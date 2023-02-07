@@ -1,0 +1,10 @@
+https://app.ripapp.it {
+
+    tls ripappbrescia@gmail.com
+
+    reverse_proxy /* {
+        to backend:48795
+        flush_interval -1
+    }
+
+}

@@ -1,0 +1,5 @@
+FROM caddy:2.4.5
+
+COPY Caddyfile /etc/caddy/Caddyfile
+ENV ACME_AGREE=true
+EXPOSE 443
