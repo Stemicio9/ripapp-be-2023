@@ -71,12 +71,15 @@ public class RipappApplication implements WebMvcConfigurer {
     @Bean
     public FirebaseAuth firebaseAuth() {
         try {
-            InputStream inputstream = RipappApplication.class.getResourceAsStream("/ripapp-6cb0e-firebase-adminsdk-4uez1-62cbd67496.json");
+            // InputStream inputstream = RipappApplication.class.getResourceAsStream("/ripapp-6cb0e-firebase-adminsdk-4uez1-62cbd67496.json");
+            InputStream inputstream = RipappApplication.class.getResourceAsStream("/rip-app-v2-firebase-adminsdk-fd3hm-5aaff94371.json");
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(inputstream))
-                    .setDatabaseUrl("https://ripapp-6cb0e.firebaseio.com")
-                    .setStorageBucket("ripapp-6cb0e.appspot.com")
+                    // .setDatabaseUrl("https://ripapp-6cb0e.firebaseio.com")
+                    .setDatabaseUrl("https://ripapp-v2.firebaseio.com")
+                    // .setStorageBucket("ripapp-6cb0e.appspot.com")
+                    .setStorageBucket("ripapp-v2.appspot.com")
                     .build();
 
             FirebaseApp.initializeApp(options);
