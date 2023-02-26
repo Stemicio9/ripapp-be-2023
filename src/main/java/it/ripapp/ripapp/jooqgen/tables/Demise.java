@@ -18,7 +18,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row19;
+import org.jooq.Row20;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -145,6 +145,11 @@ public class Demise extends TableImpl<DemiseRecord> {
      */
     public final TableField<DemiseRecord, String> FUNERALNOTES = createField(DSL.name("funeralnotes"), SQLDataType.VARCHAR, this, "");
 
+    /**
+     * The column <code>public.demise.agencylogo</code>.
+     */
+    public final TableField<DemiseRecord, String> AGENCYLOGO = createField(DSL.name("agencylogo"), SQLDataType.VARCHAR, this, "");
+
     private Demise(Name alias, Table<DemiseRecord> aliased) {
         this(alias, aliased, null);
     }
@@ -220,11 +225,11 @@ public class Demise extends TableImpl<DemiseRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row19 type methods
+    // Row20 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row19<UUID, String, String, String, LocalDate, String, LocalDateTime, String, String, String, String, String, LocalDateTime, LocalDateTime, String, Integer, String, String, String> fieldsRow() {
-        return (Row19) super.fieldsRow();
+    public Row20<UUID, String, String, String, LocalDate, String, LocalDateTime, String, String, String, String, String, LocalDateTime, LocalDateTime, String, Integer, String, String, String, String> fieldsRow() {
+        return (Row20) super.fieldsRow();
     }
 }

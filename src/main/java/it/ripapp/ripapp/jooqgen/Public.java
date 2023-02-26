@@ -7,9 +7,11 @@ package it.ripapp.ripapp.jooqgen;
 import it.ripapp.ripapp.jooqgen.tables.Account;
 import it.ripapp.ripapp.jooqgen.tables.AccountCity;
 import it.ripapp.ripapp.jooqgen.tables.AccountInstanceid;
+import it.ripapp.ripapp.jooqgen.tables.Admin;
 import it.ripapp.ripapp.jooqgen.tables.Agency;
 import it.ripapp.ripapp.jooqgen.tables.AgencyDemise;
 import it.ripapp.ripapp.jooqgen.tables.AgencyOperator;
+import it.ripapp.ripapp.jooqgen.tables.AgencyProduct;
 import it.ripapp.ripapp.jooqgen.tables.Appversions;
 import it.ripapp.ripapp.jooqgen.tables.City;
 import it.ripapp.ripapp.jooqgen.tables.CounterSet;
@@ -24,7 +26,9 @@ import it.ripapp.ripapp.jooqgen.tables.KinshipText;
 import it.ripapp.ripapp.jooqgen.tables.NotificationKinshipText;
 import it.ripapp.ripapp.jooqgen.tables.NotificationText;
 import it.ripapp.ripapp.jooqgen.tables.Phonebook;
+import it.ripapp.ripapp.jooqgen.tables.Product;
 import it.ripapp.ripapp.jooqgen.tables.Serverinfo;
+import it.ripapp.ripapp.jooqgen.tables.Telegram;
 
 import java.util.Arrays;
 import java.util.List;
@@ -63,6 +67,11 @@ public class Public extends SchemaImpl {
     public final AccountInstanceid ACCOUNT_INSTANCEID = AccountInstanceid.ACCOUNT_INSTANCEID;
 
     /**
+     * The table <code>public.admin</code>.
+     */
+    public final Admin ADMIN = Admin.ADMIN;
+
+    /**
      * The table <code>public.agency</code>.
      */
     public final Agency AGENCY = Agency.AGENCY;
@@ -76,6 +85,11 @@ public class Public extends SchemaImpl {
      * The table <code>public.agency_operator</code>.
      */
     public final AgencyOperator AGENCY_OPERATOR = AgencyOperator.AGENCY_OPERATOR;
+
+    /**
+     * The table <code>public.agency_product</code>.
+     */
+    public final AgencyProduct AGENCY_PRODUCT = AgencyProduct.AGENCY_PRODUCT;
 
     /**
      * The table <code>public.appversions</code>.
@@ -148,9 +162,19 @@ public class Public extends SchemaImpl {
     public final Phonebook PHONEBOOK = Phonebook.PHONEBOOK;
 
     /**
+     * The table <code>public.product</code>.
+     */
+    public final Product PRODUCT = Product.PRODUCT;
+
+    /**
      * The table <code>public.serverinfo</code>.
      */
     public final Serverinfo SERVERINFO = Serverinfo.SERVERINFO;
+
+    /**
+     * The table <code>public.telegram</code>.
+     */
+    public final Telegram TELEGRAM = Telegram.TELEGRAM;
 
     /**
      * No further instances allowed
@@ -171,9 +195,11 @@ public class Public extends SchemaImpl {
             Account.ACCOUNT,
             AccountCity.ACCOUNT_CITY,
             AccountInstanceid.ACCOUNT_INSTANCEID,
+            Admin.ADMIN,
             Agency.AGENCY,
             AgencyDemise.AGENCY_DEMISE,
             AgencyOperator.AGENCY_OPERATOR,
+            AgencyProduct.AGENCY_PRODUCT,
             Appversions.APPVERSIONS,
             City.CITY,
             CounterSet.COUNTER_SET,
@@ -188,6 +214,8 @@ public class Public extends SchemaImpl {
             NotificationKinshipText.NOTIFICATION_KINSHIP_TEXT,
             NotificationText.NOTIFICATION_TEXT,
             Phonebook.PHONEBOOK,
-            Serverinfo.SERVERINFO);
+            Product.PRODUCT,
+            Serverinfo.SERVERINFO,
+            Telegram.TELEGRAM);
     }
 }

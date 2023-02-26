@@ -3,10 +3,7 @@ package it.ripapp.ripapp.dal;
 import com.google.common.hash.Hashing;
 import it.ripapp.ripapp.entities.*;
 import it.ripapp.ripapp.jooqgen.Tables;
-import it.ripapp.ripapp.jooqgen.tables.records.AgencyDemiseRecord;
-import it.ripapp.ripapp.jooqgen.tables.records.DemiseMatchRecord;
-import it.ripapp.ripapp.jooqgen.tables.records.DemiseRecord;
-import it.ripapp.ripapp.jooqgen.tables.records.DemiseRelativeRecord;
+import it.ripapp.ripapp.jooqgen.tables.records.*;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 import org.springframework.stereotype.Service;
@@ -322,4 +319,88 @@ public class AgencyDAL extends AbstractDAL {
                         .where(Tables.AGENCY_OPERATOR.ACCOUNTID.eq(userid), Tables.AGENCY_DEMISE.DEMISEID.eq(demiseid))
         );
     }
+
+    public boolean agencyOwnsProduct(UUID productId, UUID agencyId) {
+        return dsl.fetchExists(
+                dsl.select().from(Tables.AGENCY)
+
+                        .innerJoin(Tables.AGENCY_PRODUCT)
+                        .on(Tables.AGENCY_PRODUCT.AGENCYID.eq(Tables.AGENCY.AGENCYID))
+
+                        .where(Tables.AGENCY.AGENCYID.eq(agencyId), Tables.AGENCY_PRODUCT.PRODUCTID.eq(productId))
+        );
+    }
+
+
+
+
+
+    public void insertProduct(UUID agencyid, ProductEntity product) {
+
+        dsl.transaction(ctx -> {
+            DSLContext temp = DSL.using(ctx);
+
+            ProductRecord productRecord = temp.newRecord(Tables.PRODUCT, product);
+
+            try
+            {
+                productRecord.store();
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
+            AgencyProductRecord agencyProductRecord = temp.newRecord(Tables.AGENCY_PRODUCT);
+
+            agencyProductRecord.setProductid(productRecord.getProductid());
+            agencyProductRecord.setAgencyid(agencyid);
+            agencyProductRecord.store();
+
+        });
+    }
+
+    public Boolean deleteProductByID(UUID productId) {
+        return dsl.deleteFrom(Tables.PRODUCT).where(Tables.PRODUCT.PRODUCTID.eq(productId)).execute() > 0;
+    }
+
+
+    public Boolean updateProduct(UUID productId, ProductEntity product) {
+        dsl.transaction(ctx -> {
+            DSLContext temp = DSL.using(ctx);
+
+
+            temp.update(Tables.PRODUCT)
+                    .set(Tables.PRODUCT.PRODUCTNAME, product.getProductName())
+                    .set(Tables.PRODUCT.PRICE, product.getPrice())
+                    .set(Tables.PRODUCT.URLIMAGE, product.getUrlImage())
+                    .execute();
+
+
+        });
+
+        return true;
+    }
+
+    public List<ProductEntity> getAllProduct() {
+        return dsl.selectFrom(Tables.PRODUCT).fetchInto(ProductEntity.class);
+    }
+
+    public List<ProductEntity> getProductsByAgency(UUID agencyid, Integer offset) {
+
+        var products = dsl.select()
+                .from(Tables.AGENCY_PRODUCT)
+
+                .innerJoin(Tables.PRODUCT)
+                .on(Tables.PRODUCT.PRODUCTID.eq(Tables.AGENCY_PRODUCT.PRODUCTID))
+
+                .where(Tables.AGENCY_PRODUCT.AGENCYID.eq(agencyid))
+                .offset(offset)
+                .limit(20)
+                .fetchMap(x -> x.getValue(Tables.PRODUCT.PRODUCTID), x -> x.into(ProductEntity.class));
+
+        return products.values().stream().collect(Collectors.toList());
+
+    }
+
+
 }

@@ -69,7 +69,7 @@ public class DemiseRelative extends TableImpl<DemiseRelativeRecord> {
     /**
      * The column <code>public.demise_relative.kinship</code>.
      */
-    public final TableField<DemiseRelativeRecord, Kinship> KINSHIP = createField(DSL.name("kinship"), SQLDataType.VARCHAR.nullable(false).asEnumDataType(Kinship.class), this, "");
+    public final TableField<DemiseRelativeRecord, Kinship> KINSHIP = createField(DSL.name("kinship"), SQLDataType.VARCHAR.nullable(false).asEnumDataType(it.ripapp.ripapp.jooqgen.enums.Kinship.class), this, "");
 
     /**
      * The column <code>public.demise_relative.phone</code>.

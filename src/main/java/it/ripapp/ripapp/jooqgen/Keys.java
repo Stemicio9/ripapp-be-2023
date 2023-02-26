@@ -7,9 +7,11 @@ package it.ripapp.ripapp.jooqgen;
 import it.ripapp.ripapp.jooqgen.tables.Account;
 import it.ripapp.ripapp.jooqgen.tables.AccountCity;
 import it.ripapp.ripapp.jooqgen.tables.AccountInstanceid;
+import it.ripapp.ripapp.jooqgen.tables.Admin;
 import it.ripapp.ripapp.jooqgen.tables.Agency;
 import it.ripapp.ripapp.jooqgen.tables.AgencyDemise;
 import it.ripapp.ripapp.jooqgen.tables.AgencyOperator;
+import it.ripapp.ripapp.jooqgen.tables.AgencyProduct;
 import it.ripapp.ripapp.jooqgen.tables.Appversions;
 import it.ripapp.ripapp.jooqgen.tables.City;
 import it.ripapp.ripapp.jooqgen.tables.CounterSet;
@@ -24,12 +26,16 @@ import it.ripapp.ripapp.jooqgen.tables.KinshipText;
 import it.ripapp.ripapp.jooqgen.tables.NotificationKinshipText;
 import it.ripapp.ripapp.jooqgen.tables.NotificationText;
 import it.ripapp.ripapp.jooqgen.tables.Phonebook;
+import it.ripapp.ripapp.jooqgen.tables.Product;
 import it.ripapp.ripapp.jooqgen.tables.Serverinfo;
+import it.ripapp.ripapp.jooqgen.tables.Telegram;
 import it.ripapp.ripapp.jooqgen.tables.records.AccountCityRecord;
 import it.ripapp.ripapp.jooqgen.tables.records.AccountInstanceidRecord;
 import it.ripapp.ripapp.jooqgen.tables.records.AccountRecord;
+import it.ripapp.ripapp.jooqgen.tables.records.AdminRecord;
 import it.ripapp.ripapp.jooqgen.tables.records.AgencyDemiseRecord;
 import it.ripapp.ripapp.jooqgen.tables.records.AgencyOperatorRecord;
+import it.ripapp.ripapp.jooqgen.tables.records.AgencyProductRecord;
 import it.ripapp.ripapp.jooqgen.tables.records.AgencyRecord;
 import it.ripapp.ripapp.jooqgen.tables.records.AppversionsRecord;
 import it.ripapp.ripapp.jooqgen.tables.records.CityRecord;
@@ -45,7 +51,9 @@ import it.ripapp.ripapp.jooqgen.tables.records.KinshipTextRecord;
 import it.ripapp.ripapp.jooqgen.tables.records.NotificationKinshipTextRecord;
 import it.ripapp.ripapp.jooqgen.tables.records.NotificationTextRecord;
 import it.ripapp.ripapp.jooqgen.tables.records.PhonebookRecord;
+import it.ripapp.ripapp.jooqgen.tables.records.ProductRecord;
 import it.ripapp.ripapp.jooqgen.tables.records.ServerinfoRecord;
+import it.ripapp.ripapp.jooqgen.tables.records.TelegramRecord;
 
 import org.jooq.ForeignKey;
 import org.jooq.TableField;
@@ -69,9 +77,11 @@ public class Keys {
     public static final UniqueKey<AccountRecord> ACCOUNT_PKEY = Internal.createUniqueKey(Account.ACCOUNT, DSL.name("account_pkey"), new TableField[] { Account.ACCOUNT.ACCOUNTID }, true);
     public static final UniqueKey<AccountCityRecord> ACCOUNT_CITY_PKEY = Internal.createUniqueKey(AccountCity.ACCOUNT_CITY, DSL.name("account_city_pkey"), new TableField[] { AccountCity.ACCOUNT_CITY.ACCOUNTID, AccountCity.ACCOUNT_CITY.CITYID }, true);
     public static final UniqueKey<AccountInstanceidRecord> ACCOUNT_INSTANCEID_PKEY = Internal.createUniqueKey(AccountInstanceid.ACCOUNT_INSTANCEID, DSL.name("account_instanceid_pkey"), new TableField[] { AccountInstanceid.ACCOUNT_INSTANCEID.ACCOUNTID, AccountInstanceid.ACCOUNT_INSTANCEID.INSTANCEID }, true);
+    public static final UniqueKey<AdminRecord> ADMIN_PK = Internal.createUniqueKey(Admin.ADMIN, DSL.name("admin_pk"), new TableField[] { Admin.ADMIN.ADMINID }, true);
     public static final UniqueKey<AgencyRecord> AGENCY_PKEY = Internal.createUniqueKey(Agency.AGENCY, DSL.name("agency_pkey"), new TableField[] { Agency.AGENCY.AGENCYID }, true);
     public static final UniqueKey<AgencyDemiseRecord> AGENCY_DEMISE_PKEY = Internal.createUniqueKey(AgencyDemise.AGENCY_DEMISE, DSL.name("agency_demise_pkey"), new TableField[] { AgencyDemise.AGENCY_DEMISE.AGENCYID, AgencyDemise.AGENCY_DEMISE.DEMISEID }, true);
     public static final UniqueKey<AgencyOperatorRecord> AGENCY_OPERATOR_PKEY = Internal.createUniqueKey(AgencyOperator.AGENCY_OPERATOR, DSL.name("agency_operator_pkey"), new TableField[] { AgencyOperator.AGENCY_OPERATOR.AGENCYID, AgencyOperator.AGENCY_OPERATOR.ACCOUNTID }, true);
+    public static final UniqueKey<AgencyProductRecord> AGENCY_PRODUCT_PK = Internal.createUniqueKey(AgencyProduct.AGENCY_PRODUCT, DSL.name("agency_product_pk"), new TableField[] { AgencyProduct.AGENCY_PRODUCT.PRODUCTID, AgencyProduct.AGENCY_PRODUCT.AGENCYID }, true);
     public static final UniqueKey<AppversionsRecord> APPVERSIONS_PKEY = Internal.createUniqueKey(Appversions.APPVERSIONS, DSL.name("appversions_pkey"), new TableField[] { Appversions.APPVERSIONS.VERSION }, true);
     public static final UniqueKey<CityRecord> CITY_PKEY = Internal.createUniqueKey(City.CITY, DSL.name("city_pkey"), new TableField[] { City.CITY.CITYID }, true);
     public static final UniqueKey<CounterSetRecord> COUNTER_SET_PKEY = Internal.createUniqueKey(CounterSet.COUNTER_SET, DSL.name("counter_set_pkey"), new TableField[] { CounterSet.COUNTER_SET.ACCOUNTID }, true);
@@ -87,7 +97,9 @@ public class Keys {
     public static final UniqueKey<NotificationKinshipTextRecord> NOTIFICATION_KINSHIP_TEXT_PKEY = Internal.createUniqueKey(NotificationKinshipText.NOTIFICATION_KINSHIP_TEXT, DSL.name("notification_kinship_text_pkey"), new TableField[] { NotificationKinshipText.NOTIFICATION_KINSHIP_TEXT.KINSHIP, NotificationKinshipText.NOTIFICATION_KINSHIP_TEXT.LANG }, true);
     public static final UniqueKey<NotificationTextRecord> NOTIFICATION_TEXT_PKEY = Internal.createUniqueKey(NotificationText.NOTIFICATION_TEXT, DSL.name("notification_text_pkey"), new TableField[] { NotificationText.NOTIFICATION_TEXT.LANG }, true);
     public static final UniqueKey<PhonebookRecord> PHONEBOOK_PKEY = Internal.createUniqueKey(Phonebook.PHONEBOOK, DSL.name("phonebook_pkey"), new TableField[] { Phonebook.PHONEBOOK.ACCOUNTID, Phonebook.PHONEBOOK.IDX }, true);
+    public static final UniqueKey<ProductRecord> PRODUCT_PK = Internal.createUniqueKey(Product.PRODUCT, DSL.name("product_pk"), new TableField[] { Product.PRODUCT.PRODUCTID }, true);
     public static final UniqueKey<ServerinfoRecord> SERVERINFO_PKEY = Internal.createUniqueKey(Serverinfo.SERVERINFO, DSL.name("serverinfo_pkey"), new TableField[] { Serverinfo.SERVERINFO.STATUS }, true);
+    public static final UniqueKey<TelegramRecord> TABLE_NAME_PK = Internal.createUniqueKey(Telegram.TELEGRAM, DSL.name("table_name_pk"), new TableField[] { Telegram.TELEGRAM.TELEGRAMID }, true);
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
@@ -100,6 +112,8 @@ public class Keys {
     public static final ForeignKey<AgencyDemiseRecord, DemiseRecord> AGENCY_DEMISE__AGENCY_DEMISE_DEMISEID_FKEY = Internal.createForeignKey(AgencyDemise.AGENCY_DEMISE, DSL.name("agency_demise_demiseid_fkey"), new TableField[] { AgencyDemise.AGENCY_DEMISE.DEMISEID }, Keys.DEMISE_PKEY, new TableField[] { Demise.DEMISE.DEMISEID }, true);
     public static final ForeignKey<AgencyOperatorRecord, AccountRecord> AGENCY_OPERATOR__AGENCY_OPERATOR_ACCOUNTID_FKEY = Internal.createForeignKey(AgencyOperator.AGENCY_OPERATOR, DSL.name("agency_operator_accountid_fkey"), new TableField[] { AgencyOperator.AGENCY_OPERATOR.ACCOUNTID }, Keys.ACCOUNT_PKEY, new TableField[] { Account.ACCOUNT.ACCOUNTID }, true);
     public static final ForeignKey<AgencyOperatorRecord, AgencyRecord> AGENCY_OPERATOR__AGENCY_OPERATOR_AGENCYID_FKEY = Internal.createForeignKey(AgencyOperator.AGENCY_OPERATOR, DSL.name("agency_operator_agencyid_fkey"), new TableField[] { AgencyOperator.AGENCY_OPERATOR.AGENCYID }, Keys.AGENCY_PKEY, new TableField[] { Agency.AGENCY.AGENCYID }, true);
+    public static final ForeignKey<AgencyProductRecord, AgencyRecord> AGENCY_PRODUCT__AGENCY_FK = Internal.createForeignKey(AgencyProduct.AGENCY_PRODUCT, DSL.name("agency_fk"), new TableField[] { AgencyProduct.AGENCY_PRODUCT.AGENCYID }, Keys.AGENCY_PKEY, new TableField[] { Agency.AGENCY.AGENCYID }, true);
+    public static final ForeignKey<AgencyProductRecord, ProductRecord> AGENCY_PRODUCT__AGENCY_PRODUCT_PRODUCT_PRODUCTID_FK = Internal.createForeignKey(AgencyProduct.AGENCY_PRODUCT, DSL.name("agency_product_product_productId_fk"), new TableField[] { AgencyProduct.AGENCY_PRODUCT.PRODUCTID }, Keys.PRODUCT_PK, new TableField[] { Product.PRODUCT.PRODUCTID }, true);
     public static final ForeignKey<CounterSetRecord, AccountRecord> COUNTER_SET__COUNTER_SET_ACCOUNTID_FKEY = Internal.createForeignKey(CounterSet.COUNTER_SET, DSL.name("counter_set_accountid_fkey"), new TableField[] { CounterSet.COUNTER_SET.ACCOUNTID }, Keys.ACCOUNT_PKEY, new TableField[] { Account.ACCOUNT.ACCOUNTID }, true);
     public static final ForeignKey<DemiseCityRecord, CityRecord> DEMISE_CITY__DEMISE_CITY_CITYID_FKEY = Internal.createForeignKey(DemiseCity.DEMISE_CITY, DSL.name("demise_city_cityid_fkey"), new TableField[] { DemiseCity.DEMISE_CITY.CITYID }, Keys.CITY_PKEY, new TableField[] { City.CITY.CITYID }, true);
     public static final ForeignKey<DemiseCityRecord, DemiseRecord> DEMISE_CITY__DEMISE_CITY_DEMISEID_FKEY = Internal.createForeignKey(DemiseCity.DEMISE_CITY, DSL.name("demise_city_demiseid_fkey"), new TableField[] { DemiseCity.DEMISE_CITY.DEMISEID }, Keys.DEMISE_PKEY, new TableField[] { Demise.DEMISE.DEMISEID }, true);
@@ -111,4 +125,6 @@ public class Keys {
     public static final ForeignKey<DemiseRelativeRecord, AccountRecord> DEMISE_RELATIVE__DEMISE_RELATIVE_ACCOUNTID_FKEY = Internal.createForeignKey(DemiseRelative.DEMISE_RELATIVE, DSL.name("demise_relative_accountid_fkey"), new TableField[] { DemiseRelative.DEMISE_RELATIVE.ACCOUNTID }, Keys.ACCOUNT_PKEY, new TableField[] { Account.ACCOUNT.ACCOUNTID }, true);
     public static final ForeignKey<DemiseRelativeRecord, DemiseRecord> DEMISE_RELATIVE__DEMISE_RELATIVE_DEMISEID_FKEY = Internal.createForeignKey(DemiseRelative.DEMISE_RELATIVE, DSL.name("demise_relative_demiseid_fkey"), new TableField[] { DemiseRelative.DEMISE_RELATIVE.DEMISEID }, Keys.DEMISE_PKEY, new TableField[] { Demise.DEMISE.DEMISEID }, true);
     public static final ForeignKey<PhonebookRecord, AccountRecord> PHONEBOOK__PHONEBOOK_ACCOUNTID_FKEY = Internal.createForeignKey(Phonebook.PHONEBOOK, DSL.name("phonebook_accountid_fkey"), new TableField[] { Phonebook.PHONEBOOK.ACCOUNTID }, Keys.ACCOUNT_PKEY, new TableField[] { Account.ACCOUNT.ACCOUNTID }, true);
+    public static final ForeignKey<TelegramRecord, AccountRecord> TELEGRAM__TABLE_NAME_ACCOUNT_ACCOUNTID_FK = Internal.createForeignKey(Telegram.TELEGRAM, DSL.name("table_name_account_accountid_fk"), new TableField[] { Telegram.TELEGRAM.USERID }, Keys.ACCOUNT_PKEY, new TableField[] { Account.ACCOUNT.ACCOUNTID }, true);
+    public static final ForeignKey<TelegramRecord, DemiseRecord> TELEGRAM__TABLE_NAME_DEMISE_DEMISEID_FK = Internal.createForeignKey(Telegram.TELEGRAM, DSL.name("table_name_demise_demiseid_fk"), new TableField[] { Telegram.TELEGRAM.DEMISEID }, Keys.DEMISE_PKEY, new TableField[] { Demise.DEMISE.DEMISEID }, true);
 }

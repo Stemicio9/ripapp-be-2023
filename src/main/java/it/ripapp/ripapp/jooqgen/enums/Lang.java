@@ -17,7 +17,7 @@ import org.jooq.Schema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public enum Lang implements EnumType {
 
-    it("it"),
+    it_("it"),
 
     en("en");
 

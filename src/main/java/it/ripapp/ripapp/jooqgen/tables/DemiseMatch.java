@@ -64,7 +64,7 @@ public class DemiseMatch extends TableImpl<DemiseMatchRecord> {
     /**
      * The column <code>public.demise_match.type</code>.
      */
-    public final TableField<DemiseMatchRecord, Demisematchtype> TYPE = createField(DSL.name("type"), SQLDataType.VARCHAR.nullable(false).asEnumDataType(Demisematchtype.class), this, "");
+    public final TableField<DemiseMatchRecord, Demisematchtype> TYPE = createField(DSL.name("type"), SQLDataType.VARCHAR.nullable(false).asEnumDataType(it.ripapp.ripapp.jooqgen.enums.Demisematchtype.class), this, "");
 
     /**
      * The column <code>public.demise_match.name</code>.
@@ -74,7 +74,7 @@ public class DemiseMatch extends TableImpl<DemiseMatchRecord> {
     /**
      * The column <code>public.demise_match.kinship</code>.
      */
-    public final TableField<DemiseMatchRecord, Kinship> KINSHIP = createField(DSL.name("kinship"), SQLDataType.VARCHAR.asEnumDataType(Kinship.class), this, "");
+    public final TableField<DemiseMatchRecord, Kinship> KINSHIP = createField(DSL.name("kinship"), SQLDataType.VARCHAR.asEnumDataType(it.ripapp.ripapp.jooqgen.enums.Kinship.class), this, "");
 
     /**
      * The column <code>public.demise_match.cityid</code>.

@@ -51,7 +51,7 @@ public class Serverinfo extends TableImpl<ServerinfoRecord> {
     /**
      * The column <code>public.serverinfo.status</code>.
      */
-    public final TableField<ServerinfoRecord, Serverstatus> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR.nullable(false).asEnumDataType(Serverstatus.class), this, "");
+    public final TableField<ServerinfoRecord, Serverstatus> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR.nullable(false).asEnumDataType(it.ripapp.ripapp.jooqgen.enums.Serverstatus.class), this, "");
 
     private Serverinfo(Name alias, Table<ServerinfoRecord> aliased) {
         this(alias, aliased, null);

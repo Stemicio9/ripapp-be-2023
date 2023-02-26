@@ -41,8 +41,12 @@ public class AgencyBLL {
 
     public List<DemiseEntity> getAgencyDemises(UUID userid, int offset){
         AgencyEntity agency = agencyDAL.getAgencyByOperator(userid);
-
         return agencyDAL.getDemisesByAgency(agency.getAgencyid(), offset);
+    }
+
+    public List<ProductEntity> getAgencyProducts(UUID userid, int offset){
+        AgencyEntity agency = agencyDAL.getAgencyByOperator(userid);
+        return agencyDAL.getProductsByAgency(agency.getAgencyid(), offset);
     }
 
 
@@ -67,6 +71,15 @@ public class AgencyBLL {
         agencyDAL.insertDemise(agency.getAgencyid(), demise);
 
         matchDemiseAndUpdateMatchesAndNotify(demise);
+
+        return true;
+    }
+
+    public Boolean insertProduct(UUID userid, ProductEntity product) {
+
+        AgencyEntity agency = agencyDAL.getAgencyByOperator(userid);
+
+        agencyDAL.insertProduct(agency.getAgencyid(), product);
 
         return true;
     }
@@ -276,6 +289,20 @@ public class AgencyBLL {
         return true;
     }
 
+
+    public Boolean deleteProductByID(UUID userid, UUID productId) throws ServerErrorException, ForbiddenException {
+
+        AgencyEntity agency = agencyDAL.getAgencyByOperator(userid);
+
+        if (!agencyDAL.operatorOwnsDemise(productId, agency.getAgencyid()))
+            throw new ForbiddenException("Utente non abilitato");
+
+        if(!agencyDAL.deleteProductByID(productId))
+            throw new ServerErrorException("Demise not deleted " + productId.toString());
+
+        return true;
+    }
+
     public Boolean updateDemise(UUID userid, UUID demiseid, DemiseEntity demise) throws BadRequestException, ForbiddenException {
 
         if (!agencyDAL.operatorOwnsDemise(userid, demiseid))
@@ -298,6 +325,22 @@ public class AgencyBLL {
 
         matchDemiseAndUpdateMatchesAndNotify(demise);
 
+
+        return true;
+    }
+
+
+    public Boolean updateProduct(UUID userid, UUID productId, ProductEntity product) throws BadRequestException, ForbiddenException {
+
+        AgencyEntity agency = agencyDAL.getAgencyByOperator(userid);
+
+        if (!agencyDAL.agencyOwnsProduct(productId, agency.getAgencyid()))
+            throw new ForbiddenException("Utente non abilitato");
+
+        if (!productId.equals(product.getProductId()))
+            throw new BadRequestException("id prodotto non uguale all'id fornito in path");
+
+        agencyDAL.updateProduct(productId, product);
 
         return true;
     }

@@ -52,12 +52,12 @@ public class KinshipText extends TableImpl<KinshipTextRecord> {
     /**
      * The column <code>public.kinship_text.kinship</code>.
      */
-    public final TableField<KinshipTextRecord, Kinship> KINSHIP = createField(DSL.name("kinship"), SQLDataType.VARCHAR.nullable(false).asEnumDataType(Kinship.class), this, "");
+    public final TableField<KinshipTextRecord, Kinship> KINSHIP = createField(DSL.name("kinship"), SQLDataType.VARCHAR.nullable(false).asEnumDataType(it.ripapp.ripapp.jooqgen.enums.Kinship.class), this, "");
 
     /**
      * The column <code>public.kinship_text.lang</code>.
      */
-    public final TableField<KinshipTextRecord, Lang> LANG = createField(DSL.name("lang"), SQLDataType.VARCHAR.nullable(false).asEnumDataType(Lang.class), this, "");
+    public final TableField<KinshipTextRecord, Lang> LANG = createField(DSL.name("lang"), SQLDataType.VARCHAR.nullable(false).asEnumDataType(it.ripapp.ripapp.jooqgen.enums.Lang.class), this, "");
 
     /**
      * The column <code>public.kinship_text.text</code>.

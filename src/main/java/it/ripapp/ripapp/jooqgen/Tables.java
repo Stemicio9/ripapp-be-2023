@@ -7,9 +7,11 @@ package it.ripapp.ripapp.jooqgen;
 import it.ripapp.ripapp.jooqgen.tables.Account;
 import it.ripapp.ripapp.jooqgen.tables.AccountCity;
 import it.ripapp.ripapp.jooqgen.tables.AccountInstanceid;
+import it.ripapp.ripapp.jooqgen.tables.Admin;
 import it.ripapp.ripapp.jooqgen.tables.Agency;
 import it.ripapp.ripapp.jooqgen.tables.AgencyDemise;
 import it.ripapp.ripapp.jooqgen.tables.AgencyOperator;
+import it.ripapp.ripapp.jooqgen.tables.AgencyProduct;
 import it.ripapp.ripapp.jooqgen.tables.Appversions;
 import it.ripapp.ripapp.jooqgen.tables.City;
 import it.ripapp.ripapp.jooqgen.tables.CounterSet;
@@ -24,7 +26,9 @@ import it.ripapp.ripapp.jooqgen.tables.KinshipText;
 import it.ripapp.ripapp.jooqgen.tables.NotificationKinshipText;
 import it.ripapp.ripapp.jooqgen.tables.NotificationText;
 import it.ripapp.ripapp.jooqgen.tables.Phonebook;
+import it.ripapp.ripapp.jooqgen.tables.Product;
 import it.ripapp.ripapp.jooqgen.tables.Serverinfo;
+import it.ripapp.ripapp.jooqgen.tables.Telegram;
 
 
 /**
@@ -49,6 +53,11 @@ public class Tables {
     public static final AccountInstanceid ACCOUNT_INSTANCEID = AccountInstanceid.ACCOUNT_INSTANCEID;
 
     /**
+     * The table <code>public.admin</code>.
+     */
+    public static final Admin ADMIN = Admin.ADMIN;
+
+    /**
      * The table <code>public.agency</code>.
      */
     public static final Agency AGENCY = Agency.AGENCY;
@@ -62,6 +71,11 @@ public class Tables {
      * The table <code>public.agency_operator</code>.
      */
     public static final AgencyOperator AGENCY_OPERATOR = AgencyOperator.AGENCY_OPERATOR;
+
+    /**
+     * The table <code>public.agency_product</code>.
+     */
+    public static final AgencyProduct AGENCY_PRODUCT = AgencyProduct.AGENCY_PRODUCT;
 
     /**
      * The table <code>public.appversions</code>.
@@ -134,7 +148,17 @@ public class Tables {
     public static final Phonebook PHONEBOOK = Phonebook.PHONEBOOK;
 
     /**
+     * The table <code>public.product</code>.
+     */
+    public static final Product PRODUCT = Product.PRODUCT;
+
+    /**
      * The table <code>public.serverinfo</code>.
      */
     public static final Serverinfo SERVERINFO = Serverinfo.SERVERINFO;
+
+    /**
+     * The table <code>public.telegram</code>.
+     */
+    public static final Telegram TELEGRAM = Telegram.TELEGRAM;
 }

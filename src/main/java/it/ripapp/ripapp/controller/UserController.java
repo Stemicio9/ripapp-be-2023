@@ -59,7 +59,6 @@ public class UserController extends AbstractController {
             @RequestBody FiltersEntity filters,
             @CookieValue Lang lang,
             @CookieValue UUID userid) throws ResponseException {
-
         return GetResponse(demiseBLL.getUserLinkedDemises(userid, filters, lang), HttpStatus.CREATED);
     }
 

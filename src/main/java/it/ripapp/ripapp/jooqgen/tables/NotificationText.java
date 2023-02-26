@@ -51,7 +51,7 @@ public class NotificationText extends TableImpl<NotificationTextRecord> {
     /**
      * The column <code>public.notification_text.lang</code>.
      */
-    public final TableField<NotificationTextRecord, Lang> LANG = createField(DSL.name("lang"), SQLDataType.VARCHAR.nullable(false).asEnumDataType(Lang.class), this, "");
+    public final TableField<NotificationTextRecord, Lang> LANG = createField(DSL.name("lang"), SQLDataType.VARCHAR.nullable(false).asEnumDataType(it.ripapp.ripapp.jooqgen.enums.Lang.class), this, "");
 
     /**
      * The column <code>public.notification_text.text</code>.

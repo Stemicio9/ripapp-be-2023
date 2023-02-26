@@ -97,7 +97,7 @@ public class Account extends TableImpl<AccountRecord> {
     /**
      * The column <code>public.account.lang</code>.
      */
-    public final TableField<AccountRecord, Lang> LANG = createField(DSL.name("lang"), SQLDataType.VARCHAR.defaultValue(DSL.field("'it'::lang", SQLDataType.VARCHAR)).asEnumDataType(Lang.class), this, "");
+    public final TableField<AccountRecord, Lang> LANG = createField(DSL.name("lang"), SQLDataType.VARCHAR.defaultValue(DSL.field("'it'::lang", SQLDataType.VARCHAR)).asEnumDataType(it.ripapp.ripapp.jooqgen.enums.Lang.class), this, "");
 
     /**
      * The column <code>public.account.photourl</code>.

@@ -103,9 +103,9 @@ public class ExceptionController extends AbstractController {
 
     private Lang getLangByString(String value){
         return switch (value){
-            case "it" -> Lang.it;
+            case "it" -> Lang.it_;
             case "en" -> Lang.en;
-            default -> Lang.it;
+            default -> Lang.it_;
         };
     }
 
