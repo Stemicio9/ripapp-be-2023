@@ -4,8 +4,9 @@ package it.ripapp.ripapp.entityUpdate;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import it.ripapp.ripapp.jooqgen.enums.Kinship;
-import it.ripapp.ripapp.jooqgen.enums.Lang;
+import it.ripapp.ripapp.bll.Kinship;
+import it.ripapp.ripapp.bll.Lang;
+
 import it.ripapp.ripapp.utilities.UserStatus;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
