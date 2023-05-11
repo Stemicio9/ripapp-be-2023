@@ -1,5 +1,5 @@
 package it.ripapp.ripapp.dal;
-
+/*
 import com.google.common.hash.Hashing;
 import it.ripapp.ripapp.entities.*;
 import it.ripapp.ripapp.jooqgen.Tables;
@@ -404,3 +404,4 @@ public class AgencyDAL extends JpaRe {
 
 
 }
+*/

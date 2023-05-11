@@ -1,5 +1,6 @@
 package it.ripapp.ripapp.dal;
 
+/*
 import com.google.common.hash.Hashing;
 import it.ripapp.ripapp.entities.*;
 import it.ripapp.ripapp.jooqgen.Tables;
@@ -640,3 +641,4 @@ public class UserDAL extends AbstractDAL {
         dsl.deleteFrom(Tables.ACCOUNT_INSTANCEID).where(Tables.ACCOUNT_INSTANCEID.INSTANCEID.in(instanceIDs)).execute();
     }
 }
+*/

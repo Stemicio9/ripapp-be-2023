@@ -1,5 +1,5 @@
 package it.ripapp.ripapp.dal;
-
+/*
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,3 +15,4 @@ public abstract class AbstractDAL {
     }
 
 }
+*/

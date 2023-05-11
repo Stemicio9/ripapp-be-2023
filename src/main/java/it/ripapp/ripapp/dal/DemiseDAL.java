@@ -1,5 +1,6 @@
 package it.ripapp.ripapp.dal;
 
+/*
 import it.ripapp.ripapp.entities.DemiseEntity;
 import it.ripapp.ripapp.entities.DemiseMatchEntity;
 import it.ripapp.ripapp.jooqgen.Tables;
@@ -64,3 +65,6 @@ public class DemiseDAL extends AbstractDAL {
                 .fetchSet(x -> x.into(DemiseEntity.class));
     }
 }
+
+
+ */

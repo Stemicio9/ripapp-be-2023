@@ -1,5 +1,6 @@
 package it.ripapp.ripapp.dal;
 
+/*
 import it.ripapp.ripapp.jooqgen.Tables;
 import it.ripapp.ripapp.jooqgen.enums.Serverstatus;
 import it.ripapp.ripapp.jooqgen.tables.records.AppversionsRecord;
@@ -25,3 +26,4 @@ public class MiscDAL extends AbstractDAL {
     }
 
 }
+*/
