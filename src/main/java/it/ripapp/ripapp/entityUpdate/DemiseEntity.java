@@ -63,9 +63,9 @@ public class DemiseEntity {
     private AccountEntity relative;
     private String relativename;
 
-   @OneToMany
-   Cascade(CascadeType.ALL)
-    private List<DemiseRelativeEntity> relatives;
+    @OneToMany
+    @Cascade(CascadeType.ALL)
+    private List<DemiseRelative> relatives;
 
     @JsonIgnore
     private Demisematchtype demisematchtype;

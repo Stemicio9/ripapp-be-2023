@@ -8,6 +8,7 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -20,9 +21,12 @@ import java.util.UUID;
 @AllArgsConstructor
 public class DemiseMatchEntity {
     @Id
-    private UUID accountid;
-    private UUID demiseid;
-    private UUID cityid;
+    @OneToOne
+    private AccountEntity accountid;
+    @OneToOne
+    private DemiseEntity demiseid;
+    @OneToOne
+    private CityEntity cityid;
     private String name;
     private Kinship kinship;
     private Demisematchtype type;

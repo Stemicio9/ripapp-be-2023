@@ -33,7 +33,7 @@ public class DemiseRelative {
 
     @OneToMany
     @Cascade(CascadeType.ALL)
-    private ArrayList<Demise> demises;
+    private ArrayList<DemiseEntity> demises;
 
     private UUID DEMISEID;
     private UUID ACCOUNTID;
