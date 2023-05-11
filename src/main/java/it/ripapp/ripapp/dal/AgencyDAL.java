@@ -12,8 +12,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Service
-public class AgencyDAL extends AbstractDAL {
+
+public class AgencyDAL extends JpaRe {
 
     public AgencyDAL(DSLContext dsl) {
         super(dsl);
