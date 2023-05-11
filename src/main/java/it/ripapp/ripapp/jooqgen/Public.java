@@ -17,7 +17,6 @@ import it.ripapp.ripapp.jooqgen.tables.Country;
 import it.ripapp.ripapp.jooqgen.tables.Demise;
 import it.ripapp.ripapp.jooqgen.tables.DemiseCity;
 import it.ripapp.ripapp.jooqgen.tables.DemiseMatch;
-import it.ripapp.ripapp.jooqgen.tables.DemiseRead;
 import it.ripapp.ripapp.jooqgen.tables.DemiseRelative;
 import it.ripapp.ripapp.jooqgen.tables.EndpointLogging;
 import it.ripapp.ripapp.jooqgen.tables.KinshipText;
