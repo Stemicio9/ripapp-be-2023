@@ -18,6 +18,6 @@ public class AccountInstanceid {
     String instanceId;
 
     @OneToOne
-    AccountEntity account;
+    it.ripapp.ripapp.entityUpdate.AccountEntity account;
 
 }

@@ -1,4 +1,4 @@
-package it.ripapp.ripapp.entityUpdate;
+package it.ripapp.ripapp.EntityUpdate;
 
 import lombok.*;
 
