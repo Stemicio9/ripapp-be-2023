@@ -15,6 +15,7 @@ import it.ripapp.ripapp.onesignal.OneSignal;
 import info.debatty.java.stringsimilarity.Cosine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -22,8 +23,10 @@ import java.time.ZoneOffset;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 public class AgencyBLL {
+
+    // TODO TEST BRANCH
 
     private AgencyDAL agencyDAL;
     private UserDAL userDAL;
