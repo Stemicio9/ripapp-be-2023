@@ -21,6 +21,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class DemiseMatchEntity {
     @Id
+    private UUID id;
+
     @OneToOne
     private AccountEntity accountid;
     @OneToOne

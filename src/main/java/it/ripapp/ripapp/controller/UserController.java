@@ -26,9 +26,7 @@ public class UserController extends AbstractController {
     private DemiseBLL demiseBLL;
     private AgencyBLL agencyBLL;
 
-    private UserService userService;
-    private DemiseService demiseService;
-    private AgencyService agencyService;
+
 
     @Autowired
     public UserController(TextBLL textBLL, UserBLL userBLL, DemiseBLL demiseBLL, AgencyBLL agencyBLL) {
