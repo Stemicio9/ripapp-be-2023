@@ -1,16 +1,16 @@
 package it.ripapp.ripapp.entities;
 
-public class LoginDataEntity {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class LoginDataEntity {
     private String idtoken;
 
-    public String getIdtoken() {
-        return idtoken;
-    }
-
-    public LoginDataEntity setIdtoken(String idtoken) {
-        this.idtoken = idtoken;
-        return this;
-    }
 
 }

@@ -4,7 +4,6 @@ import com.google.firebase.auth.FirebaseAuthException;
 import it.ripapp.ripapp.bll.MiscBLL;
 import it.ripapp.ripapp.bll.TextBLL;
 import it.ripapp.ripapp.bll.UserBLL;
-import it.ripapp.ripapp.entities.AccountEntity;
 import it.ripapp.ripapp.entities.LoginDataEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
 import it.ripapp.ripapp.jooqgen.enums.Lang;

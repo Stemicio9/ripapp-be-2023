@@ -1,9 +1,16 @@
 package it.ripapp.ripapp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
-
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class AgencyEntity implements IEntity {
 
     private UUID agencyid;
@@ -17,57 +24,5 @@ public class AgencyEntity implements IEntity {
     @JsonIgnore
     private String email;
 
-    public UUID getAgencyid() {
-        return agencyid;
-    }
 
-    public AgencyEntity setAgencyid(UUID agencyid) {
-        this.agencyid = agencyid;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public AgencyEntity setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public AgencyEntity setAddress(String address) {
-        this.address = address;
-        return this;
-    }
-
-    public Double getSimilarity() {
-        return similarity;
-    }
-
-    public AgencyEntity setSimilarity(Double similarity) {
-        this.similarity = similarity;
-        return this;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public AgencyEntity setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
-    public String getLogo() {
-        return logo;
-    }
-
-    public AgencyEntity setLogo(String logo) {
-        this.logo = logo;
-        return this;
-    }
 }

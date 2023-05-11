@@ -1,7 +1,15 @@
 package it.ripapp.ripapp.entities;
 
-import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.UUID;
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductEntity implements IEntity{
 
     private UUID productId;
@@ -12,36 +20,4 @@ public class ProductEntity implements IEntity{
 
     private String urlImage;
 
-
-    public double getPrice() {
-        return price;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public String getUrlImage() {
-        return urlImage;
-    }
-
-    public UUID getProductId() {
-        return productId;
-    }
-
-    public void setProductId(UUID productId) {
-        this.productId = productId;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public void setUrlImage(String urlImage) {
-        this.urlImage = urlImage;
-    }
 }

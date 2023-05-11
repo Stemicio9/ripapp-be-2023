@@ -4,7 +4,6 @@ import it.ripapp.ripapp.bll.AgencyBLL;
 import it.ripapp.ripapp.bll.DemiseBLL;
 import it.ripapp.ripapp.bll.TextBLL;
 import it.ripapp.ripapp.bll.UserBLL;
-import it.ripapp.ripapp.entities.AccountEntity;
 import it.ripapp.ripapp.entities.FiltersEntity;
 import it.ripapp.ripapp.entities.PhoneBookSyncEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
