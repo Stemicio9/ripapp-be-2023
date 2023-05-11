@@ -4,8 +4,6 @@
 package it.ripapp.ripapp.jooqgen.tables.records;
 
 
-import it.ripapp.ripapp.jooqgen.tables.AgencyProduct;
-
 import java.util.UUID;
 
 import org.jooq.Field;
