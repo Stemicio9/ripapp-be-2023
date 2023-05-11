@@ -1,7 +1,15 @@
 package it.ripapp.ripapp.entities;
 
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.List;
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class PhoneBookSyncEntity {
 
     private List<ContactEntity> contacts;
@@ -9,39 +17,4 @@ public class PhoneBookSyncEntity {
     private Integer total;
     private Boolean hasnextchunk;
 
-    public List<ContactEntity> getContacts() {
-        return contacts;
-    }
-
-    public PhoneBookSyncEntity setContacts(List<ContactEntity> contacts) {
-        this.contacts = contacts;
-        return this;
-    }
-
-    public Integer getOffset() {
-        return offset;
-    }
-
-    public PhoneBookSyncEntity setOffset(Integer offset) {
-        this.offset = offset;
-        return this;
-    }
-
-    public Integer getTotal() {
-        return total;
-    }
-
-    public PhoneBookSyncEntity setTotal(Integer total) {
-        this.total = total;
-        return this;
-    }
-
-    public Boolean getHasnextchunk() {
-        return hasnextchunk;
-    }
-
-    public PhoneBookSyncEntity setHasnextchunk(Boolean hasnextchunk) {
-        this.hasnextchunk = hasnextchunk;
-        return this;
-    }
 }

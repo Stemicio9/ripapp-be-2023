@@ -60,12 +60,12 @@ public class DemiseEntity {
 
     @OneToOne
     @Cascade(CascadeType.ALL)
-    private AccountEntity relative;
+    private it.ripapp.ripapp.entityUpdate.AccountEntity relative;
     private String relativename;
 
     @OneToMany
     @Cascade(CascadeType.ALL)
-    private List<DemiseRelative> relatives;
+    private List<it.ripapp.ripapp.entityUpdate.DemiseRelative> relatives;
 
     @JsonIgnore
     private Demisematchtype demisematchtype;
@@ -75,11 +75,11 @@ public class DemiseEntity {
 
     @OneToMany
     @Cascade(CascadeType.ALL)
-    private List<CityEntity> cities;
+    private List<it.ripapp.ripapp.entityUpdate.CityEntity> cities;
 
     @OneToOne
     @Cascade(CascadeType.ALL)
-    private CityEntity city;
+    private it.ripapp.ripapp.entityUpdate.CityEntity city;
 
 
 }

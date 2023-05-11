@@ -6,19 +6,16 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.UUID;
 
-@Entity
-@Data
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminEntity {
+@Data
+@Entity
+public class SearchResultEntity {
+
     @Id
-    private UUID accountid;
-
-    private String name;
-
-    private String email;
+    private String result;
+    private UUID resultid;
 
 }

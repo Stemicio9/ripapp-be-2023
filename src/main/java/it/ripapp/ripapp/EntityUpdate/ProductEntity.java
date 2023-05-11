@@ -1,17 +1,20 @@
-package it.ripapp.ripapp.entities;
+package it.ripapp.ripapp.EntityUpdate;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jdk.jfr.Enabled;
+import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductEntity implements IEntity{
-
+@Entity
+@Data
+public class ProductEntity {
+    @Id
     private UUID productId;
 
     private String productName;
@@ -19,5 +22,4 @@ public class ProductEntity implements IEntity{
     private double price;
 
     private String urlImage;
-
 }

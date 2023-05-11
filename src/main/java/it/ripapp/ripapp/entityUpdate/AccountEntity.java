@@ -38,7 +38,7 @@ public class AccountEntity {
     private Boolean notif;
     @OneToMany
     @Cascade(CascadeType.ALL)
-    private List<CityEntity> city;
+    private List<it.ripapp.ripapp.entityUpdate.CityEntity> city;
     private Boolean enabled;
     private String photourl;
     private Lang lang;

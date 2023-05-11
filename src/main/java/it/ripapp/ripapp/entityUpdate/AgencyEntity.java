@@ -32,7 +32,7 @@ public class AgencyEntity {
 
     @OneToMany
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<DemiseEntity> demises;
+    private List<it.ripapp.ripapp.entityUpdate.DemiseEntity> demises;
 
 
     @OneToMany
