@@ -1,9 +1,6 @@
 package it.ripapp.ripapp.controller;
 
-import it.ripapp.ripapp.bll.*;
-import it.ripapp.ripapp.entities.FiltersEntity;
-import it.ripapp.ripapp.entities.IEntity;
-import it.ripapp.ripapp.entities.PhoneBookSyncEntity;
+import it.ripapp.ripapp.bll.*; 
 import it.ripapp.ripapp.entityUpdate.AccountEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
 
@@ -21,30 +18,8 @@ import java.util.UUID;
 @RequestMapping(value = "/api/auth")
 public class UserController extends AbstractController {
 
-    private UserBLL userBLL;
-    private DemiseBLL demiseBLL;
-    private AgencyBLL agencyBLL;
-
-
-
-    @Autowired
-    public UserController(TextBLL textBLL, UserBLL userBLL, DemiseBLL demiseBLL, AgencyBLL agencyBLL) {
-        super(textBLL);
-        this.userBLL = userBLL;
-        this.demiseBLL = demiseBLL;
-        this.agencyBLL = agencyBLL;
-    }
 
     /*
-    @RequestMapping(value = "/search/demises", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity searchDemisesByCity(
-            @RequestBody FiltersEntity filters,
-            @CookieValue UUID userid,
-            @CookieValue Lang lang) throws ResponseException {
-
-        return GetResponse(demiseBLL.getDemisesByFilters(filters, userid, lang), HttpStatus.CREATED);
-    }*/
 
     @RequestMapping(value = "/search/demises/autocomplete", method = RequestMethod.GET)
     @ResponseBody
@@ -55,15 +30,7 @@ public class UserController extends AbstractController {
         return GetResponse(demiseBLL.userDemisesAutocomplete(userid, query), HttpStatus.OK);
     }
 
-    /*
-    @RequestMapping(value = "/user/demises", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity getUserLinkedDemises(
-            @RequestBody FiltersEntity filters,
-            @CookieValue Lang lang,
-            @CookieValue UUID userid) throws ResponseException {
-        return GetResponse(demiseBLL.getUserLinkedDemises(userid, filters, lang), HttpStatus.CREATED);
-    }*/
+
 
     @RequestMapping(value = "/account", method = RequestMethod.PUT)
     @ResponseBody
@@ -91,17 +58,7 @@ public class UserController extends AbstractController {
         return GetResponse(userBLL.syncPhoneBookChunk(userid, phoneBookSyncEntity), HttpStatus.CREATED);
     }
 
-   /* @RequestMapping(value = "/notifications", method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity getUserUnreadDemises(
-            @CookieValue UUID userid,
-            @CookieValue Lang lang,
-            @RequestParam Integer offset) throws ResponseException {
 
-        return GetResponse(userBLL.getUserUnreadDemises(userid, offset, lang), HttpStatus.OK);
-    }
-
-    */
 
     @RequestMapping(value = "/account", method = RequestMethod.DELETE)
     @ResponseBody
@@ -140,6 +97,6 @@ public class UserController extends AbstractController {
         return GetResponse(userBLL.addPlayerID(userid, playerid), HttpStatus.CREATED);
     }
 
-
+*/
 
 }

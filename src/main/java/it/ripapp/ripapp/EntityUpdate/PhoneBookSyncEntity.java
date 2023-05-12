@@ -1,12 +1,9 @@
-package it.ripapp.ripapp.EntityUpdate;
+package it.ripapp.ripapp.entityUpdate;
 
-import it.ripapp.ripapp.entities.ContactEntity;
 import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.List;
 
 @Getter
 @Setter
@@ -16,6 +13,7 @@ import java.util.List;
 @Entity
 public class PhoneBookSyncEntity {
     @Id
+    private long id;
     //TODO fare entità contatti e poi aggiornare
     //@OneToMany
    // private List<ContactEntity> contacts;

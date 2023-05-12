@@ -9,9 +9,8 @@ import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 import com.lmax.disruptor.util.DaemonThreadFactory;
-import it.ripapp.ripapp.bll.MiscBLL;
 import it.ripapp.ripapp.utilities.CustomInterceptor;
-import it.ripapp.ripapp.utilities.LogManager;
+//import it.ripapp.ripapp.utilities.LogManager;
 import it.ripapp.ripapp.utilities.LoggingEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -39,11 +38,10 @@ public class RipappApplication implements WebMvcConfigurer {
     @Autowired
     private CustomInterceptor customInterceptor;
 
-    @Autowired
-    private MiscBLL miscBLL;
 
-    @Autowired
-    private LogManager logManager;
+
+  //  @Autowired
+  //  private LogManager logManager;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -97,15 +95,13 @@ public class RipappApplication implements WebMvcConfigurer {
     public RingBuffer<LoggingEvent> ringBuffer(){
         ThreadFactory threadFactory = DaemonThreadFactory.INSTANCE;
         Disruptor<LoggingEvent> disruptor = new Disruptor<>(LoggingEvent.EVENT_FACTORY, 32, threadFactory, ProducerType.MULTI, new BlockingWaitStrategy());
-        disruptor.handleEventsWith((event, sequence, endOfBatch) -> logManager.logEvent(event));
+       // disruptor.handleEventsWith((event, sequence, endOfBatch) -> logManager.logEvent(event));
         return disruptor.start();
     }
 
 
     @EventListener(ApplicationReadyEvent.class)
     public void doSomethingAfterStartup() {
-        System.out.println(miscBLL.getServerStatus());
-        System.out.println(miscBLL.getSupportedAppVersions());
     }
 
 }

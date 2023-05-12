@@ -3,6 +3,8 @@ package it.ripapp.ripapp.entityUpdate;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -31,8 +33,8 @@ public class AgencyEntity {
     private String email;
 
     @OneToMany
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<it.ripapp.ripapp.entityUpdate.DemiseEntity> demises;
+    @Cascade(CascadeType.ALL)
+    private List<DemiseEntity> demises;
 
 
     @OneToMany

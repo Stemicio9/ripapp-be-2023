@@ -1,7 +1,7 @@
 package it.ripapp.ripapp.onesignal;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import it.ripapp.ripapp.jooqgen.enums.Lang;
+import it.ripapp.ripapp.bll.Lang;
 
 
 import java.util.*;

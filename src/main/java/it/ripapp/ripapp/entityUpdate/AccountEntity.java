@@ -15,6 +15,7 @@ import org.hibernate.annotations.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,7 +26,7 @@ import java.util.UUID;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountEntity {
+public class AccountEntity implements Serializable {
 
     //cappire se fare DTO o registrazione a db
     @Id
@@ -39,7 +40,7 @@ public class AccountEntity {
     private Boolean notif;
     @OneToMany
     @Cascade(CascadeType.ALL)
-    private List<it.ripapp.ripapp.entityUpdate.CityEntity> city;
+    private List<CityEntity> city;
     private Boolean enabled;
     private String photourl;
     private Lang lang;

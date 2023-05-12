@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -13,8 +14,12 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class PhoneBookEntity {
+public class PhoneBookEntity implements Serializable {
+
     @Id
+    private long id;
+
+
     @OneToOne
     private AccountEntity accountid;
 

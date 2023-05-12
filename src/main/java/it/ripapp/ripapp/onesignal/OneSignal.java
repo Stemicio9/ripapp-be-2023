@@ -2,7 +2,6 @@ package it.ripapp.ripapp.onesignal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.ripapp.ripapp.bll.UserBLL;
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,14 +22,14 @@ public class OneSignal {
     private final OkHttpClient client;
     private final ObjectMapper jacksonObjectMapper;
 
-    private final UserBLL userBLL;
+
 
 
     @Autowired
-    public OneSignal(ObjectMapper jacksonObjectMapper, UserBLL userBLL) {
+    public OneSignal(ObjectMapper jacksonObjectMapper) {
         client = new OkHttpClient();
         this.jacksonObjectMapper = jacksonObjectMapper;
-        this.userBLL = userBLL;
+
     }
 
 
@@ -61,8 +60,8 @@ public class OneSignal {
             if (response.code() == 200){
                 var result = jacksonObjectMapper.readValue(response.body().string(), OSResponse.class);
 
-                if (result.getErrors() != null && result.getErrors().getInvalid_player_ids() != null && result.getErrors().getInvalid_player_ids().size() > 0)
-                    userBLL.deleteInstanceIDs(result.getErrors().getInvalid_player_ids());
+                if (result.getErrors() != null && result.getErrors().getInvalid_player_ids() != null && result.getErrors().getInvalid_player_ids().size() > 0){}
+                 //   userBLL.deleteInstanceIDs(result.getErrors().getInvalid_player_ids());
             }
             else {
                 System.out.println("ERRORE ONESIGNAL "+response.code()+" "+response.body().string());

@@ -1,6 +1,5 @@
-package it.ripapp.ripapp.EntityUpdate;
+package it.ripapp.ripapp.entityUpdate;
 
-import jdk.jfr.Enabled;
 import lombok.*;
 
 import javax.persistence.Entity;

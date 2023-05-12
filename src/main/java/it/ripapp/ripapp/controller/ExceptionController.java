@@ -1,32 +1,14 @@
 package it.ripapp.ripapp.controller;
 
 
-import com.lmax.disruptor.RingBuffer;
-import it.ripapp.ripapp.bll.TextBLL;
-import it.ripapp.ripapp.exceptions.BadRequestException;
-import it.ripapp.ripapp.jooqgen.enums.Lang;
-import it.ripapp.ripapp.utilities.LoggingEvent;
-import it.ripapp.ripapp.utilities.LoggingEventType;
-import it.ripapp.ripapp.utilities.MessagesTextIDs;
-import it.ripapp.ripapp.utilities.RequestIDs;
-import org.jooq.exception.DataAccessException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Arrays;
 
 @RestControllerAdvice
 public class ExceptionController extends AbstractController {
 
 
+    /*
     @Autowired
     private RingBuffer<LoggingEvent> ringBuffer;
 
@@ -123,7 +105,7 @@ public class ExceptionController extends AbstractController {
 
         ringBuffer.publish(seq);
     }
-
+*/
 
 }
 

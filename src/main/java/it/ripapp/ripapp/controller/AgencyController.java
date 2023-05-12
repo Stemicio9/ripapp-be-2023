@@ -1,9 +1,5 @@
 package it.ripapp.ripapp.controller;
 
-import it.ripapp.ripapp.bll.AgencyBLL;
-import it.ripapp.ripapp.bll.TextBLL;
-import it.ripapp.ripapp.entities.DemiseEntity;
-import it.ripapp.ripapp.entities.ProductEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,16 +12,9 @@ import java.util.UUID;
 @RequestMapping(value = "/api/auth")
 public class AgencyController extends AbstractController {
 
-    private AgencyBLL agencyBLL;
-
-    @Autowired
-    public AgencyController(TextBLL textBLL, AgencyBLL agencyBLL) {
-        super(textBLL);
-        this.agencyBLL = agencyBLL;
-    }
 
 
-
+/*
     @RequestMapping(value = "/demises", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity getAgencyDemises(
@@ -114,6 +103,6 @@ public class AgencyController extends AbstractController {
         return GetResponse(agencyBLL.updateProduct(userid,productid, product), HttpStatus.CREATED);
     }
 
-
+*/
 
 }

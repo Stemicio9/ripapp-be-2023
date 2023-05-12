@@ -1,10 +1,6 @@
 package it.ripapp.ripapp.controller;
 
-import it.ripapp.ripapp.bll.TextBLL;
-import it.ripapp.ripapp.entities.IEntity;
-import it.ripapp.ripapp.entities.LocalizedEntity;
-import it.ripapp.ripapp.jooqgen.enums.Lang;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.codec.language.bm.Lang;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -12,30 +8,25 @@ import java.util.Collection;
 
 public class AbstractController {
 
-    protected TextBLL textBLL;
-
-    @Autowired
-    public AbstractController(TextBLL textBLL) {
-        this.textBLL = textBLL;
-    }
 
 
-    protected ResponseEntity GetResponse(Collection<? extends LocalizedEntity> entities, Lang lang, HttpStatus httpStatus) {
-        entities.forEach(e -> e.resolveTexts(textBLL, lang));
+
+    protected ResponseEntity GetResponse(Collection entities, Lang lang, HttpStatus httpStatus) {
+  //      entities.forEach(e -> e.resolveTexts(textBLL, lang));
         return GetResponse(entities, lang, httpStatus);
     }
 
-    protected ResponseEntity GetResponse(Collection<? extends IEntity> entities, HttpStatus httpStatus) {
+    protected ResponseEntity GetResponse(Collection entities, HttpStatus httpStatus) {
         return ResponseEntity.status(httpStatus).body(entities);
     }
 
-    protected ResponseEntity GetResponse(LocalizedEntity entity, Lang lang, HttpStatus httpStatus) {
-        entity.resolveTexts(textBLL, lang);
+    protected ResponseEntity GetResponse(Object entity, Lang lang, HttpStatus httpStatus) {
+    //    entity.resolveTexts(textBLL, lang);
         return GetResponse(entity, lang, httpStatus);
     }
 
 
-    protected ResponseEntity GetResponse(IEntity entity, HttpStatus httpStatus) {
+    protected ResponseEntity GetResponse(Object entity, HttpStatus httpStatus) {
 
 //        try {
 //            logManager.addResponseBody(Thread.currentThread().getId(), jacksonObjectMapper.writeValueAsString(entity));

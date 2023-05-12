@@ -3,9 +3,7 @@
  */
 package it.ripapp.ripapp.entityUpdate;
 
-
-import it.ripapp.ripapp.jooqgen.enums.Kinship;
-import it.ripapp.ripapp.jooqgen.tables.Demise;
+import it.ripapp.ripapp.bll.Kinship;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +12,7 @@ import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -33,7 +32,7 @@ public class DemiseRelative {
 
     @OneToMany
     @Cascade(CascadeType.ALL)
-    private ArrayList<DemiseEntity> demises;
+    private List<DemiseEntity> demises;
 
     private UUID DEMISEID;
     private UUID ACCOUNTID;

@@ -1,7 +1,7 @@
 package it.ripapp.ripapp.entityUpdate.compositeKeys;
 
-import it.ripapp.ripapp.jooqgen.enums.Kinship;
-import it.ripapp.ripapp.jooqgen.enums.Lang;
+import it.ripapp.ripapp.bll.Kinship;
+import it.ripapp.ripapp.bll.Lang;
 
 import java.io.Serializable;
 
