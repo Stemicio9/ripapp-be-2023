@@ -35,6 +35,7 @@ public class UserController extends AbstractController {
         this.agencyBLL = agencyBLL;
     }
 
+    /*
     @RequestMapping(value = "/search/demises", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity searchDemisesByCity(
@@ -43,7 +44,7 @@ public class UserController extends AbstractController {
             @CookieValue Lang lang) throws ResponseException {
 
         return GetResponse(demiseBLL.getDemisesByFilters(filters, userid, lang), HttpStatus.CREATED);
-    }
+    }*/
 
     @RequestMapping(value = "/search/demises/autocomplete", method = RequestMethod.GET)
     @ResponseBody
@@ -54,6 +55,7 @@ public class UserController extends AbstractController {
         return GetResponse(demiseBLL.userDemisesAutocomplete(userid, query), HttpStatus.OK);
     }
 
+    /*
     @RequestMapping(value = "/user/demises", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity getUserLinkedDemises(
@@ -61,7 +63,7 @@ public class UserController extends AbstractController {
             @CookieValue Lang lang,
             @CookieValue UUID userid) throws ResponseException {
         return GetResponse(demiseBLL.getUserLinkedDemises(userid, filters, lang), HttpStatus.CREATED);
-    }
+    }*/
 
     @RequestMapping(value = "/account", method = RequestMethod.PUT)
     @ResponseBody
