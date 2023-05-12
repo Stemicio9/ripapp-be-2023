@@ -51,5 +51,7 @@ public class AccountEntity {
     private Double similarity;
 
 
-
+    public List<CityEntity> getCities() {
+        return city;
+    }
 }

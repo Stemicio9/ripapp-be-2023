@@ -5,10 +5,13 @@ import com.google.firebase.auth.*;
 import it.ripapp.ripapp.dal.AgencyDAL;
 import it.ripapp.ripapp.dal.UserDAL;
 import it.ripapp.ripapp.entities.*;
+import it.ripapp.ripapp.entityUpdate.AccountEntity;
 import it.ripapp.ripapp.exceptions.*;
 import it.ripapp.ripapp.jooqgen.enums.Demisematchtype;
 import it.ripapp.ripapp.jooqgen.enums.Kinship;
 import it.ripapp.ripapp.jooqgen.enums.Lang;
+import it.ripapp.ripapp.repository.AccountRepository;
+import it.ripapp.ripapp.repository.AgencyRepository;
 import it.ripapp.ripapp.utilities.FirebaseAuthCookieData;
 import it.ripapp.ripapp.utilities.UserStatus;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -26,12 +29,13 @@ import java.util.stream.Collectors;
 @Service
 public class UserBLL {
 
-    private UserDAL userDAL;
-    private AgencyDAL agencyDAL;
+    private AccountRepository userDAL;
+    private AgencyRepository agencyDAL;
+
 
 
     @Autowired
-    public UserBLL(UserDAL userDAL, AgencyDAL agencyDAL) {
+    public UserBLL(AccountRepository userDAL, AgencyRepository agencyDAL) {
         this.userDAL = userDAL;
         this.agencyDAL = agencyDAL;
     }
