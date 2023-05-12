@@ -2,16 +2,14 @@ package it.ripapp.ripapp.bll;
 
 import com.google.common.hash.Hashing;
 import com.google.firebase.auth.*;
-import it.ripapp.ripapp.dal.AgencyDAL;
-import it.ripapp.ripapp.dal.UserDAL;
+
 import it.ripapp.ripapp.entities.*;
 import it.ripapp.ripapp.entityUpdate.AccountEntity;
 import it.ripapp.ripapp.exceptions.*;
-import it.ripapp.ripapp.jooqgen.enums.Demisematchtype;
-import it.ripapp.ripapp.jooqgen.enums.Kinship;
-import it.ripapp.ripapp.jooqgen.enums.Lang;
+
 import it.ripapp.ripapp.repository.AccountRepository;
 import it.ripapp.ripapp.repository.AgencyRepository;
+import it.ripapp.ripapp.repository.DemiseRepository;
 import it.ripapp.ripapp.utilities.FirebaseAuthCookieData;
 import it.ripapp.ripapp.utilities.UserStatus;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -32,6 +30,7 @@ public class UserBLL {
     private AccountRepository userDAL;
     private AgencyRepository agencyDAL;
 
+    private DemiseRepository demiseDAL;
 
 
     @Autowired
@@ -42,11 +41,11 @@ public class UserBLL {
 
     public UserStatus getUserStatusByEmail(String email) {
 
-        AgencyEntity agency = agencyDAL.getAgencyByEmail(email);
+        it.ripapp.ripapp.entityUpdate.AgencyEntity agency = agencyDAL.findByEmail(email);
         if (agency != null)
             return UserStatus.agency;
 
-        AccountEntity account = userDAL.getAccountByEmail(email);
+        AccountEntity account = userDAL.findByEmail(email);
         if (account != null)
             return account.getEnabled() ? UserStatus.active : UserStatus.disabled;
 
@@ -54,13 +53,15 @@ public class UserBLL {
     }
 
     public AccountEntity getAccountByEmail(String email) throws NotFoundException {
-        AccountEntity account =  userDAL.getAccountByEmail(email);
+        AccountEntity account =  userDAL.findByEmail(email);
 
         if (account == null)
             throw new NotFoundException("Account not found");
 
         return account;
     }
+
+    /*
 
     public FirebaseAuthCookieData getUserbaseUUIDByFirebaseToken(String token, Lang lang) throws ResponseException, FirebaseAuthException {
 
@@ -80,8 +81,10 @@ public class UserBLL {
         return new FirebaseAuthCookieData(account.getAccountid(), cookie);
     }
 
-    private void updateUserLang(UUID accountid, Lang lang) {
-        userDAL.updateUserLang(accountid, lang);
+
+
+     private void updateUserLang(UUID accountid, Lang lang) {
+       userDAL.updateUserLang(accountid, lang);
     }
 
 
@@ -96,6 +99,8 @@ public class UserBLL {
 
         return getUserbaseUUIDByFirebaseToken(account.getIdtoken(), lang);
     }
+
+ */
 
     public boolean syncPhoneBookChunk(UUID accountid, PhoneBookSyncEntity phoneBookSyncEntity){
 
@@ -147,7 +152,10 @@ public class UserBLL {
         return true;
     }
 
+    private void updatePhoneBookMatches(UUID accountid) {
+    }
 
+  /*
     public Boolean updateAccount(UUID userid, AccountEntity accountEntity) {
 
         //check user esiste
@@ -159,17 +167,20 @@ public class UserBLL {
         return true;
     }
 
-    public AccountEntity getAccountByID(UUID userid) {
-        var account = userDAL.getAccountByID(userid);
+   */
 
-        account.setCities(userDAL.getCitiesByAccount(userid));
+    public AccountEntity getAccountByID(UUID userid) {
+        AccountEntity account = userDAL.getAccountByID(userid);
+
+        account.setCities((List<it.ripapp.ripapp.entityUpdate.CityEntity>) userDAL.getCitiesByAccount(userid));
         account.setStatus(getUserStatusByEmail(account.getEmail()));
 
         return account;
     }
 
+    /*
     public Collection<DemiseEntity> getUserUnreadDemises(UUID userid, Integer offset, Lang lang) {
-        var demises = userDAL.getUnreadDemisesAndMarkRead(userid, offset);
+        DemiseEntity demises = userDAL.getUnreadDemisesAndMarkRead(userid, offset);
 
         for (DemiseEntity d : demises) {
             switch (d.getMatch().getType()){
@@ -190,12 +201,14 @@ public class UserBLL {
             }
         }
 
-        return demises;
+        return (Collection<DemiseEntity>) demises;
     }
 
-    public Boolean deleteAccount(UUID userid) {
+     */
 
-        AccountEntity account = userDAL.getAccountByID(userid);
+    public Boolean deleteAccount(UUID id) {
+
+        AccountEntity account = userDAL.getAccountByID(id);
         try {
             UserRecord firebaseUser = FirebaseAuth.getInstance().getUserByEmail(account.getEmail());
             FirebaseAuth.getInstance().deleteUser(firebaseUser.getUid());
@@ -203,7 +216,7 @@ public class UserBLL {
             e.printStackTrace();
         }
 
-        userDAL.deleteUserByID(userid);
+        userDAL.deleteById(id);
 
         return true;
     }
@@ -258,6 +271,8 @@ public class UserBLL {
         return text.replace("{0}", demiseName);
     }
 
+    /*
+
     public String computeKinshipDesc(String relativeName, Kinship kinship, Lang lang) {
         String result = userDAL.getKinshipText(kinship, lang);
         result = result.split(",")[1].replace("{1}", relativeName).strip();
@@ -310,10 +325,11 @@ public class UserBLL {
 
     }
 
+
     //todo testare
     private void updateCityMatches(UUID accountid, List<UUID> cities){
-        var matches = userDAL.getAccountMatches(accountid);
-        var demisesByCities = userDAL.getDemiseIDsByCities(cities);
+        var matches = userDAL.findById(accountid);
+        DemiseEntity demisesByCities = userDAL.getDemiseIDsByCities(cities);
 
         Map<UUID, DemiseMatchEntity> toInsert = new HashMap<>();
 
@@ -347,4 +363,6 @@ public class UserBLL {
 
 
     //todo fixare sorting nome/cognome usando quelli corretti
+
+     */
 }

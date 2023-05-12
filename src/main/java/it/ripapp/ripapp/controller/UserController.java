@@ -1,19 +1,19 @@
 package it.ripapp.ripapp.controller;
 
-import it.ripapp.ripapp.bll.AgencyBLL;
-import it.ripapp.ripapp.bll.DemiseBLL;
-import it.ripapp.ripapp.bll.TextBLL;
-import it.ripapp.ripapp.bll.UserBLL;
+import it.ripapp.ripapp.bll.*;
 import it.ripapp.ripapp.entities.FiltersEntity;
+import it.ripapp.ripapp.entities.IEntity;
 import it.ripapp.ripapp.entities.PhoneBookSyncEntity;
+import it.ripapp.ripapp.entityUpdate.AccountEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
-import it.ripapp.ripapp.jooqgen.enums.Lang;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.UUID;
 
 
@@ -77,7 +77,7 @@ public class UserController extends AbstractController {
     public ResponseEntity getAccountByCookie(
             @CookieValue UUID userid) throws ResponseException {
 
-        return GetResponse(userBLL.getAccountByID(userid), HttpStatus.OK);
+        return GetResponse((Collection<? extends IEntity>) userBLL.getAccountByID(userid), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/phonebook", method = RequestMethod.POST)
@@ -89,7 +89,7 @@ public class UserController extends AbstractController {
         return GetResponse(userBLL.syncPhoneBookChunk(userid, phoneBookSyncEntity), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/notifications", method = RequestMethod.GET)
+   /* @RequestMapping(value = "/notifications", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity getUserUnreadDemises(
             @CookieValue UUID userid,
@@ -98,6 +98,8 @@ public class UserController extends AbstractController {
 
         return GetResponse(userBLL.getUserUnreadDemises(userid, offset, lang), HttpStatus.OK);
     }
+
+    */
 
     @RequestMapping(value = "/account", method = RequestMethod.DELETE)
     @ResponseBody

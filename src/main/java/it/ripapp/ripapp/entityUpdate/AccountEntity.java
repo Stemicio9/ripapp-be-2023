@@ -54,4 +54,8 @@ public class AccountEntity {
     public List<CityEntity> getCities() {
         return city;
     }
+
+    public void setCities(List<CityEntity> citiesByAccount) {
+        this.city = citiesByAccount;
+    }
 }

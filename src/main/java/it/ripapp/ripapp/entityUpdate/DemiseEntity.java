@@ -2,18 +2,13 @@ package it.ripapp.ripapp.entityUpdate;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import it.ripapp.ripapp.entities.DemiseMatchEntity;
-import it.ripapp.ripapp.entities.DemiseRelativeEntity;
-import it.ripapp.ripapp.jooqgen.enums.Demisematchtype;
-import it.ripapp.ripapp.jooqgen.enums.Kinship;
+import it.ripapp.ripapp.bll.Kinship;
+
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -67,9 +62,10 @@ public class DemiseEntity {
     @Cascade(CascadeType.ALL)
     private List<it.ripapp.ripapp.entityUpdate.DemiseRelative> relatives;
 
-    @JsonIgnore
-    private Demisematchtype demisematchtype;
+   // @JsonIgnore
+    //private Demisematchtype demisematchtype;
 
+    @ManyToOne
     @JsonIgnore
     private DemiseMatchEntity match;
 

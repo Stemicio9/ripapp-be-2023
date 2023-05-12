@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface DemiseEntity extends JpaRepository<it.ripapp.ripapp.entityUpdate.DemiseEntity, UUID> {
+public interface DemiseRepository extends JpaRepository<it.ripapp.ripapp.entityUpdate.DemiseEntity, UUID> {
 }
