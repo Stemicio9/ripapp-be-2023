@@ -15,6 +15,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CityEntity {
     @Id
-    private UUID cityid;
+    private UUID cityId;
     private String name;
 }

@@ -7,6 +7,9 @@ import it.ripapp.ripapp.bll.Kinship;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.jooq.Catalog;
+import org.jooq.EnumType;
+import org.jooq.Schema;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -79,3 +82,8 @@ public class DemiseEntity {
 
 
 }
+
+
+
+
+

@@ -1,9 +1,9 @@
 package it.ripapp.ripapp.entityUpdate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import it.ripapp.ripapp.jooqgen.enums.Demisematchtype;
-import it.ripapp.ripapp.jooqgen.enums.Kinship;
-import it.ripapp.ripapp.jooqgen.enums.Lang;
+import it.ripapp.ripapp.bll.Demisematchtype;
+import it.ripapp.ripapp.bll.Kinship;
+import it.ripapp.ripapp.bll.Lang;
 import lombok.*;
 
 import javax.persistence.Entity;

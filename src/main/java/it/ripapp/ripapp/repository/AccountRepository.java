@@ -4,6 +4,7 @@ import it.ripapp.ripapp.bll.Kinship;
 import it.ripapp.ripapp.bll.Lang;
 import it.ripapp.ripapp.entities.ContactEntity;
 import it.ripapp.ripapp.entities.DemiseEntity;
+import it.ripapp.ripapp.entities.IEntity;
 import it.ripapp.ripapp.entityUpdate.AccountEntity;
 import it.ripapp.ripapp.entityUpdate.CityEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -79,4 +80,6 @@ public interface AccountRepository extends JpaRepository<it.ripapp.ripapp.entity
     void updatePhoneBookSync(UUID accountid, List<ContactEntity> hashed, Integer offset);
 
     void deleteContactsOverIdx(UUID accountid, Integer total);
+
+    List<UUID> findAllByCitY_CityId(UUID accountid);
 }

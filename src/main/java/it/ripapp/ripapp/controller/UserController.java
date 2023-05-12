@@ -69,7 +69,7 @@ public class UserController extends AbstractController {
             @RequestBody AccountEntity accountEntity,
             @CookieValue UUID userid) throws ResponseException {
 
-        return GetResponse(userBLL.updateAccount(userid, accountEntity), HttpStatus.OK);
+        return GetResponse(userBLL.updateUserByID(userid, accountEntity), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/account", method = RequestMethod.GET)

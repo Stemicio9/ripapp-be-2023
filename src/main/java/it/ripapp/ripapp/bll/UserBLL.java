@@ -10,9 +10,7 @@ import it.ripapp.ripapp.exceptions.*;
 import it.ripapp.ripapp.repository.AccountRepository;
 import it.ripapp.ripapp.repository.AgencyRepository;
 import it.ripapp.ripapp.repository.DemiseRepository;
-import it.ripapp.ripapp.utilities.FirebaseAuthCookieData;
 import it.ripapp.ripapp.utilities.UserStatus;
-import org.apache.commons.validator.routines.EmailValidator;
 import org.simplejavamail.api.mailer.config.TransportStrategy;
 import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.mailer.MailerBuilder;
@@ -21,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -271,13 +268,21 @@ public class UserBLL {
         return text.replace("{0}", demiseName);
     }
 
-    /*
+    public Collection<? extends IEntity> updateUserByID(UUID userid, AccountEntity accountEntity) {
+         userDAL.updateUserByID(userid, accountEntity);
+        return null;
+    }
+
+
+
+
 
     public String computeKinshipDesc(String relativeName, Kinship kinship, Lang lang) {
         String result = userDAL.getKinshipText(kinship, lang);
         result = result.split(",")[1].replace("{1}", relativeName).strip();
         return result;
     }
+     /*
 
 
     //todo testare

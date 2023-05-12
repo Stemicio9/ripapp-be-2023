@@ -1,40 +1,45 @@
 package it.ripapp.ripapp.bll;
 
-import it.ripapp.ripapp.dal.DemiseDAL;
-import it.ripapp.ripapp.dal.UserDAL;
+
 import it.ripapp.ripapp.entities.DemiseEntity;
 import it.ripapp.ripapp.entities.FiltersEntity;
-import it.ripapp.ripapp.jooqgen.enums.Lang;
+
+import it.ripapp.ripapp.repository.AccountRepository;
+import it.ripapp.ripapp.repository.DemiseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static it.ripapp.ripapp.bll.Demisematchtype.*;
+
 @Service
 public class DemiseBLL {
 
     private final int searchSize = 20;
-    private DemiseDAL demiseDAL;
-    private UserDAL userDAL;
+    private DemiseRepository demiseDAL;
+    private AccountRepository userDAL;
     private UserBLL userBLL;
 
     @Autowired
-    public DemiseBLL(DemiseDAL demiseDAL, UserDAL userDAL, UserBLL userBLL) {
+    public DemiseBLL(DemiseRepository demiseDAL, AccountRepository userDAL, UserBLL userBLL) {
         this.demiseDAL = demiseDAL;
         this.userDAL = userDAL;
         this.userBLL = userBLL;
     }
+    /*
 
     public List<DemiseEntity> getDemisesByFilters(FiltersEntity filters, UUID accountid, Lang lang){
 
         if (filters.getCities() == null || filters.getCities().isEmpty())
-            filters.setCities(userDAL.getCitiesIDsByAccount(accountid));
+            filters.setCities(userDAL.findAllByCitY_CityId(accountid));
 
         List<DemiseEntity> results = demiseDAL.getDemisesByCitiesWithSorting(filters.getCities(), filters.getSorting(), filters.getOffset(), searchSize, accountid);
 
         for (DemiseEntity d : results) {
 
+            Demisematchtype contact;
             if (d.getMatch() != null)
                 switch (d.getMatch().getType()){
 
@@ -60,15 +65,17 @@ public class DemiseBLL {
         return results;
     }
 
+
+
     public List<DemiseEntity> getUserLinkedDemises(UUID userid, FiltersEntity filtersEntity, Lang lang) {
 
         var matches = userDAL.getAccountMatches(userid);
 
-        var demises = userDAL.getDemisesByIDs(matches.keySet());
+        List<it.ripapp.ripapp.entityUpdate.DemiseEntity> demises = userDAL.getDemisesByIDs(matches.keySet());
 
-        for (DemiseEntity d : demises) {
+        for (it.ripapp.ripapp.entityUpdate.DemiseEntity d : demises) {
 
-            var m = matches.get(d.getDemiseid());
+            Demisematchtype m = matches.get(d.getDemiseid());
 
             switch (m.getType()){
 
@@ -112,6 +119,8 @@ public class DemiseBLL {
                 .collect(Collectors.toList());
     }
 
+     */
+
 //    public List<DemiseEntity> getUserLinkedDemises(UUID userid, FiltersEntity filtersEntity, Lang lang) {
 //        var demises = userDAL.getUserLinkedDemises(userid, filtersEntity.setLimit(20));
 //
@@ -132,7 +141,7 @@ public class DemiseBLL {
 //    }
 
     public Set<DemiseEntity> userDemisesAutocomplete(UUID userid, String query) {
-        Set<DemiseEntity> result = demiseDAL.searchDemisesBySurname(query);
+        Set<DemiseEntity> result = (Set<DemiseEntity>) demiseDAL.findAllBySurnameContains(query);
         return result;
     }
 }

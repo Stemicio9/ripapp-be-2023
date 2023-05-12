@@ -1,13 +1,13 @@
 package it.ripapp.ripapp.controller;
 
 import com.google.firebase.auth.FirebaseAuthException;
+import it.ripapp.ripapp.bll.Lang;
 import it.ripapp.ripapp.bll.MiscBLL;
 import it.ripapp.ripapp.bll.TextBLL;
 import it.ripapp.ripapp.bll.UserBLL;
 import it.ripapp.ripapp.entities.LoginDataEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
-import it.ripapp.ripapp.jooqgen.enums.Lang;
-import it.ripapp.ripapp.jooqgen.enums.Serverstatus;
+
 import it.ripapp.ripapp.utilities.FirebaseAuthCookieData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +33,7 @@ public class PublicController extends AbstractController {
         this.miscBLL = miscBLL;
     }
 
-
+    /*
     @RequestMapping(value = "/productionready", method = RequestMethod.GET)
     public ResponseEntity productionServerIsReady(HttpServletRequest request){
 
@@ -53,7 +53,7 @@ public class PublicController extends AbstractController {
         }
 
         return ResponseEntity.ok().body(body);
-    }
+    }*/
 
 
     @RequestMapping(value = "/userstatus", method = RequestMethod.GET)
@@ -65,7 +65,7 @@ public class PublicController extends AbstractController {
     }
 
 
-
+ /*
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity login(
@@ -93,7 +93,7 @@ public class PublicController extends AbstractController {
         response.addCookie(new Cookie("firebasecookie", firebaseAuthData.getCookie()));
         response.addCookie(new Cookie("userid", firebaseAuthData.getAccountid().toString()));
         return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
+    } */
 
 
 //    @Autowired
