@@ -12,9 +12,7 @@ import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
@@ -33,6 +31,8 @@ public class AccountEntity implements Serializable {
     private UUID accountid;
     private String name;
     private String surname;
+
+    @Column(unique = true)
     private String email;
     private String prefix;
     private String phone;

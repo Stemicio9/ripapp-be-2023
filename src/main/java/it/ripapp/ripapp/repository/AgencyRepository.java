@@ -9,10 +9,9 @@ import java.util.UUID;
 
 public interface AgencyRepository extends JpaRepository<it.ripapp.ripapp.entityUpdate.AgencyEntity, UUID> {
 
-
-
-
     List<AgencyEntity> findAllByEmail(String email);
 
     AgencyEntity findAllByAgencyid(UUID agencyid);
+
+    List<AgencyEntity> findAllByNameContains(String query);
 }

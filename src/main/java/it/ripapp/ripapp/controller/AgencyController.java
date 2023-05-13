@@ -1,6 +1,9 @@
 package it.ripapp.ripapp.controller;
 
+import it.ripapp.ripapp.entityUpdate.DemiseEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
+import it.ripapp.ripapp.services.AgencyService;
+import it.ripapp.ripapp.services.DemiseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,58 +15,58 @@ import java.util.UUID;
 @RequestMapping(value = "/api/auth")
 public class AgencyController extends AbstractController {
 
+    @Autowired
+    private DemiseService demiseService;
 
+    @Autowired
+    private AgencyService agencyService;
 
-/*
-    @RequestMapping(value = "/demises", method = RequestMethod.GET)
+    @GetMapping("/demises")
     @ResponseBody
     public ResponseEntity getAgencyDemises(
             @RequestParam Integer offset,
             @CookieValue UUID userid) throws ResponseException {
 
-        return GetResponse(agencyBLL.getAgencyDemises(userid, offset), HttpStatus.OK);
+        return GetResponse(demiseService.getAgencyDemises(userid, offset), HttpStatus.OK);
     }
 
-
-    @RequestMapping(value = "/demise", method = RequestMethod.POST)
+    @PostMapping("/demise")
     @ResponseBody
     public ResponseEntity insertDemise(
             @RequestBody DemiseEntity demise,
             @CookieValue UUID userid) throws ResponseException {
 
-        return GetResponse(agencyBLL.insertDemise(userid, demise), HttpStatus.CREATED);
+        return GetResponse(demiseService.insertDemise(userid, demise), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/demise/{demiseid}", method = RequestMethod.DELETE)
+    @DeleteMapping("/demise/{demiseid}")
     @ResponseBody
     public ResponseEntity deleteDemise(
             @PathVariable UUID demiseid,
             @CookieValue UUID userid) throws ResponseException {
 
-        return GetResponse(agencyBLL.deleteDemiseByID(userid, demiseid), HttpStatus.OK);
+        return GetResponse(demiseService.deleteDemiseByID(userid, demiseid), HttpStatus.OK);
     }
 
-
-    @RequestMapping(value = "/demise/{demiseid}", method = RequestMethod.PUT)
+    @PutMapping("/demise/{demiseid}")
     @ResponseBody
     public ResponseEntity updateDemise(
             @PathVariable UUID demiseid,
             @RequestBody DemiseEntity demise,
             @CookieValue UUID userid) throws ResponseException {
-        return GetResponse(agencyBLL.updateDemise(userid,demiseid, demise), HttpStatus.CREATED);
+        return GetResponse(demiseService.updateDemise(userid,demiseid, demise), HttpStatus.CREATED);
     }
 
-
-    @RequestMapping(value = "/account/search", method = RequestMethod.GET)
+    @GetMapping("/account/search")
     @ResponseBody
     public ResponseEntity searchAccount(
             @RequestParam String query,
             @CookieValue UUID userid) throws ResponseException {
 
-        return GetResponse(agencyBLL.searchAccount(userid, query), HttpStatus.OK);
+        return GetResponse(agencyService.searchAccount(userid, query), HttpStatus.OK);
     }
 
-
+/*
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     @ResponseBody

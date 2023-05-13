@@ -2,8 +2,12 @@ package it.ripapp.ripapp.controller;
 
 import it.ripapp.ripapp.bll.*; 
 import it.ripapp.ripapp.entityUpdate.AccountEntity;
+import it.ripapp.ripapp.entityUpdate.PhoneBookSyncEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
 
+import it.ripapp.ripapp.services.AccountService;
+import it.ripapp.ripapp.services.AgencyService;
+import it.ripapp.ripapp.services.DemiseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,57 +22,52 @@ import java.util.UUID;
 @RequestMapping(value = "/api/auth")
 public class UserController extends AbstractController {
 
+    @Autowired
+    private AccountService accountService;
 
-    /*
+    @Autowired
+    private DemiseService demiseService;
 
-    @RequestMapping(value = "/search/demises/autocomplete", method = RequestMethod.GET)
+    @Autowired
+    private AgencyService agencyService;
+
+    @GetMapping("/search/demises/autocomplete")
     @ResponseBody
     public ResponseEntity searchDemisesAutocomplete(
             @RequestParam String query,
             @CookieValue UUID userid) throws ResponseException {
-
-        return GetResponse(demiseBLL.userDemisesAutocomplete(userid, query), HttpStatus.OK);
+        return GetResponse(demiseService.userDemisesAutocomplete(userid, query), HttpStatus.OK);
     }
 
-
-
-    @RequestMapping(value = "/account", method = RequestMethod.PUT)
+    @PutMapping("/account")
     @ResponseBody
     public ResponseEntity updateAccount(
             @RequestBody AccountEntity accountEntity,
             @CookieValue UUID userid) throws ResponseException {
-
-        return GetResponse(userBLL.updateUserByID(userid, accountEntity), HttpStatus.OK);
+        return GetResponse(accountService.updateUserByID(userid, accountEntity), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/account", method = RequestMethod.GET)
+    @GetMapping("/account")
     @ResponseBody
     public ResponseEntity getAccountByCookie(
             @CookieValue UUID userid) throws ResponseException {
-
-        return GetResponse((Collection<? extends IEntity>) userBLL.getAccountByID(userid), HttpStatus.OK);
+        return GetResponse(accountService.getAccountByID(userid), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/phonebook", method = RequestMethod.POST)
+    @PostMapping("/phonebook")
     @ResponseBody
     public ResponseEntity syncPhonebook(
             @CookieValue UUID userid,
-            @RequestBody PhoneBookSyncEntity phoneBookSyncEntity) throws ResponseException {
-
-        return GetResponse(userBLL.syncPhoneBookChunk(userid, phoneBookSyncEntity), HttpStatus.CREATED);
+            @RequestBody Collection<PhoneBookSyncEntity> phoneBookSyncEntity) throws ResponseException {
+        return GetResponse(accountService.syncPhoneBook(userid, phoneBookSyncEntity), HttpStatus.OK);
     }
 
-
-
-    @RequestMapping(value = "/account", method = RequestMethod.DELETE)
+    @DeleteMapping("/account")
     @ResponseBody
     public ResponseEntity deleteAccount(
             @CookieValue UUID userid) throws ResponseException {
-
-        return GetResponse(userBLL.deleteAccount(userid), HttpStatus.OK);
+        return GetResponse(accountService.deleteAccount(userid), HttpStatus.OK);
     }
-
-
 
     @RequestMapping(value = "/agency/{agencyid}/phonebook", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
@@ -77,17 +76,26 @@ public class UserController extends AbstractController {
             @PathVariable UUID agencyid,
             @RequestParam String file) throws ResponseException {
 
-        return GetResponse(userBLL.sendPhoneBook(userid, agencyid, file), HttpStatus.CREATED);
+        return GetResponse(accountService.sendPhoneBook(userid, agencyid, file), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/agency/search", method = RequestMethod.GET)
+    @GetMapping("/agency/search")
     @ResponseBody
     public ResponseEntity searchAgency(
             @CookieValue UUID userid,
-            @RequestParam String query) {
-        return GetResponse(agencyBLL.searchAgency(userid, query), HttpStatus.OK);
+            @RequestParam String query) throws ResponseException {
+        return GetResponse(agencyService.searchAgency(userid, query), HttpStatus.OK);
     }
 
+    @PostMapping("/user/playerid/{playerid}")
+    @ResponseBody
+    public ResponseEntity setPlayerID(
+            @CookieValue UUID userid,
+            @PathVariable String playerid) throws ResponseException {
+        return GetResponse(accountService.addPlayerID(userid, playerid), HttpStatus.CREATED);
+    }
+
+    /*
 
     @RequestMapping(value = "/user/playerid/{playerid}", method = RequestMethod.POST)
     @ResponseBody
