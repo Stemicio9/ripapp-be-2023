@@ -19,14 +19,11 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Getter
-@Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountEntity implements Serializable {
 
-    //cappire se fare DTO o registrazione a db
+    //capire se fare DTO o registrazione a db
     @Id
     private UUID accountid;
     private String name;
@@ -48,15 +45,10 @@ public class AccountEntity implements Serializable {
     private Kinship kinship;
     private String phonebookName;
     private UserStatus status;
+    @OneToOne
+    private AgencyEntity agency;
     @JsonIgnore
     private Double similarity;
 
 
-    public List<CityEntity> getCities() {
-        return city;
-    }
-
-    public void setCities(List<CityEntity> citiesByAccount) {
-        this.city = citiesByAccount;
-    }
 }

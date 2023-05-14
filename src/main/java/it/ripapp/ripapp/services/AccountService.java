@@ -25,7 +25,7 @@ public class AccountService extends AbstractService{
 
     public AccountEntity saveUser(AccountEntity user){
         // TODO here we need to check if UUID should be generated here or in the database to avoid duplicates
-        return executeAction(() -> accountRepository.save(user));
+        return executeAction(() -> saveUserFlow(user));
     }
 
     public UserStatus getUserStatusByEmail(String email){
@@ -84,6 +84,37 @@ public class AccountService extends AbstractService{
         // TODO what the hell is this playerID ???
       //  account.get().setPlayerid(playerID);
         return executeAction(() -> accountRepository.save(account.get()));
+    }
+
+    private AccountEntity saveUserFlow(AccountEntity accountEntity){
+        // If the user is a customer or an admin, we save it as a normal user
+        if(accountEntity.getStatus().equals(UserStatus.active)
+                || accountEntity.getStatus().equals(UserStatus.disabled)
+                || accountEntity.getStatus().equals(UserStatus.admin)){
+            return accountRepository.save(accountEntity);
+        }
+        // If the user is an agency, we save the agency before
+        else if(accountEntity.getStatus().equals(UserStatus.agency)){
+            String agencyEmail = accountEntity.getAgency().getEmail();
+            Optional<AgencyEntity> agency = agencyRepository.findByEmail(agencyEmail);
+            AgencyEntity agencyEntity = null;
+            // We can write this section in 1 row, but for readability we split it !!! Do not follow Intellij hint
+            if(agency.isEmpty()){
+                // here we need to save agency object
+                agencyEntity = agencyRepository.save(accountEntity.getAgency());
+            } else {
+                // here we need to assign the correct agency to user
+                agencyEntity = agency.get();
+            }
+            accountEntity.setAgency(agencyEntity);
+            return accountRepository.save(accountEntity);
+        }
+
+        else {
+            // we should not be here in no case
+            throw new RuntimeException("User status not valid");
+        }
+
     }
 
 }

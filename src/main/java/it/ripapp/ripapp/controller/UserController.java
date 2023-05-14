@@ -95,16 +95,5 @@ public class UserController extends AbstractController {
         return GetResponse(accountService.addPlayerID(userid, playerid), HttpStatus.CREATED);
     }
 
-    /*
-
-    @RequestMapping(value = "/user/playerid/{playerid}", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity setPlayerID(
-            @CookieValue UUID userid,
-            @PathVariable String playerid) {
-        return GetResponse(userBLL.addPlayerID(userid, playerid), HttpStatus.CREATED);
-    }
-
-*/
 
 }

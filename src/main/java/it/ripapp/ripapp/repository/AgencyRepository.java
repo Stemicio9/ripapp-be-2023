@@ -5,11 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-public interface AgencyRepository extends JpaRepository<it.ripapp.ripapp.entityUpdate.AgencyEntity, UUID> {
+public interface AgencyRepository extends JpaRepository<AgencyEntity, UUID> {
 
-    List<AgencyEntity> findAllByEmail(String email);
+    Optional<AgencyEntity> findByEmail(String email);
 
     AgencyEntity findAllByAgencyid(UUID agencyid);
 

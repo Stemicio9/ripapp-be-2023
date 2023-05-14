@@ -6,6 +6,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -14,9 +15,6 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Getter
-@Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class AgencyEntity {
@@ -29,16 +27,20 @@ public class AgencyEntity {
     @JsonIgnore
     private Double similarity;
 
-    @JsonIgnore
+    @Column(unique = true)
     private String email;
 
     @OneToMany
     @Cascade(CascadeType.ALL)
     private List<DemiseEntity> demises;
 
+    @OneToMany
+    @Cascade(CascadeType.ALL)
+    private List<ProductEntity> products;
+
 
     @OneToMany
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @Cascade(CascadeType.ALL)
     private List<AgencyEntity> agencies;
 
 

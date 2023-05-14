@@ -1,6 +1,7 @@
 package it.ripapp.ripapp.controller;
 
 import it.ripapp.ripapp.entityUpdate.DemiseEntity;
+import it.ripapp.ripapp.entityUpdate.ProductEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
 import it.ripapp.ripapp.services.AgencyService;
 import it.ripapp.ripapp.services.DemiseService;
@@ -66,46 +67,42 @@ public class AgencyController extends AbstractController {
         return GetResponse(agencyService.searchAccount(userid, query), HttpStatus.OK);
     }
 
-/*
-
-    @RequestMapping(value = "/products", method = RequestMethod.GET)
+    @GetMapping("/products")
     @ResponseBody
     public ResponseEntity getAgencyProducts(
             @RequestParam Integer offset,
             @CookieValue UUID userid) throws ResponseException {
 
-        return GetResponse(agencyBLL.getAgencyProducts(userid, offset), HttpStatus.OK);
+        return GetResponse(agencyService.getAgencyProducts(userid, offset), HttpStatus.OK);
     }
 
-
-    @RequestMapping(value = "/product", method = RequestMethod.POST)
+    @PostMapping("/product")
     @ResponseBody
     public ResponseEntity insertProduct(
             @RequestBody ProductEntity product,
             @CookieValue UUID userid) throws ResponseException {
 
-        return GetResponse(agencyBLL.insertProduct(userid, product), HttpStatus.CREATED);
+        return GetResponse(agencyService.insertProduct(userid, product), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/product/{productid}", method = RequestMethod.DELETE)
+    @DeleteMapping("/product/{productid}")
     @ResponseBody
     public ResponseEntity deleteProduct(
-            @PathVariable UUID productId,
+            @PathVariable UUID productid,
             @CookieValue UUID userid) throws ResponseException {
 
-        return GetResponse(agencyBLL.deleteProductByID(userid, productId), HttpStatus.OK);
+        return GetResponse(agencyService.deleteProduct(userid, productid), HttpStatus.OK);
     }
 
-
-    @RequestMapping(value = "/product/{productid}", method = RequestMethod.PUT)
+    @PutMapping("/product/{productid}")
     @ResponseBody
     public ResponseEntity updateProduct(
             @PathVariable UUID productid,
             @RequestBody ProductEntity product,
             @CookieValue UUID userid) throws ResponseException {
-        return GetResponse(agencyBLL.updateProduct(userid,productid, product), HttpStatus.CREATED);
+        return GetResponse(agencyService.updateProduct(userid,productid, product), HttpStatus.CREATED);
     }
 
-*/
+
 
 }
