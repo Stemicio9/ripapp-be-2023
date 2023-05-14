@@ -4,11 +4,16 @@ package it.ripapp.ripapp.entityUpdate;
 
 
 import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
-import javax.persistence.*;
 
-
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -21,7 +26,7 @@ public class DemiseEntity {
 
     @Id
     private UUID demiseid;
- /*   private String name;
+    private String name;
     private String surname;
     private String photourl;
     private Date fdate;
@@ -44,32 +49,34 @@ public class DemiseEntity {
 
     private Date ts;
 
-    private boolean read;
+
+    // Do not call this column read, because it is a reserved keyword in SQL
+    private boolean isread;
 
     private String kinship;
-    private UUID accountid; */
+    private UUID accountid;
 
- /*   @OneToOne
+    @OneToOne
     @Cascade(CascadeType.ALL)
     private AccountEntity relative;
     private String relativename;
 
     @OneToMany
     @Cascade(CascadeType.ALL)
-    private List<DemiseRelative> relatives; */
+    private List<DemiseRelative> relatives;
 
    // @JsonIgnore
     //private Demisematchtype demisematchtype;
 
 
 
-  /*  @OneToMany
+    @OneToMany
     @Cascade(CascadeType.ALL)
-    private List<it.ripapp.ripapp.entityUpdate.CityEntity> cities;
+    private List<CityEntity> cities;
 
     @OneToOne
     @Cascade(CascadeType.ALL)
-    private it.ripapp.ripapp.entityUpdate.CityEntity city; */
+    private CityEntity city;
 
 
 }
