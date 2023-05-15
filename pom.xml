@@ -38,14 +38,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jooq</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>jooq</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>jooq-codegen</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -134,50 +127,6 @@
                         <enabled>true</enabled>
                         <includeLayerTools>true</includeLayerTools>
                     </layers>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.jooq</groupId>
-                <artifactId>jooq-codegen-maven</artifactId>
-                <version>3.14.15</version>
-
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-
-                <dependencies>
-                    <dependency>
-                        <groupId>org.postgresql</groupId>
-                        <artifactId>postgresql</artifactId>
-                        <version>42.2.24</version>
-                    </dependency>
-                </dependencies>
-
-                <configuration>
-                    <jdbc>
-                        <driver>org.postgresql.Driver</driver>
-                        <url>jdbc:postgresql://192.168.82.74:49494/ripapp</url>
-                        <user>ripapp_admin</user>
-                        <password>RQE4xHLlU3XmcZi0YPo4wm7WkBhNxvXs5zu1AYyDnZ87RC1MmJhuDLoftTYXfnzur3Rc4zNmy4e5Nehq2xEw</password>
-                    </jdbc>
-                    <generator>
-                        <generate>
-                            <javaTimeTypes>true</javaTimeTypes>
-                        </generate>
-                        <database>
-                            <name>org.jooq.meta.postgres.PostgresDatabase</name>
-                            <includes>.*</includes>
-                            <inputSchema>public</inputSchema>
-                        </database>
-                        <target>
-                            <packageName>it.ripapp.ripapp.jooqgen</packageName>
-                            <directory>src/main/java</directory>
-                        </target>
-                    </generator>
                 </configuration>
             </plugin>
         </plugins>
