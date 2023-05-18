@@ -4,11 +4,14 @@ import it.ripapp.ripapp.EntityUpdate.*;
 import it.ripapp.ripapp.bll.Lang;
 
 import it.ripapp.ripapp.services.AccountService;
+import it.ripapp.ripapp.utilities.UserStatus;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -33,13 +36,31 @@ public class PublicController extends AbstractController {
     @ResponseBody
     public ResponseEntity saveUser(){
         AccountEntity account = new AccountEntity();
-        accountService.saveUser(account);
 
         CityEntity city = new CityEntity();
+        city.setName("mil");
         AgencyEntity agency = new AgencyEntity();
+        agency.setEmail("ciaociaio");
         ProductEntity productEntity = new ProductEntity();
+        productEntity.setProductName("prodotto");
+        ArrayList<ProductEntity> list= new ArrayList<>();
+        list.add(productEntity);
+        agency.setProducts(list);
         DemiseEntity demiseEntity = new DemiseEntity();
+        demiseEntity.setRelativename("relative");
+        ArrayList<DemiseEntity> list2= new ArrayList<>();
+        list2.add(demiseEntity);
+        agency.setDemises(list2);
         DemiseRelative demiseRelative = new DemiseRelative();
+        demiseRelative.setPHONE("331");
+
+        ArrayList<DemiseRelative> list3= new ArrayList<>();
+        list3.add(demiseRelative);
+        demiseEntity.setRelatives(list3);
+        demiseEntity.setCity(city);
+        account.setAgency(agency);
+        account.setStatus(UserStatus.agency);
+
 
 
         return GetResponse(accountService.saveUser(account), HttpStatus.OK);
