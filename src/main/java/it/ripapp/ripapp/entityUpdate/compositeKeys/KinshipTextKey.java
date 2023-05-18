@@ -1,4 +1,4 @@
-package it.ripapp.ripapp.entityUpdate.compositeKeys;
+package it.ripapp.ripapp.EntityUpdate.compositeKeys;
 
 import it.ripapp.ripapp.bll.Kinship;
 import it.ripapp.ripapp.bll.Lang;

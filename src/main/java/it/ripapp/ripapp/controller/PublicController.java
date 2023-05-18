@@ -1,9 +1,10 @@
 package it.ripapp.ripapp.controller;
 
+import it.ripapp.ripapp.EntityUpdate.*;
 import it.ripapp.ripapp.bll.Lang;
 
-import it.ripapp.ripapp.EntityUpdate.AccountEntity;
 import it.ripapp.ripapp.services.AccountService;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,11 +28,20 @@ public class PublicController extends AbstractController {
        return GetResponse(accountService.saveUser(user), HttpStatus.OK);
     }
 
+
     @GetMapping("/saveUserTest")
     @ResponseBody
     public ResponseEntity saveUser(){
         AccountEntity account = new AccountEntity();
         accountService.saveUser(account);
+
+        CityEntity city = new CityEntity();
+        AgencyEntity agency = new AgencyEntity();
+        ProductEntity productEntity = new ProductEntity();
+        DemiseEntity demiseEntity = new DemiseEntity();
+        DemiseRelative demiseRelative = new DemiseRelative();
+
+
         return GetResponse(accountService.saveUser(account), HttpStatus.OK);
     }
 

@@ -1,4 +1,4 @@
-package it.ripapp.ripapp.entityUpdate;
+package it.ripapp.ripapp.EntityUpdate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.ripapp.ripapp.bll.Demisematchtype;
@@ -6,9 +6,7 @@ import it.ripapp.ripapp.bll.Kinship;
 import it.ripapp.ripapp.bll.Lang;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -21,7 +19,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class DemiseMatchEntity {
     @Id
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @OneToOne
     private AccountEntity accountid;

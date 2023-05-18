@@ -1,8 +1,10 @@
-package it.ripapp.ripapp.entityUpdate;
+package it.ripapp.ripapp.EntityUpdate;
 
 import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
@@ -14,6 +16,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 public class NotificationText {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long lang;
 
     private String text;

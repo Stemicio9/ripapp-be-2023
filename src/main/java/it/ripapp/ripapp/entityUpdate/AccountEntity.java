@@ -1,4 +1,4 @@
-package it.ripapp.ripapp.entityUpdate;
+package it.ripapp.ripapp.EntityUpdate;
 
 
 
@@ -25,7 +25,8 @@ public class AccountEntity implements Serializable {
 
     //capire se fare DTO o registrazione a db
     @Id
-    private UUID accountid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long accountid;
     private String name;
     private String surname;
 

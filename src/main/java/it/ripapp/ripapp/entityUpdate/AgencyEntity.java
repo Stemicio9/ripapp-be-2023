@@ -1,4 +1,4 @@
-package it.ripapp.ripapp.entityUpdate;
+package it.ripapp.ripapp.EntityUpdate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -6,10 +6,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +16,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AgencyEntity {
     @Id
-    private UUID agencyid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long agencyid;
     private String name;
     private String address;
     private String logo;

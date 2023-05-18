@@ -1,5 +1,7 @@
-package it.ripapp.ripapp.entityUpdate;
+package it.ripapp.ripapp.EntityUpdate;
 
+import it.ripapp.ripapp.EntityUpdate.AccountEntity;
+import it.ripapp.ripapp.EntityUpdate.ContactEntity;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 
@@ -17,7 +19,8 @@ import java.util.List;
 public class PhoneBookEntity implements Serializable {
 
     @Id
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
 
     @OneToOne

@@ -3,10 +3,7 @@ package it.ripapp.ripapp.EntityUpdate;
 import it.ripapp.ripapp.utilities.SearchSorting;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +14,7 @@ import java.util.UUID;
 @Entity
 public class FilterEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     //TODO fare classe cities e aggiornare
     //@OneToMany

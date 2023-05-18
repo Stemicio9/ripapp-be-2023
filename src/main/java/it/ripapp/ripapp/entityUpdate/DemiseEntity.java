@@ -1,4 +1,4 @@
-package it.ripapp.ripapp.entityUpdate;
+package it.ripapp.ripapp.EntityUpdate;
 
 
 
@@ -8,10 +8,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -25,7 +22,8 @@ import java.util.UUID;
 public class DemiseEntity {
 
     @Id
-    private UUID demiseid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long demiseid;
     private String name;
     private String surname;
     private String photourl;
