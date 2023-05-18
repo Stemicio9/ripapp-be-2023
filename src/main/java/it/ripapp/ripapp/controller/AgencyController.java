@@ -1,7 +1,7 @@
 package it.ripapp.ripapp.controller;
 
-import it.ripapp.ripapp.entityUpdate.DemiseEntity;
-import it.ripapp.ripapp.entityUpdate.ProductEntity;
+import it.ripapp.ripapp.EntityUpdate.DemiseEntity;
+import it.ripapp.ripapp.EntityUpdate.ProductEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
 import it.ripapp.ripapp.services.AgencyService;
 import it.ripapp.ripapp.services.DemiseService;
@@ -26,7 +26,7 @@ public class AgencyController extends AbstractController {
     @ResponseBody
     public ResponseEntity getAgencyDemises(
             @RequestParam Integer offset,
-            @CookieValue UUID userid) throws ResponseException {
+            @CookieValue Long userid) throws ResponseException {
 
         return GetResponse(demiseService.getAgencyDemises(userid, offset), HttpStatus.OK);
     }
@@ -35,7 +35,7 @@ public class AgencyController extends AbstractController {
     @ResponseBody
     public ResponseEntity insertDemise(
             @RequestBody DemiseEntity demise,
-            @CookieValue UUID userid) throws ResponseException {
+            @CookieValue Long userid) throws ResponseException {
 
         return GetResponse(demiseService.insertDemise(userid, demise), HttpStatus.CREATED);
     }
@@ -43,8 +43,8 @@ public class AgencyController extends AbstractController {
     @DeleteMapping("/demise/{demiseid}")
     @ResponseBody
     public ResponseEntity deleteDemise(
-            @PathVariable UUID demiseid,
-            @CookieValue UUID userid) throws ResponseException {
+            @PathVariable Long demiseid,
+            @CookieValue Long userid) throws ResponseException {
 
         return GetResponse(demiseService.deleteDemiseByID(userid, demiseid), HttpStatus.OK);
     }
@@ -52,9 +52,9 @@ public class AgencyController extends AbstractController {
     @PutMapping("/demise/{demiseid}")
     @ResponseBody
     public ResponseEntity updateDemise(
-            @PathVariable UUID demiseid,
+            @PathVariable Long demiseid,
             @RequestBody DemiseEntity demise,
-            @CookieValue UUID userid) throws ResponseException {
+            @CookieValue Long userid) throws ResponseException {
         return GetResponse(demiseService.updateDemise(userid,demiseid, demise), HttpStatus.CREATED);
     }
 
@@ -62,7 +62,7 @@ public class AgencyController extends AbstractController {
     @ResponseBody
     public ResponseEntity searchAccount(
             @RequestParam String query,
-            @CookieValue UUID userid) throws ResponseException {
+            @CookieValue Long userid) throws ResponseException {
 
         return GetResponse(agencyService.searchAccount(userid, query), HttpStatus.OK);
     }
@@ -71,7 +71,7 @@ public class AgencyController extends AbstractController {
     @ResponseBody
     public ResponseEntity getAgencyProducts(
             @RequestParam Integer offset,
-            @CookieValue UUID userid) throws ResponseException {
+            @CookieValue Long userid) throws ResponseException {
 
         return GetResponse(agencyService.getAgencyProducts(userid, offset), HttpStatus.OK);
     }
@@ -80,7 +80,7 @@ public class AgencyController extends AbstractController {
     @ResponseBody
     public ResponseEntity insertProduct(
             @RequestBody ProductEntity product,
-            @CookieValue UUID userid) throws ResponseException {
+            @CookieValue Long userid) throws ResponseException {
 
         return GetResponse(agencyService.insertProduct(userid, product), HttpStatus.CREATED);
     }
@@ -88,8 +88,8 @@ public class AgencyController extends AbstractController {
     @DeleteMapping("/product/{productid}")
     @ResponseBody
     public ResponseEntity deleteProduct(
-            @PathVariable UUID productid,
-            @CookieValue UUID userid) throws ResponseException {
+            @PathVariable Long productid,
+            @CookieValue Long userid) throws ResponseException {
 
         return GetResponse(agencyService.deleteProduct(userid, productid), HttpStatus.OK);
     }
@@ -97,9 +97,9 @@ public class AgencyController extends AbstractController {
     @PutMapping("/product/{productid}")
     @ResponseBody
     public ResponseEntity updateProduct(
-            @PathVariable UUID productid,
+            @PathVariable Long productid,
             @RequestBody ProductEntity product,
-            @CookieValue UUID userid) throws ResponseException {
+            @CookieValue Long userid) throws ResponseException {
         return GetResponse(agencyService.updateProduct(userid,productid, product), HttpStatus.CREATED);
     }
 

@@ -1,4 +1,4 @@
-package it.ripapp.ripapp.entityUpdate;
+package it.ripapp.ripapp.EntityUpdate;
 
 import lombok.*;
 
@@ -14,8 +14,8 @@ import java.util.UUID;
 @Entity
 public class SearchResultEntity {
 
-    @Id
     private String result;
-    private UUID resultid;
+    @Id
+    private Long resultid;
 
 }

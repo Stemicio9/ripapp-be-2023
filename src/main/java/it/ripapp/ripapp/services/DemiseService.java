@@ -1,6 +1,6 @@
 package it.ripapp.ripapp.services;
 
-import it.ripapp.ripapp.entityUpdate.DemiseEntity;
+import it.ripapp.ripapp.EntityUpdate.DemiseEntity;
 import it.ripapp.ripapp.repository.DemiseEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class DemiseService extends AbstractService{
     private DemiseEntityRepository demiseEntityRepository;
 
 
-    public List<DemiseEntity> userDemisesAutocomplete(UUID accountID, String query){
+    public List<DemiseEntity> userDemisesAutocomplete(Long accountID, String query){
        // TODO
        // Here understand how to get the user's demises
        // Below an example of how to implement it, for now just mocked an empty linkedlist
@@ -25,23 +25,23 @@ public class DemiseService extends AbstractService{
         return new LinkedList<DemiseEntity>();
     }
 
-    public List<DemiseEntity> getAgencyDemises(UUID accountID, Integer offset){
+    public List<DemiseEntity> getAgencyDemises(Long accountID, Integer offset){
         // TODO
         // Here understand how to get the agency's demises as above
         return new LinkedList<DemiseEntity>();
     }
 
-    public List<DemiseEntity> insertDemise(UUID accountID, DemiseEntity demise){
+    public List<DemiseEntity> insertDemise(Long accountID, DemiseEntity demise){
        executeAction(() -> demiseEntityRepository.save(demise));
        return getAgencyDemises(accountID, 0);
     }
 
-    public List<DemiseEntity> deleteDemiseByID(UUID accountID, UUID demiseID){
+    public List<DemiseEntity> deleteDemiseByID(Long accountID, Long demiseID){
         demiseEntityRepository.deleteById(demiseID);
         return getAgencyDemises(accountID, 0);
     }
 
-    public List<DemiseEntity> updateDemise(UUID accountID, UUID demiseID, DemiseEntity demise){
+    public List<DemiseEntity> updateDemise(Long accountID, Long demiseID, DemiseEntity demise){
         Optional<DemiseEntity> demiseEntity = demiseEntityRepository.findById(demiseID);
         if(!demiseEntity.isPresent()){
             throw new RuntimeException("Demise not found");

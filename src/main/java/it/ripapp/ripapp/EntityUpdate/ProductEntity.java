@@ -1,4 +1,4 @@
-package it.ripapp.ripapp.entityUpdate;
+package it.ripapp.ripapp.EntityUpdate;
 
 import lombok.*;
 
@@ -14,7 +14,7 @@ import java.util.UUID;
 @Data
 public class ProductEntity {
     @Id
-    private UUID productId;
+    private Long productId;
 
     private String productName;
 

@@ -2,7 +2,7 @@ package it.ripapp.ripapp.controller;
 
 import it.ripapp.ripapp.bll.Lang;
 
-import it.ripapp.ripapp.entityUpdate.AccountEntity;
+import it.ripapp.ripapp.EntityUpdate.AccountEntity;
 import it.ripapp.ripapp.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +25,14 @@ public class PublicController extends AbstractController {
             @RequestBody AccountEntity user,
             @CookieValue(defaultValue = "it") Lang lang){
        return GetResponse(accountService.saveUser(user), HttpStatus.OK);
+    }
+
+    @GetMapping("/saveUserTest")
+    @ResponseBody
+    public ResponseEntity saveUser(){
+        AccountEntity account = new AccountEntity();
+        accountService.saveUser(account);
+        return GetResponse(accountService.saveUser(account), HttpStatus.OK);
     }
 
     @GetMapping("/userstatus")

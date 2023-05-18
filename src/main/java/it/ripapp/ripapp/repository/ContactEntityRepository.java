@@ -1,9 +1,8 @@
 package it.ripapp.ripapp.repository;
 
-import it.ripapp.ripapp.entityUpdate.ContactEntity;
+import it.ripapp.ripapp.EntityUpdate.ContactEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.UUID;
 
-public interface ContactEntityRepository extends JpaRepository<ContactEntity, UUID> {
+public interface ContactEntityRepository extends JpaRepository<ContactEntity, Long> {
 }

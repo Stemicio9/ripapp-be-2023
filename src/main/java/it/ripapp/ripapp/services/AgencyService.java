@@ -1,8 +1,8 @@
 package it.ripapp.ripapp.services;
 
-import it.ripapp.ripapp.entityUpdate.AccountEntity;
-import it.ripapp.ripapp.entityUpdate.AgencyEntity;
-import it.ripapp.ripapp.entityUpdate.ProductEntity;
+import it.ripapp.ripapp.EntityUpdate.AccountEntity;
+import it.ripapp.ripapp.EntityUpdate.AgencyEntity;
+import it.ripapp.ripapp.EntityUpdate.ProductEntity;
 import it.ripapp.ripapp.repository.AccountRepository;
 import it.ripapp.ripapp.repository.AgencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +21,17 @@ public class AgencyService extends AbstractService{
     private AccountRepository accountRepository;
 
 
-    public List<AgencyEntity> searchAgency(UUID userId, String query){
+    public List<AgencyEntity> searchAgency(Long userId, String query){
         // TODO here understand if is needed userId or not, I think it should remain as it is
         return executeAction(() -> agencyRepository.findAllByNameContains(query));
     }
 
-    public List<AccountEntity> searchAccount(UUID userId, String query){
+    public List<AccountEntity> searchAccount(Long userId, String query){
         // TODO here understand how to search account by agency or viceversa, should work like this
         return executeAction(() -> accountRepository.findAllByAgency_NameContainsOrAgency_EmailContains(query, query));
     }
 
-    public List<ProductEntity> getAgencyProducts(UUID userId, int offset){
+    public List<ProductEntity> getAgencyProducts(Long userId, int offset){
         AccountEntity entity = accountRepository.getById(userId);
         AgencyEntity agency = entity.getAgency();
         if(agency == null){
@@ -40,7 +40,7 @@ public class AgencyService extends AbstractService{
         return executeAction(() -> agency.getProducts().subList(offset, offset + 10));
     }
 
-    public AgencyEntity insertProduct(UUID userId, ProductEntity productEntity){
+    public AgencyEntity insertProduct(Long userId, ProductEntity productEntity){
         // TODO here understand how to search account by agency or viceversa
         AccountEntity entity = accountRepository.getById(userId);
         AgencyEntity agencyEntity = entity.getAgency();
@@ -52,7 +52,7 @@ public class AgencyService extends AbstractService{
         return agencyEntity;
     }
 
-    public AgencyEntity deleteProduct(UUID userId, UUID productId){
+    public AgencyEntity deleteProduct(Long userId, Long productId){
         // TODO here understand how to search account by agency or viceversa
         AccountEntity entity = accountRepository.getById(userId);
         AgencyEntity agencyEntity = entity.getAgency();
@@ -64,7 +64,7 @@ public class AgencyService extends AbstractService{
         return agencyEntity;
     }
 
-    public AgencyEntity updateProduct(UUID userId, UUID productId, ProductEntity productEntity){
+    public AgencyEntity updateProduct(Long userId, Long productId, ProductEntity productEntity){
         // TODO here understand how to search account by agency or viceversa
         AccountEntity entity = accountRepository.getById(userId);
         AgencyEntity agencyEntity = entity.getAgency();

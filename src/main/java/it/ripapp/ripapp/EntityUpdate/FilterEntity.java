@@ -1,4 +1,4 @@
-package it.ripapp.ripapp.entityUpdate;
+package it.ripapp.ripapp.EntityUpdate;
 
 import it.ripapp.ripapp.utilities.SearchSorting;
 import lombok.*;
@@ -17,7 +17,7 @@ import java.util.UUID;
 @Entity
 public class FilterEntity {
     @Id
-    private UUID id;
+    private Long id;
     //TODO fare classe cities e aggiornare
     //@OneToMany
     //private List<CityEntity> cities;

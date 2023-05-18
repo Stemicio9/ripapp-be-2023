@@ -1,8 +1,8 @@
 package it.ripapp.ripapp.services;
 
-import it.ripapp.ripapp.entityUpdate.AccountEntity;
-import it.ripapp.ripapp.entityUpdate.AgencyEntity;
-import it.ripapp.ripapp.entityUpdate.PhoneBookSyncEntity;
+import it.ripapp.ripapp.EntityUpdate.AccountEntity;
+import it.ripapp.ripapp.EntityUpdate.AgencyEntity;
+import it.ripapp.ripapp.EntityUpdate.PhoneBookSyncEntity;
 import it.ripapp.ripapp.repository.AccountRepository;
 import it.ripapp.ripapp.repository.AgencyRepository;
 import it.ripapp.ripapp.utilities.UserStatus;
@@ -32,7 +32,7 @@ public class AccountService extends AbstractService{
         return executeAction(() -> accountRepository.findByEmail(email).getStatus());
     }
 
-    public AccountEntity updateUserByID(UUID userId, AccountEntity accountEntity){
+    public AccountEntity updateUserByID(Long userId, AccountEntity accountEntity){
         // here is a draft of how to update AccountEntity
         Optional<AccountEntity> account = accountRepository.findById(userId);
         if(account.isEmpty()){
@@ -42,11 +42,11 @@ public class AccountService extends AbstractService{
         return executeAction(() -> accountRepository.save(accountEntity));
     }
 
-    public AccountEntity getAccountByID(UUID userId){
+    public AccountEntity getAccountByID(Long userId){
         return executeAction(() -> accountRepository.findById(userId).orElseThrow());
     }
 
-    public AccountEntity syncPhoneBook(UUID userId, Collection<PhoneBookSyncEntity> phoneBookSyncEntity){
+    public AccountEntity syncPhoneBook(Long userId, Collection<PhoneBookSyncEntity> phoneBookSyncEntity){
         Optional<AccountEntity> account = accountRepository.findById(userId);
         if(account.isEmpty()){
             throw new RuntimeException("User not found");
@@ -56,7 +56,7 @@ public class AccountService extends AbstractService{
         return account.get();
     }
 
-    public AccountEntity deleteAccount(UUID userId){
+    public AccountEntity deleteAccount(Long userId){
         Optional<AccountEntity> account = accountRepository.findById(userId);
         if(account.isEmpty()){
             throw new RuntimeException("User not found");
@@ -65,7 +65,7 @@ public class AccountService extends AbstractService{
         return account.get();
     }
 
-    public AccountEntity sendPhoneBook(UUID userId, UUID agencyId, String file){
+    public AccountEntity sendPhoneBook(Long userId, Long agencyId, String file){
         Optional<AccountEntity> account = accountRepository.findById(userId);
         Optional<AgencyEntity> agency = agencyRepository.findById(agencyId);
         if(account.isEmpty() || agency.isEmpty()){
@@ -76,7 +76,7 @@ public class AccountService extends AbstractService{
         return account.get();
     }
 
-    public AccountEntity addPlayerID(UUID userId, String playerID){
+    public AccountEntity addPlayerID(Long userId, String playerID){
         Optional<AccountEntity> account = accountRepository.findById(userId);
         if(account.isEmpty()){
             throw new RuntimeException("User not found");

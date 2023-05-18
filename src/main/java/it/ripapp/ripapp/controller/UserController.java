@@ -1,8 +1,8 @@
 package it.ripapp.ripapp.controller;
 
 import it.ripapp.ripapp.bll.*; 
-import it.ripapp.ripapp.entityUpdate.AccountEntity;
-import it.ripapp.ripapp.entityUpdate.PhoneBookSyncEntity;
+import it.ripapp.ripapp.EntityUpdate.AccountEntity;
+import it.ripapp.ripapp.EntityUpdate.PhoneBookSyncEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
 
 import it.ripapp.ripapp.services.AccountService;
@@ -35,7 +35,7 @@ public class UserController extends AbstractController {
     @ResponseBody
     public ResponseEntity searchDemisesAutocomplete(
             @RequestParam String query,
-            @CookieValue UUID userid) throws ResponseException {
+            @CookieValue Long userid) throws ResponseException {
         return GetResponse(demiseService.userDemisesAutocomplete(userid, query), HttpStatus.OK);
     }
 
@@ -43,21 +43,21 @@ public class UserController extends AbstractController {
     @ResponseBody
     public ResponseEntity updateAccount(
             @RequestBody AccountEntity accountEntity,
-            @CookieValue UUID userid) throws ResponseException {
+            @CookieValue Long userid) throws ResponseException {
         return GetResponse(accountService.updateUserByID(userid, accountEntity), HttpStatus.OK);
     }
 
     @GetMapping("/account")
     @ResponseBody
     public ResponseEntity getAccountByCookie(
-            @CookieValue UUID userid) throws ResponseException {
+            @CookieValue Long userid) throws ResponseException {
         return GetResponse(accountService.getAccountByID(userid), HttpStatus.OK);
     }
 
     @PostMapping("/phonebook")
     @ResponseBody
     public ResponseEntity syncPhonebook(
-            @CookieValue UUID userid,
+            @CookieValue Long userid,
             @RequestBody Collection<PhoneBookSyncEntity> phoneBookSyncEntity) throws ResponseException {
         return GetResponse(accountService.syncPhoneBook(userid, phoneBookSyncEntity), HttpStatus.OK);
     }
@@ -65,15 +65,15 @@ public class UserController extends AbstractController {
     @DeleteMapping("/account")
     @ResponseBody
     public ResponseEntity deleteAccount(
-            @CookieValue UUID userid) throws ResponseException {
+            @CookieValue Long userid) throws ResponseException {
         return GetResponse(accountService.deleteAccount(userid), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/agency/{agencyid}/phonebook", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
     public ResponseEntity sendPhoneBook(
-            @CookieValue UUID userid,
-            @PathVariable UUID agencyid,
+            @CookieValue Long userid,
+            @PathVariable Long agencyid,
             @RequestParam String file) throws ResponseException {
 
         return GetResponse(accountService.sendPhoneBook(userid, agencyid, file), HttpStatus.CREATED);
@@ -82,7 +82,7 @@ public class UserController extends AbstractController {
     @GetMapping("/agency/search")
     @ResponseBody
     public ResponseEntity searchAgency(
-            @CookieValue UUID userid,
+            @CookieValue Long userid,
             @RequestParam String query) throws ResponseException {
         return GetResponse(agencyService.searchAgency(userid, query), HttpStatus.OK);
     }
@@ -90,7 +90,7 @@ public class UserController extends AbstractController {
     @PostMapping("/user/playerid/{playerid}")
     @ResponseBody
     public ResponseEntity setPlayerID(
-            @CookieValue UUID userid,
+            @CookieValue Long userid,
             @PathVariable String playerid) throws ResponseException {
         return GetResponse(accountService.addPlayerID(userid, playerid), HttpStatus.CREATED);
     }

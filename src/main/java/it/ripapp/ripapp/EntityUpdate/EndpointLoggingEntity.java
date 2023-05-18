@@ -1,4 +1,4 @@
-package it.ripapp.ripapp.entityUpdate;
+package it.ripapp.ripapp.EntityUpdate;
 
 import lombok.*;
 
@@ -14,7 +14,7 @@ import java.util.UUID;
 @Data
 public class EndpointLoggingEntity {
     @Id
-    private UUID id;
+    private Long id;
     private String requid;
     private LocalDateTime timestamp;
     private String method;

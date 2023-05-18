@@ -14,6 +14,6 @@ import javax.persistence.Id;
 public class CountryEntity {
 
     @Id
-    private Integer id;
+    private Long id;
     private Integer phonecode;
 }
