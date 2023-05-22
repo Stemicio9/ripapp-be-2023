@@ -1,19 +1,23 @@
 package it.ripapp.ripapp.controller;
 
-import it.ripapp.ripapp.bll.*; 
-import it.ripapp.ripapp.EntityUpdate.AccountEntity;
-import it.ripapp.ripapp.EntityUpdate.PhoneBookSyncEntity;
+
+import it.ripapp.ripapp.authentication.model.LoginRequest;
+import it.ripapp.ripapp.entityUpdate.AccountEntity;
+import it.ripapp.ripapp.entityUpdate.PhoneBookSyncEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
 
 import it.ripapp.ripapp.services.AccountService;
 import it.ripapp.ripapp.services.AgencyService;
 import it.ripapp.ripapp.services.DemiseService;
+import it.ripapp.ripapp.utilities.FirebaseAuthCookieData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -49,9 +53,20 @@ public class UserController extends AbstractController {
 
     @GetMapping("/account")
     @ResponseBody
-    public ResponseEntity getAccountByCookie(
-            @CookieValue Long userid) throws ResponseException {
-        return GetResponse(accountService.getAccountByID(userid), HttpStatus.OK);
+    public ResponseEntity getAccountByContext(@CookieValue String firebasecookie) throws ResponseException, Exception {
+        return GetResponse(accountService.accountFromToken(firebasecookie), HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    @ResponseBody
+    public ResponseEntity login(@RequestBody LoginRequest loginRequest,
+                                HttpServletResponse response) throws ResponseException, Exception {
+        //  return GetResponse(accountService.getAccountByID(userid), HttpStatus.OK);
+        FirebaseAuthCookieData firebaseAuthData =  accountService.getUserbaseUUIDByFirebaseToken(loginRequest.getIdtoken());
+
+        response.addCookie(new Cookie("firebasecookie", firebaseAuthData.getCookie()));
+        response.addCookie(new Cookie("userid", firebaseAuthData.getAccountid()));
+        return GetResponse("CIAO", HttpStatus.OK);
     }
 
     @PostMapping("/phonebook")

@@ -1,17 +1,26 @@
 package it.ripapp.ripapp.services;
 
-import it.ripapp.ripapp.EntityUpdate.AccountEntity;
-import it.ripapp.ripapp.EntityUpdate.AgencyEntity;
-import it.ripapp.ripapp.EntityUpdate.PhoneBookSyncEntity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.auth.SessionCookieOptions;
+import it.ripapp.ripapp.entityUpdate.AccountEntity;
+import it.ripapp.ripapp.entityUpdate.AgencyEntity;
+import it.ripapp.ripapp.entityUpdate.PhoneBookSyncEntity;
+import it.ripapp.ripapp.exceptions.BadRequestException;
+import it.ripapp.ripapp.exceptions.ForbiddenException;
+import it.ripapp.ripapp.exceptions.ResponseException;
 import it.ripapp.ripapp.repository.AccountRepository;
 import it.ripapp.ripapp.repository.AgencyRepository;
+import it.ripapp.ripapp.utilities.FirebaseAuthCookieData;
 import it.ripapp.ripapp.utilities.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class AccountService extends AbstractService{
@@ -21,6 +30,39 @@ public class AccountService extends AbstractService{
 
     @Autowired
     private AgencyRepository agencyRepository;
+
+
+    public FirebaseAuthCookieData getUserbaseUUIDByFirebaseToken(String token) throws ResponseException, FirebaseAuthException {
+
+
+        if (token == null)
+            throw new BadRequestException("token not provided");
+
+        FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
+        String cookie = FirebaseAuth.getInstance().createSessionCookie(token, SessionCookieOptions.builder().setExpiresIn(TimeUnit.DAYS.toMillis(1)).build());
+
+        AccountEntity account = accountRepository.findByEmail(decodedToken.getEmail());
+
+        try {
+            if (!account.getEnabled())
+                throw new ForbiddenException("Account disabled");
+        }catch(Exception e){
+            // IF this exception is thrown, it means that the account is enabled (by default enabled is null, that means enabled)
+        }
+
+        return new FirebaseAuthCookieData(account.getIdtoken(), cookie);
+    }
+
+    public AccountEntity accountFromToken(String token) throws Exception{
+        if (token == null)
+            throw new BadRequestException("token not provided");
+
+       // FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
+        FirebaseToken decodedToken = FirebaseAuth.getInstance().verifySessionCookie(token);
+        AccountEntity account = accountRepository.findByEmail(decodedToken.getEmail());
+        return account;
+    }
+
 
 
     public AccountEntity saveUser(AccountEntity user){
@@ -44,6 +86,10 @@ public class AccountService extends AbstractService{
 
     public AccountEntity getAccountByID(Long userId){
         return executeAction(() -> accountRepository.findById(userId).orElseThrow());
+    }
+
+    public AccountEntity getAccountByFirebaseID(String firebaseId){
+        return executeAction(() -> accountRepository.findByIdtoken(firebaseId));
     }
 
     public AccountEntity syncPhoneBook(Long userId, Collection<PhoneBookSyncEntity> phoneBookSyncEntity){

@@ -1,5 +1,4 @@
-package it.ripapp.ripapp.EntityUpdate;
-
+package it.ripapp.ripapp.entityUpdate;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.ripapp.ripapp.bll.Demisematchtype;
 import it.ripapp.ripapp.bll.Kinship;

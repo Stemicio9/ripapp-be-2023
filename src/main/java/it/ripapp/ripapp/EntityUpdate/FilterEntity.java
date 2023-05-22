@@ -1,5 +1,4 @@
-package it.ripapp.ripapp.EntityUpdate;
-
+package it.ripapp.ripapp.entityUpdate;
 import it.ripapp.ripapp.utilities.SearchSorting;
 import lombok.*;
 

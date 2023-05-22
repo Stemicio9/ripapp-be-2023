@@ -13,7 +13,7 @@ public class LoggingEvent {
     private String method;
     private String url;
     private String querystring;
-    private UUID userid;
+    private String userid;
     private Integer status;
     private Long executiontime;
     private String response;
@@ -70,7 +70,7 @@ public class LoggingEvent {
         return this;
     }
 
-    public UUID getUserid() {
+    public String getUserid() {
         return userid;
     }
 
@@ -101,7 +101,7 @@ public class LoggingEvent {
         return this;
     }
 
-    public LoggingEvent setUserid(UUID userid) {
+    public LoggingEvent setUserid(String userid) {
         this.userid = userid;
         return this;
     }

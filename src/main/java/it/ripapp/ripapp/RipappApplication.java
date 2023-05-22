@@ -70,14 +70,17 @@ public class RipappApplication implements WebMvcConfigurer {
     public FirebaseAuth firebaseAuth() {
         try {
             // InputStream inputstream = RipappApplication.class.getResourceAsStream("/ripapp-6cb0e-firebase-adminsdk-4uez1-62cbd67496.json");
-            InputStream inputstream = RipappApplication.class.getResourceAsStream("/rip-app-v2-firebase-adminsdk-fd3hm-5aaff94371.json");
+          //  InputStream inputstream = RipappApplication.class.getResourceAsStream("/rip-app-v2-firebase-adminsdk-fd3hm-5aaff94371.json");
+            InputStream inputstream = RipappApplication.class.getResourceAsStream("/ripapp-auth-firebase-adminsdk-7vn4f-4282c15e4f.json");
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(inputstream))
                     // .setDatabaseUrl("https://ripapp-6cb0e.firebaseio.com")
-                    .setDatabaseUrl("https://ripapp-v2.firebaseio.com")
+                    //.setDatabaseUrl("https://ripapp-v2.firebaseio.com")
+                    .setDatabaseUrl("https://ripapp-auth.firebaseio.com")
                     // .setStorageBucket("ripapp-6cb0e.appspot.com")
-                    .setStorageBucket("ripapp-v2.appspot.com")
+                    // .setStorageBucket("ripapp-v2.appspot.com")
+                    .setStorageBucket("ripapp-auth.appspot.com")
                     .build();
 
             FirebaseApp.initializeApp(options);

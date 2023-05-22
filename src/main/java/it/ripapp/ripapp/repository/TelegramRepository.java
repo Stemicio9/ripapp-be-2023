@@ -1,7 +1,8 @@
 package it.ripapp.ripapp.repository;
 
 
-import it.ripapp.ripapp.EntityUpdate.Telegram;
+
+import it.ripapp.ripapp.entityUpdate.Telegram;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

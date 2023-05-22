@@ -1,4 +1,4 @@
-package it.ripapp.ripapp.EntityUpdate.compositeKeys;
+package it.ripapp.ripapp.entityUpdate.compositeKeys;
 
 
 

@@ -1,4 +1,4 @@
-package it.ripapp.ripapp.EntityUpdate;
+package it.ripapp.ripapp.entityUpdate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;

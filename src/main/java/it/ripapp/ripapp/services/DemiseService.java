@@ -1,6 +1,7 @@
 package it.ripapp.ripapp.services;
 
-import it.ripapp.ripapp.EntityUpdate.DemiseEntity;
+
+import it.ripapp.ripapp.entityUpdate.DemiseEntity;
 import it.ripapp.ripapp.repository.DemiseEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

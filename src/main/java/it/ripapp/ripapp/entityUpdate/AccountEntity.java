@@ -1,4 +1,4 @@
-package it.ripapp.ripapp.EntityUpdate;
+package it.ripapp.ripapp.entityUpdate;
 
 
 
@@ -16,6 +16,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
+
 
 @Entity
 @Data

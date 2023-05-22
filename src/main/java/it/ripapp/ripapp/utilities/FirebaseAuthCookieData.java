@@ -4,11 +4,11 @@ import java.util.UUID;
 
 public class FirebaseAuthCookieData {
     private String cookie;
-    private UUID accountid;
+    private String accountid;
 
     public FirebaseAuthCookieData() {}
 
-    public FirebaseAuthCookieData(UUID accountid, String cookie) {
+    public FirebaseAuthCookieData(String accountid, String cookie) {
         this.cookie = cookie;
         this.accountid = accountid;
     }
@@ -17,7 +17,7 @@ public class FirebaseAuthCookieData {
         return cookie;
     }
 
-    public UUID getAccountid() {
+    public String getAccountid() {
         return accountid;
     }
 }

@@ -1,8 +1,9 @@
 package it.ripapp.ripapp.services;
 
-import it.ripapp.ripapp.EntityUpdate.AccountEntity;
-import it.ripapp.ripapp.EntityUpdate.AgencyEntity;
-import it.ripapp.ripapp.EntityUpdate.ProductEntity;
+
+import it.ripapp.ripapp.entityUpdate.AccountEntity;
+import it.ripapp.ripapp.entityUpdate.AgencyEntity;
+import it.ripapp.ripapp.entityUpdate.ProductEntity;
 import it.ripapp.ripapp.repository.AccountRepository;
 import it.ripapp.ripapp.repository.AgencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;

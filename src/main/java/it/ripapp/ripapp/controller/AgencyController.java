@@ -1,7 +1,8 @@
 package it.ripapp.ripapp.controller;
 
-import it.ripapp.ripapp.EntityUpdate.DemiseEntity;
-import it.ripapp.ripapp.EntityUpdate.ProductEntity;
+
+import it.ripapp.ripapp.entityUpdate.DemiseEntity;
+import it.ripapp.ripapp.entityUpdate.ProductEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
 import it.ripapp.ripapp.services.AgencyService;
 import it.ripapp.ripapp.services.DemiseService;

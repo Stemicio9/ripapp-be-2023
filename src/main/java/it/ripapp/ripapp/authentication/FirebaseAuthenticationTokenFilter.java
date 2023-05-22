@@ -58,10 +58,6 @@ public class FirebaseAuthenticationTokenFilter extends AbstractAuthenticationPro
         }
 
 
-
-
-
-
         return getAuthenticationManager().authenticate(new FirebaseAuthenticationToken(cookie));
     }
 

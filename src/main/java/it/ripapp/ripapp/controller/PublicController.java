@@ -1,11 +1,12 @@
 package it.ripapp.ripapp.controller;
 
-import it.ripapp.ripapp.EntityUpdate.*;
+
 import it.ripapp.ripapp.bll.Lang;
+import it.ripapp.ripapp.entityUpdate.*;
 
 import it.ripapp.ripapp.services.AccountService;
 import it.ripapp.ripapp.utilities.UserStatus;
-import org.checkerframework.checker.units.qual.A;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,7 @@ public class PublicController extends AbstractController {
     @PostMapping("/saveUser")
     @ResponseBody
     public ResponseEntity saveUser(
-            @RequestBody AccountEntity user,
-            @CookieValue(defaultValue = "it") Lang lang){
+            @RequestBody AccountEntity user){
        return GetResponse(accountService.saveUser(user), HttpStatus.OK);
     }
 

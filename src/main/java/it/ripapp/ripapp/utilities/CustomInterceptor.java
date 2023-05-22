@@ -66,10 +66,10 @@ public class CustomInterceptor implements HandlerInterceptor {
                     userCookie = cookie.split("=")[1];
         }
 
-        UUID userid = null;
+        String userid = null;
 
         if (!userCookie.isEmpty())
-            userid = UUID.fromString(userCookie);
+            userid = userCookie;
 
         logRequestInsert(
                 requestIDs.getReqID(Thread.currentThread().getId()).toString(),
@@ -170,7 +170,7 @@ public class CustomInterceptor implements HandlerInterceptor {
     }
 
 
-    private void logRequestInsert(String reqid, LocalDateTime timestamp, String method, String url, String querystring, UUID userid){
+    private void logRequestInsert(String reqid, LocalDateTime timestamp, String method, String url, String querystring, String userid){
         final long seq = ringBuffer.next();
 
         final LoggingEvent valueEvent = ringBuffer.get(seq);

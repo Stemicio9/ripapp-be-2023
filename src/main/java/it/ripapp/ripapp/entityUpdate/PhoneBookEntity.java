@@ -1,7 +1,4 @@
-package it.ripapp.ripapp.EntityUpdate;
-
-import it.ripapp.ripapp.EntityUpdate.AccountEntity;
-import it.ripapp.ripapp.EntityUpdate.ContactEntity;
+package it.ripapp.ripapp.entityUpdate;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 
