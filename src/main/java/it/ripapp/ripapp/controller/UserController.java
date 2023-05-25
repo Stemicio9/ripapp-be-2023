@@ -64,8 +64,10 @@ public class UserController extends AbstractController {
         //  return GetResponse(accountService.getAccountByID(userid), HttpStatus.OK);
         FirebaseAuthCookieData firebaseAuthData =  accountService.getUserbaseUUIDByFirebaseToken(loginRequest.getIdtoken());
 
-        response.addCookie(new Cookie("firebasecookie", firebaseAuthData.getCookie()));
-        response.addCookie(new Cookie("userid", firebaseAuthData.getAccountid()));
+        Cookie cookie1 = new Cookie("firebasecookie", firebaseAuthData.getCookie());
+        Cookie cookie2 = new Cookie("userid", firebaseAuthData.getAccountid());
+        response.addCookie(cookie1);
+        response.addCookie(cookie2);
         return GetResponse("CIAO", HttpStatus.OK);
     }
 

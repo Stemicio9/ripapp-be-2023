@@ -78,5 +78,9 @@ public class AgencyService extends AbstractService{
         return agencyEntity;
     }
 
+    public AgencyEntity saveAgencyEntity(AgencyEntity agency){
+        return agencyRepository.save(agency);
+    }
+
 
 }

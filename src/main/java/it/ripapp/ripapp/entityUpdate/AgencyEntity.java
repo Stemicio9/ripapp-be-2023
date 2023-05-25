@@ -21,6 +21,9 @@ public class AgencyEntity {
     private String name;
     private String address;
     private String logo;
+    private String telephoneNumber;
+    private String idtoken; //uid di firebase
+    private String photoUrl;
 
     @JsonIgnore
     private Double similarity;

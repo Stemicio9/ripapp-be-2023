@@ -39,16 +39,16 @@ public class AccountEntity implements Serializable {
     private Boolean notif;
     @OneToMany
     @Cascade(CascadeType.ALL)
-    private List<CityEntity> city;
+    private List<it.ripapp.ripapp.entityUpdate.CityEntity> city;
     private Boolean enabled;
     private String photourl;
     private Lang lang;
-    private String idtoken;
+    private String idtoken; //uid di firebase
     private Kinship kinship;
     private String phonebookName;
     private UserStatus status;
     @OneToOne
-    private AgencyEntity agency;
+    private it.ripapp.ripapp.entityUpdate.AgencyEntity agency;
     @JsonIgnore
     private Double similarity;
 
