@@ -37,6 +37,12 @@ public class DemiseService extends AbstractService{
        return getAgencyDemises(accountID, 0);
     }
 
+
+    //TODO eliminare questo metodo, va usato insertDemise al suo posto
+    public DemiseEntity insertDemiseForTesting(DemiseEntity demise){
+       return executeAction(() -> demiseEntityRepository.save(demise));
+    }
+
     public List<DemiseEntity> deleteDemiseByID(Long accountID, Long demiseID){
         demiseEntityRepository.deleteById(demiseID);
         return getAgencyDemises(accountID, 0);

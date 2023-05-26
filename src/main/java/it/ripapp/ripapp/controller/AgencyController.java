@@ -105,5 +105,13 @@ public class AgencyController extends AbstractController {
     }
 
 
+    //TODO usato solo per testing, va eliminato e sostituito con quello che usa i cookie; idem per quello delle agenzie
+    @PostMapping("/demiseWithoutCookie")
+    @ResponseBody
+    public ResponseEntity insertDemiseNew(@RequestBody DemiseEntity demiseEntity) throws ResponseException {
+        return GetResponse(demiseService.insertDemiseForTesting(demiseEntity), HttpStatus.CREATED);
+    }
+
+
 
 }

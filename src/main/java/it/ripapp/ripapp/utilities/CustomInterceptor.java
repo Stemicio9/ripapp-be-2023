@@ -62,8 +62,11 @@ public class CustomInterceptor implements HandlerInterceptor {
             String[] cookies = request.getHeader("cookie").split(";");
 
             for (String cookie : cookies)
-                if (cookie.split("=")[0].equals("userid"))
-                    userCookie = cookie.split("=")[1];
+               /* if (cookie.split("=")[0].equals("userid"))
+                    userCookie = cookie.split("=")[1]; */
+            if(cookie.contains("firebasecookie")){
+                userCookie = cookie.split("=")[1];
+            }
         }
 
         String userid = null;

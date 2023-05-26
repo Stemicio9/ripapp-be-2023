@@ -66,8 +66,8 @@ public class UserController extends AbstractController {
 
         Cookie cookie1 = new Cookie("firebasecookie", firebaseAuthData.getCookie());
         Cookie cookie2 = new Cookie("userid", firebaseAuthData.getAccountid());
-        response.addCookie(cookie1);
         response.addCookie(cookie2);
+        response.addCookie(cookie1);
         return GetResponse("CIAO", HttpStatus.OK);
     }
 
