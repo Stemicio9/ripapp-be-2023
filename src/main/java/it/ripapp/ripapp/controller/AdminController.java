@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -36,5 +37,11 @@ public class AdminController extends AbstractController {
     @ResponseBody
     public ResponseEntity saveProduct(@RequestBody ProductEntity productEntity) throws Exception {
         return GetResponse(adminService.saveProductEntity(productEntity), HttpStatus.OK);
+    }
+
+    @GetMapping("/agencies")
+    @ResponseBody
+    public ResponseEntity findAllAgencies(){
+        return GetResponse(adminService.findAllAgencies(), HttpStatus.OK);
     }
 }
