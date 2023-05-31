@@ -6,6 +6,7 @@ import it.ripapp.ripapp.entityUpdate.AgencyEntity;
 import it.ripapp.ripapp.entityUpdate.ProductEntity;
 import it.ripapp.ripapp.repository.AccountRepository;
 import it.ripapp.ripapp.repository.AgencyRepository;
+import it.ripapp.ripapp.repository.ProductEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,9 @@ public class AgencyService extends AbstractService{
 
     @Autowired
     private AgencyRepository agencyRepository;
+
+    @Autowired
+    private ProductEntityRepository productRepository;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -83,4 +87,12 @@ public class AgencyService extends AbstractService{
     }
 
 
+    public List<ProductEntity> getAvailableProducts(Long userId) {
+        AccountEntity entity = accountRepository.getById(userId);
+        AgencyEntity agencyEntity = entity.getAgency();
+        if(agencyEntity == null){
+            throw new RuntimeException("User is not an agency operator");
+        }
+        return productRepository.findAll();
+    }
 }

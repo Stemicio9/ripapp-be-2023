@@ -77,6 +77,14 @@ public class AgencyController extends AbstractController {
         return GetResponse(agencyService.getAgencyProducts(userid, offset), HttpStatus.OK);
     }
 
+    @GetMapping("/all-products")
+    @ResponseBody
+    public ResponseEntity getAllProducts(Long userId) throws ResponseException {
+        return GetResponse(agencyService.getAvailableProducts(userId), HttpStatus.OK);
+    }
+
+
+
     @PostMapping("/product")
     @ResponseBody
     public ResponseEntity insertProduct(
