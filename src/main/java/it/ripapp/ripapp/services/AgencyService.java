@@ -42,7 +42,8 @@ public class AgencyService extends AbstractService{
         if(agency == null){
             throw new RuntimeException("User is not an agency operator");
         }
-        return executeAction(() -> agency.getProducts().subList(offset, offset + 10));
+        int indexOfLastElement = (agency.getProducts().size() < (offset+10)) ? agency.getProducts().size() : (offset+10);
+        return executeAction(() -> agency.getProducts().subList(offset, indexOfLastElement));
     }
 
     public AgencyEntity insertProduct(Long userId, ProductEntity productEntity){

@@ -1,6 +1,7 @@
 package it.ripapp.ripapp.controller;
 
 
+import it.ripapp.ripapp.dto.ProductOffered;
 import it.ripapp.ripapp.entityUpdate.DemiseEntity;
 import it.ripapp.ripapp.entityUpdate.ProductEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -22,6 +25,7 @@ public class AgencyController extends AbstractController {
 
     @Autowired
     private AgencyService agencyService;
+
 
     @GetMapping("/demises")
     @ResponseBody
@@ -72,15 +76,32 @@ public class AgencyController extends AbstractController {
     @ResponseBody
     public ResponseEntity getAgencyProducts(
             @RequestParam Integer offset,
-            @CookieValue Long userid) throws ResponseException {
+            //@CookieValue Long userid) throws ResponseException {
+            @RequestParam Long userid) throws ResponseException { //fixme fatto come requestparam per semplicità
 
         return GetResponse(agencyService.getAgencyProducts(userid, offset), HttpStatus.OK);
     }
 
+    @GetMapping("/productsOffered")
+    public ResponseEntity getProductsOfferedByAgencyOnTotal(@RequestParam Long userid) throws ResponseException {
+        List<ProductEntity> allProducts = agencyService.getAvailableProducts(userid);
+        List<ProductEntity> productsOfferedByAgency = agencyService.getAgencyProducts(userid, 0);
+        List<ProductOffered> productsOfferedOnTotal = new ArrayList<>();
+        for (ProductEntity product : allProducts)
+            if (productsOfferedByAgency.contains(product))
+                productsOfferedOnTotal.add(new ProductOffered(product, true));
+            else
+                productsOfferedOnTotal.add(new ProductOffered(product, false));
+        return GetResponse(productsOfferedOnTotal, HttpStatus.OK);
+    }
+
+
     @GetMapping("/all-products")
     @ResponseBody
-    public ResponseEntity getAllProducts(Long userId) throws ResponseException {
-        return GetResponse(agencyService.getAvailableProducts(userId), HttpStatus.OK);
+    public ResponseEntity getAllProducts(@RequestParam Long userId) throws ResponseException {
+        List<ProductEntity> prodotti = agencyService.getAvailableProducts(userId);
+        System.out.println(prodotti);
+        return GetResponse(prodotti, HttpStatus.OK);
     }
 
 
