@@ -95,6 +95,12 @@ public class AgencyController extends AbstractController {
         return GetResponse(productsOfferedOnTotal, HttpStatus.OK);
     }
 
+    @PostMapping("/productsOffered")
+    public void editProductsOfferedByAgencyOnTotal(@RequestParam Long userid, @RequestBody List<ProductOffered> productsOffered) {
+        System.out.println("prodotti arrivati da frontend: "+ productsOffered);
+        agencyService.setAgencyProducts(userid, productsOffered);
+    }
+
 
     @GetMapping("/all-products")
     @ResponseBody
