@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -61,6 +62,9 @@ public class AccountService extends AbstractService{
         FirebaseToken decodedToken = FirebaseAuth.getInstance().verifySessionCookie(token);
         AccountEntity account = accountRepository.findByEmail(decodedToken.getEmail());
         return account;
+    }
+    public List<AccountEntity> getAllUser(){
+        return accountRepository.findAll();
     }
 
 

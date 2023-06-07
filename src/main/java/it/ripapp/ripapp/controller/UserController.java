@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -77,6 +78,10 @@ public class UserController extends AbstractController {
             @CookieValue Long userid,
             @RequestBody Collection<PhoneBookSyncEntity> phoneBookSyncEntity) throws ResponseException {
         return GetResponse(accountService.syncPhoneBook(userid, phoneBookSyncEntity), HttpStatus.OK);
+    }
+    @GetMapping("/account/list")
+    public List<AccountEntity> getAllUser(){
+        return accountService.getAllUser();
     }
 
     @DeleteMapping("/account")
