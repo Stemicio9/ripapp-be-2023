@@ -58,6 +58,9 @@ public class UserController extends AbstractController {
         return GetResponse(accountService.accountFromToken(firebasecookie), HttpStatus.OK);
     }
 
+
+
+
     @PostMapping("/login")
     @ResponseBody
     public ResponseEntity login(@RequestBody LoginRequest loginRequest,
@@ -90,6 +93,13 @@ public class UserController extends AbstractController {
             @CookieValue Long userid) throws ResponseException {
         return GetResponse(accountService.deleteAccount(userid), HttpStatus.OK);
     }
+    @DeleteMapping("/account/{idUser}")
+    @ResponseBody
+    public ResponseEntity deleteUser(
+            @PathVariable Long idUser){
+        return GetResponse(accountService.deleteUser(idUser), HttpStatus.OK);
+    }
+
 
     @RequestMapping(value = "/agency/{agencyid}/phonebook", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody

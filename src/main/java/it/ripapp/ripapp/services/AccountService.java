@@ -70,6 +70,7 @@ public class AccountService extends AbstractService{
 
 
     public AccountEntity saveUser(AccountEntity user){
+        user.setAccountid(null);
         // TODO here we need to check if UUID should be generated here or in the database to avoid duplicates
         return executeAction(() -> saveUserFlow(user));
     }
@@ -114,6 +115,14 @@ public class AccountService extends AbstractService{
         accountRepository.deleteById(userId);
         return account.get();
     }
+    public AccountEntity deleteUser(Long idUser){
+        Optional<AccountEntity> account = accountRepository.findById(idUser);
+        if(account.isEmpty()){
+            throw new RuntimeException("User not found");
+        }
+        accountRepository.deleteById(idUser);
+        return account.get();
+    }
 
     public AccountEntity sendPhoneBook(Long userId, Long agencyId, String file){
         Optional<AccountEntity> account = accountRepository.findById(userId);
@@ -136,7 +145,7 @@ public class AccountService extends AbstractService{
         return executeAction(() -> accountRepository.save(account.get()));
     }
 
-    private AccountEntity saveUserFlow(AccountEntity accountEntity){
+    private AccountEntity saveUserFlow(AccountEntity accountEntity ){
         // If the user is a customer or an admin, we save it as a normal user
         if(accountEntity.getStatus().equals(UserStatus.active)
                 || accountEntity.getStatus().equals(UserStatus.disabled)

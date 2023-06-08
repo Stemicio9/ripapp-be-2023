@@ -39,7 +39,7 @@ public class AccountEntity implements Serializable {
     private Boolean notif;
     @OneToMany
     @Cascade(CascadeType.ALL)
-    private List<it.ripapp.ripapp.entityUpdate.CityEntity> city;
+    private List<CityEntity> city;
     private Boolean enabled;
     private String photourl;
     private Lang lang;
@@ -48,7 +48,7 @@ public class AccountEntity implements Serializable {
     private String phonebookName;
     private UserStatus status;
     @OneToOne
-    private it.ripapp.ripapp.entityUpdate.AgencyEntity agency;
+    private AgencyEntity agency;
     @JsonIgnore
     private Double similarity;
 
