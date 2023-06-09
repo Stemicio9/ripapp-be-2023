@@ -1,6 +1,8 @@
 package it.ripapp.ripapp.services;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import it.ripapp.ripapp.dto.ProductOffered;
 import it.ripapp.ripapp.entityUpdate.AccountEntity;
 import it.ripapp.ripapp.entityUpdate.AgencyEntity;
@@ -17,7 +19,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class AgencyService extends AbstractService{
+public class AgencyService extends AbstractService {
 
     @Autowired
     private AgencyRepository agencyRepository;
@@ -28,44 +30,66 @@ public class AgencyService extends AbstractService{
     @Autowired
     private AccountRepository accountRepository;
 
-
-    public List<AgencyEntity> searchAgency(Long userId, String query){
+    public List<AgencyEntity> searchAgency(Long userId, String query) {
         // TODO here understand if is needed userId or not, I think it should remain as it is
         return executeAction(() -> agencyRepository.findAllByNameContains(query));
     }
 
-    public List<AccountEntity> searchAccount(Long userId, String query){
+    public List<AccountEntity> searchAccount(Long userId, String query) {
         // TODO here understand how to search account by agency or viceversa, should work like this
         return executeAction(() -> accountRepository.findAllByAgency_NameContainsOrAgency_EmailContains(query, query));
     }
 
-    public List<ProductEntity> getAgencyProducts(Long userId, int offset){
+    public List<ProductEntity> getAgencyProducts(Long userId, int offset) {
         AccountEntity entity = accountRepository.getById(userId);
         AgencyEntity agency = entity.getAgency();
-        if(agency == null){
+        if (agency == null) {
             throw new RuntimeException("User is not an agency operator");
         }
-        int indexOfLastElement = (agency.getProducts().size() < (offset+10)) ? agency.getProducts().size() : (offset+10);
+        int indexOfLastElement = (agency.getProducts().size() < (offset + 10)) ? agency.getProducts().size() : (offset + 10);
         return executeAction(() -> agency.getProducts().subList(offset, indexOfLastElement));
     }
-    public AgencyEntity deleteAgency(Long idAgency){
-        Optional<AgencyEntity> account = agencyRepository.findById(idAgency);
-        if(account.isEmpty()){
-            throw new RuntimeException("User not found");
+
+    public AgencyEntity deleteAgency(Long idAgency) throws FirebaseAuthException {
+        Optional<AgencyEntity> agency = agencyRepository.findById(idAgency);
+        if (agency.isEmpty()) {
+            throw new RuntimeException("Agency not found");
         }
-        accountRepository.deleteById(idAgency);
-        return account.get();
+
+        List<AccountEntity> accountEntityList = accountRepository.findAll();
+        List<String> usersToBeDeleted = new ArrayList<>();
+
+        //delete accounts from sql db
+        for (AccountEntity a : accountEntityList) {
+            AgencyEntity accountAgency = a.getAgency();
+            if (accountAgency != null) {
+                if (accountAgency.getAgencyid().equals(idAgency)) {
+                    accountRepository.deleteById(a.getAccountid());
+                    usersToBeDeleted.add(a.getIdtoken());
+                }
+            }
+        }
+
+        //delete agency from sql db
+        agencyRepository.deleteById(idAgency);
+
+        FirebaseAuth fa = FirebaseAuth.getInstance();
+        //delete accounts from firebase
+        for (String s : usersToBeDeleted) {
+            fa.deleteUser(s);
+        }
+
+        return agency.get();
     }
 
-    public void setAgencyProducts(Long userId, List<ProductOffered> productsOffered){
+    public void setAgencyProducts(Long userId, List<ProductOffered> productsOffered) {
         AccountEntity entity = accountRepository.getById(userId);
         AgencyEntity agency = entity.getAgency();
         List<ProductEntity> agencyProducts = agency.getProducts();
         List<ProductEntity> toRemove = new ArrayList<>();
-        for (ProductOffered productOffered : productsOffered)
-        {
+        for (ProductOffered productOffered : productsOffered) {
             System.out.println("prodotto offerto:" + productOffered);
-            if ( (!agencyProducts.contains(productOffered.getProduct())) && productOffered.getOffered())
+            if ((!agencyProducts.contains(productOffered.getProduct())) && productOffered.getOffered())
                 agencyProducts.add(productOffered.getProduct());
             else if (agencyProducts.contains(productOffered.getProduct()) && !productOffered.getOffered())
                 toRemove.add(productOffered.getProduct());
@@ -81,18 +105,18 @@ public class AgencyService extends AbstractService{
             if (contained)
                 toRemove.add(localProduct);
         }
-        for ( ProductEntity product : toRemove ) agencyProducts.remove(product);
+        for (ProductEntity product : toRemove) agencyProducts.remove(product);
         agency.setProducts(agencyProducts);
         System.out.println("agenzia che sto salvando" + agency);
         agencyRepository.save(agency);
         System.out.println("prodotti aggiornati: " + agencyProducts);
     }
 
-    public AgencyEntity insertProduct(Long userId, ProductEntity productEntity){
+    public AgencyEntity insertProduct(Long userId, ProductEntity productEntity) {
         // TODO here understand how to search account by agency or viceversa
         AccountEntity entity = accountRepository.getById(userId);
         AgencyEntity agencyEntity = entity.getAgency();
-        if(agencyEntity == null){
+        if (agencyEntity == null) {
             throw new RuntimeException("User is not an agency operator");
         }
         agencyEntity.getProducts().add(productEntity);
@@ -100,11 +124,11 @@ public class AgencyService extends AbstractService{
         return agencyEntity;
     }
 
-    public AgencyEntity deleteProduct(Long userId, Long productId){
+    public AgencyEntity deleteProduct(Long userId, Long productId) {
         // TODO here understand how to search account by agency or viceversa
         AccountEntity entity = accountRepository.getById(userId);
         AgencyEntity agencyEntity = entity.getAgency();
-        if(agencyEntity == null){
+        if (agencyEntity == null) {
             throw new RuntimeException("User is not an agency operator");
         }
         agencyEntity.getProducts().removeIf(productEntity -> productEntity.getProductId().equals(productId));
@@ -112,11 +136,11 @@ public class AgencyService extends AbstractService{
         return agencyEntity;
     }
 
-    public AgencyEntity updateProduct(Long userId, Long productId, ProductEntity productEntity){
+    public AgencyEntity updateProduct(Long userId, Long productId, ProductEntity productEntity) {
         // TODO here understand how to search account by agency or viceversa
         AccountEntity entity = accountRepository.getById(userId);
         AgencyEntity agencyEntity = entity.getAgency();
-        if(agencyEntity == null){
+        if (agencyEntity == null) {
             throw new RuntimeException("User is not an agency operator");
         }
         agencyEntity.getProducts().removeIf(productEntity1 -> productEntity1.getProductId().equals(productId));
@@ -125,7 +149,7 @@ public class AgencyService extends AbstractService{
         return agencyEntity;
     }
 
-    public AgencyEntity saveAgencyEntity(AgencyEntity agency){
+    public AgencyEntity saveAgencyEntity(AgencyEntity agency) {
         return agencyRepository.save(agency);
     }
 
@@ -133,7 +157,7 @@ public class AgencyService extends AbstractService{
     public List<ProductEntity> getAvailableProducts(Long userId) {
         AccountEntity entity = accountRepository.getById(userId);
         AgencyEntity agencyEntity = entity.getAgency();
-        if(agencyEntity == null){
+        if (agencyEntity == null) {
             throw new RuntimeException("User is not an agency operator");
         }
         return productRepository.findAll();
