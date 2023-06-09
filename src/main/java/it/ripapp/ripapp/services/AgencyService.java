@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -46,6 +47,14 @@ public class AgencyService extends AbstractService{
         }
         int indexOfLastElement = (agency.getProducts().size() < (offset+10)) ? agency.getProducts().size() : (offset+10);
         return executeAction(() -> agency.getProducts().subList(offset, indexOfLastElement));
+    }
+    public AgencyEntity deleteAgency(Long idAgency){
+        Optional<AgencyEntity> account = agencyRepository.findById(idAgency);
+        if(account.isEmpty()){
+            throw new RuntimeException("User not found");
+        }
+        accountRepository.deleteById(idAgency);
+        return account.get();
     }
 
     public void setAgencyProducts(Long userId, List<ProductOffered> productsOffered){

@@ -64,6 +64,12 @@ public class AgencyController extends AbstractController {
 
         return GetResponse(demiseService.deleteDemiseByID(userid, demiseid), HttpStatus.OK);
     }
+    @DeleteMapping("/account/{idAgency}")
+    @ResponseBody
+    public ResponseEntity deleteUser(
+            @PathVariable Long idAgency){
+        return GetResponse(agencyService.deleteAgency(idAgency), HttpStatus.OK);
+    }
 
     @PutMapping("/demise/{demiseid}")
     @ResponseBody
