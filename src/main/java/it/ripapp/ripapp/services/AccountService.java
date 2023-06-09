@@ -63,6 +63,9 @@ public class AccountService extends AbstractService{
         AccountEntity account = accountRepository.findByEmail(decodedToken.getEmail());
         return account;
     }
+    public List<AccountEntity> getAllUser(){
+        return accountRepository.findAll();
+    }
 
 
 
