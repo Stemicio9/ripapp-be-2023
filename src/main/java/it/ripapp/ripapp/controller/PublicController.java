@@ -29,6 +29,7 @@ public class PublicController extends AbstractController {
     public ResponseEntity saveUser(
             @RequestBody AccountEntity user){
         System.out.println("ciao buonasera carissimi");
+        System.out.println(user);
        return GetResponse(accountService.saveUser(user), HttpStatus.OK);
     }
 

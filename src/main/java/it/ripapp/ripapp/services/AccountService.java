@@ -72,6 +72,7 @@ public class AccountService extends AbstractService{
     public AccountEntity saveUser(AccountEntity user){
         user.setAccountid(null);
         // TODO here we need to check if UUID should be generated here or in the database to avoid duplicates
+        System.out.println(user);
         return executeAction(() -> saveUserFlow(user));
     }
 
@@ -176,4 +177,7 @@ public class AccountService extends AbstractService{
 
     }
 
+    public List<AccountEntity> findAllAccounts() {
+        return accountRepository.findAll();
+    }
 }

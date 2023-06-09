@@ -4,9 +4,11 @@ import it.ripapp.ripapp.authentication.model.LoginRequest;
 import it.ripapp.ripapp.entityUpdate.AgencyEntity;
 import it.ripapp.ripapp.entityUpdate.ProductEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
+import it.ripapp.ripapp.services.AccountService;
 import it.ripapp.ripapp.services.AdminService;
 import it.ripapp.ripapp.services.AgencyService;
 import it.ripapp.ripapp.utilities.FirebaseAuthCookieData;
+import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,8 @@ public class AdminController extends AbstractController {
     private AgencyService agencyService;
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private AccountService accountService;
 
     @PostMapping("/agency")
     @ResponseBody
@@ -43,5 +47,11 @@ public class AdminController extends AbstractController {
     @ResponseBody
     public ResponseEntity findAllAgencies(){
         return GetResponse(adminService.findAllAgencies(), HttpStatus.OK);
+    }
+
+    @GetMapping("/accounts")
+    public ResponseEntity findAllAccounts(@RequestParam Integer offset, @RequestParam Long userid){
+        System.out.println("ci arrivo qui si??");
+        return GetResponse(accountService.findAllAccounts(), HttpStatus.OK);
     }
 }

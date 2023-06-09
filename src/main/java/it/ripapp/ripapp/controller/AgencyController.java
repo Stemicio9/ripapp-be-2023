@@ -1,9 +1,11 @@
 package it.ripapp.ripapp.controller;
 
 
+import it.ripapp.ripapp.dto.ProductOffered;
 import it.ripapp.ripapp.entityUpdate.DemiseEntity;
 import it.ripapp.ripapp.entityUpdate.ProductEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
+import it.ripapp.ripapp.services.AdminService;
 import it.ripapp.ripapp.services.AgencyService;
 import it.ripapp.ripapp.services.DemiseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -23,6 +27,10 @@ public class AgencyController extends AbstractController {
     @Autowired
     private AgencyService agencyService;
 
+    @Autowired
+    private AdminService adminService;
+
+
     @GetMapping("/demises")
     @ResponseBody
     public ResponseEntity getAgencyDemises(
@@ -30,6 +38,13 @@ public class AgencyController extends AbstractController {
             @CookieValue Long userid) throws ResponseException {
 
         return GetResponse(demiseService.getAgencyDemises(userid, offset), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/demisesIgnorante")
+    public ResponseEntity getAgencyDemisesForTesting(){
+        System.out.println("ci passo!");
+        return GetResponse(demiseService.getAgencyDemisesIgnorante(), HttpStatus.OK);
     }
 
     @PostMapping("/demise")
@@ -72,15 +87,38 @@ public class AgencyController extends AbstractController {
     @ResponseBody
     public ResponseEntity getAgencyProducts(
             @RequestParam Integer offset,
-            @CookieValue Long userid) throws ResponseException {
+            //@CookieValue Long userid) throws ResponseException {
+            @RequestParam Long userid) throws ResponseException { //fixme fatto come requestparam per semplicità
 
         return GetResponse(agencyService.getAgencyProducts(userid, offset), HttpStatus.OK);
     }
 
+    @GetMapping("/productsOffered")
+    public ResponseEntity getProductsOfferedByAgencyOnTotal(@RequestParam Long userid) throws ResponseException {
+        List<ProductEntity> allProducts = agencyService.getAvailableProducts(userid);
+        List<ProductEntity> productsOfferedByAgency = agencyService.getAgencyProducts(userid, 0);
+        List<ProductOffered> productsOfferedOnTotal = new ArrayList<>();
+        for (ProductEntity product : allProducts)
+            if (productsOfferedByAgency.contains(product))
+                productsOfferedOnTotal.add(new ProductOffered(product, true));
+            else
+                productsOfferedOnTotal.add(new ProductOffered(product, false));
+        return GetResponse(productsOfferedOnTotal, HttpStatus.OK);
+    }
+
+    @PostMapping("/productsOffered")
+    public void editProductsOfferedByAgencyOnTotal(@RequestParam Long userid, @RequestBody List<ProductOffered> productsOffered) {
+        System.out.println("prodotti arrivati da frontend: "+ productsOffered);
+        agencyService.setAgencyProducts(userid, productsOffered);
+    }
+
+
     @GetMapping("/all-products")
     @ResponseBody
-    public ResponseEntity getAllProducts(Long userId) throws ResponseException {
-        return GetResponse(agencyService.getAvailableProducts(userId), HttpStatus.OK);
+    public ResponseEntity getAllProducts(@RequestParam Long userId) throws ResponseException {
+        List<ProductEntity> prodotti = adminService.findAllProducts();
+        System.out.println(prodotti);
+        return GetResponse(prodotti, HttpStatus.OK);
     }
 
 
