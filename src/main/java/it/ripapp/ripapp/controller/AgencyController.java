@@ -42,9 +42,10 @@ public class AgencyController extends AbstractController {
 
 
     @GetMapping("/demisesIgnorante")
-    public ResponseEntity getAgencyDemisesForTesting(){
+    public ResponseEntity getAgencyDemisesForTesting(@RequestParam Long accountId){
         System.out.println("ci passo!");
-        return GetResponse(demiseService.getAgencyDemisesIgnorante(), HttpStatus.OK);
+        //return GetResponse(demiseService.getAgencyDemisesIgnorante(), HttpStatus.OK);
+        return GetResponse(demiseService.getAgencyDemises(accountId, 0), HttpStatus.OK);
     }
 
     @PostMapping("/demise")
