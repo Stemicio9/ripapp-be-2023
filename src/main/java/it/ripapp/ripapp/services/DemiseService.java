@@ -59,5 +59,8 @@ public class DemiseService extends AbstractService{
     }
 
 
-
+    public List<DemiseEntity> getAgencyDemisesIgnorante() {
+        System.out.println("ci passo?");
+        return demiseEntityRepository.findAll();
+    }
 }

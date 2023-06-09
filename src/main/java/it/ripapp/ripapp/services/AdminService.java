@@ -24,4 +24,8 @@ public class AdminService extends AbstractService{
     public List<AgencyEntity> findAllAgencies() {
         return agencyRepository.findAll();
     }
+
+    public List<ProductEntity> findAllProducts(){
+        return productEntityRepository.findAll();
+    }
 }

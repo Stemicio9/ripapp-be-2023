@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -67,6 +68,7 @@ public class AccountService extends AbstractService{
 
     public AccountEntity saveUser(AccountEntity user){
         // TODO here we need to check if UUID should be generated here or in the database to avoid duplicates
+        System.out.println(user);
         return executeAction(() -> saveUserFlow(user));
     }
 
@@ -163,4 +165,7 @@ public class AccountService extends AbstractService{
 
     }
 
+    public List<AccountEntity> findAllAccounts() {
+        return accountRepository.findAll();
+    }
 }

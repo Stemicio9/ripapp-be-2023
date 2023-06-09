@@ -5,6 +5,7 @@ import it.ripapp.ripapp.dto.ProductOffered;
 import it.ripapp.ripapp.entityUpdate.DemiseEntity;
 import it.ripapp.ripapp.entityUpdate.ProductEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
+import it.ripapp.ripapp.services.AdminService;
 import it.ripapp.ripapp.services.AgencyService;
 import it.ripapp.ripapp.services.DemiseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class AgencyController extends AbstractController {
     @Autowired
     private AgencyService agencyService;
 
+    @Autowired
+    private AdminService adminService;
+
 
     @GetMapping("/demises")
     @ResponseBody
@@ -34,6 +38,13 @@ public class AgencyController extends AbstractController {
             @CookieValue Long userid) throws ResponseException {
 
         return GetResponse(demiseService.getAgencyDemises(userid, offset), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/demisesIgnorante")
+    public ResponseEntity getAgencyDemisesForTesting(){
+        System.out.println("ci passo!");
+        return GetResponse(demiseService.getAgencyDemisesIgnorante(), HttpStatus.OK);
     }
 
     @PostMapping("/demise")
@@ -105,7 +116,7 @@ public class AgencyController extends AbstractController {
     @GetMapping("/all-products")
     @ResponseBody
     public ResponseEntity getAllProducts(@RequestParam Long userId) throws ResponseException {
-        List<ProductEntity> prodotti = agencyService.getAvailableProducts(userId);
+        List<ProductEntity> prodotti = adminService.findAllProducts();
         System.out.println(prodotti);
         return GetResponse(prodotti, HttpStatus.OK);
     }
