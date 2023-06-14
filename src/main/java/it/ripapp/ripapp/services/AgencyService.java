@@ -10,6 +10,7 @@ import it.ripapp.ripapp.repository.AgencyRepository;
 import it.ripapp.ripapp.repository.ProductEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.method.HandlerTypePredicate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class AgencyService extends AbstractService{
 
     public List<ProductEntity> getAgencyProducts(Long userId, int offset){
         AccountEntity entity = accountRepository.getById(userId);
+        System.out.println("entita: " + entity);
         AgencyEntity agency = entity.getAgency();
         if(agency == null){
             throw new RuntimeException("User is not an agency operator");

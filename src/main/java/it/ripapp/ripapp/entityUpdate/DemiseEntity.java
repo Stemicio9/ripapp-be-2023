@@ -67,7 +67,7 @@ public class DemiseEntity {
 
     @OneToMany
     @Cascade(CascadeType.ALL)
-    private List<CityEntity> cities;
+    private List<CityEntity> cities; //comuni di interesse
 
     @OneToOne
     @Cascade(CascadeType.ALL)

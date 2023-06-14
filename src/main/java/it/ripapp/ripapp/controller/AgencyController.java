@@ -1,6 +1,7 @@
 package it.ripapp.ripapp.controller;
 
 
+import it.ripapp.ripapp.bll.Kinship;
 import it.ripapp.ripapp.dto.ProductOffered;
 import it.ripapp.ripapp.entityUpdate.DemiseEntity;
 import it.ripapp.ripapp.entityUpdate.ProductEntity;
@@ -159,6 +160,10 @@ public class AgencyController extends AbstractController {
         return GetResponse(demiseService.insertDemiseForTesting(demiseEntity), HttpStatus.CREATED);
     }
 
-
+    @GetMapping("/kinships")
+    public ResponseEntity getKinships(){
+        return GetResponse(Kinship.values(), HttpStatus.OK);
+        //todo fetch from db actually
+    }
 
 }

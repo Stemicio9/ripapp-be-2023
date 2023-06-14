@@ -55,6 +55,7 @@ public class AdminController extends AbstractController {
     @GetMapping("/accounts")
     public ResponseEntity findAllAccounts(@RequestParam Integer offset, @RequestParam Long userid, @RequestBody AccountSearchEntity accountSearch){
         System.out.println("ci arrivo qui si??");
+        System.out.println(offset);
         return GetResponse(accountService.findAllAccounts(accountSearch), HttpStatus.OK);
     }
 }

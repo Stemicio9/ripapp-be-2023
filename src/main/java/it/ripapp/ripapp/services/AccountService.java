@@ -174,6 +174,7 @@ public class AccountService extends AbstractService{
     }
 
     public Page<AccountEntity> findAllAccounts(AccountSearchEntity accountSearchEntity) {
+        System.out.println(accountSearchEntity);
         Pageable page = PageRequest.of(accountSearchEntity.getPageNumber(), accountSearchEntity.getPageElements(), Sort.by("accountid"));
         return accountRepository.findAll(page);
     }
