@@ -1,6 +1,7 @@
 package it.ripapp.ripapp.controller;
 
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import it.ripapp.ripapp.authentication.model.LoginRequest;
 import it.ripapp.ripapp.dto.AccountSearchEntity;
@@ -104,6 +105,7 @@ public class UserController extends AbstractController {
     @ResponseBody
     public ResponseEntity deleteUser(
             @PathVariable Long idUser) throws FirebaseAuthException {
+        AccountEntity toDelete = accountService.getAccountByID(idUser);
         return GetResponse(accountService.deleteUser(idUser), HttpStatus.OK);
     }
 

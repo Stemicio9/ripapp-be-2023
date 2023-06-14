@@ -128,6 +128,7 @@ public class AccountService extends AbstractService{
         }
         FirebaseAuth fa = FirebaseAuth.getInstance();
         String idToken = account.get().getIdtoken();
+        System.out.println("token = " + idToken);
         fa.deleteUser(idToken);
         accountRepository.deleteById(idUser);
         //delete accounts from firebase
