@@ -26,7 +26,7 @@ public class PhoneBookEntity implements Serializable {
     @OneToMany
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<ContactEntity> contacts;
-    private Integer offset;
+    private Integer offsetNumber;
     private Integer total;
     private Boolean hasnextchunk;
 }

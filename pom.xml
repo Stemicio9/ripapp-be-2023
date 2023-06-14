@@ -8,11 +8,13 @@
         <version>2.5.5</version>
         <relativePath/>
     </parent>
+
     <groupId>com.swipeapp</groupId>
     <artifactId>ripapp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ripapp</name>
     <description>RipApp backend</description>
+    <packaging>war</packaging>
 
     <properties>
         <java.version>16</java.version>
@@ -25,11 +27,12 @@
             <version>1.18.26</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
 
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -42,37 +45,44 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.24</version>
+            <version>42.6.0</version>
         </dependency>
+
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
             <version>5.5.2</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
             <version>5.5.2</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
             <version>5.5.2</version>
         </dependency>
+
         <dependency>
             <groupId>com.google.firebase</groupId>
             <artifactId>firebase-admin</artifactId>
             <version>8.1.0</version>
         </dependency>
+
         <dependency>
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
             <version>1.7</version>
         </dependency>
+
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -102,17 +112,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>mysql</groupId>-->
+<!--            <artifactId>mysql-connector-java</artifactId>-->
+<!--        </dependency>-->
+
+
     </dependencies>
 
     <build>
+        <finalName>ripapp</finalName>
         <plugins>
 <!--            <plugin>-->
 <!--                <groupId>org.codehaus.mojo</groupId>-->
@@ -123,10 +132,12 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <layers>
-                        <enabled>true</enabled>
-                        <includeLayerTools>true</includeLayerTools>
-                    </layers>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>

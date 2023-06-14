@@ -19,7 +19,7 @@ public class PhoneBookSyncEntity {
     //TODO fare entità contatti e poi aggiornare
     //@OneToMany
    // private List<ContactEntity> contacts;
-    private Integer offset;
+    private Integer offsetNumber;
     private Integer total;
     private Boolean hasnextchunk;
 }

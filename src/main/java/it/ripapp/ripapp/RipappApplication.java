@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
 import org.springframework.web.cors.CorsConfiguration;
@@ -28,7 +29,7 @@ import java.io.InputStream;
 import java.util.concurrent.ThreadFactory;
 
 @SpringBootApplication
-public class RipappApplication implements WebMvcConfigurer {
+public class RipappApplication extends SpringBootServletInitializer implements WebMvcConfigurer {
 
     public static void main(String[] args) {
         SpringApplication.run(RipappApplication.class, args);
