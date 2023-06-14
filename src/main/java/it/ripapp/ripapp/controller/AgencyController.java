@@ -2,6 +2,7 @@ package it.ripapp.ripapp.controller;
 
 
 import it.ripapp.ripapp.bll.Kinship;
+import com.google.firebase.auth.FirebaseAuthException;
 import it.ripapp.ripapp.dto.ProductOffered;
 import it.ripapp.ripapp.entityUpdate.DemiseEntity;
 import it.ripapp.ripapp.entityUpdate.ProductEntity;
@@ -61,10 +62,17 @@ public class AgencyController extends AbstractController {
     @DeleteMapping("/demise/{demiseid}")
     @ResponseBody
     public ResponseEntity deleteDemise(
-            @PathVariable Long demiseid,
-            @CookieValue Long userid) throws ResponseException {
+            @PathVariable Long demiseid) throws ResponseException {
+        demiseService.deleteDemiseByID(demiseid);
+        return GetResponse(Boolean.TRUE, HttpStatus.OK);
+    }
 
-        return GetResponse(demiseService.deleteDemiseByID(userid, demiseid), HttpStatus.OK);
+
+    @DeleteMapping("/agency/{idAgency}")
+    @ResponseBody
+    public ResponseEntity deleteAgency(
+            @PathVariable Long idAgency) throws FirebaseAuthException {
+        return GetResponse(agencyService.deleteAgency(idAgency), HttpStatus.OK);
     }
 
     @PutMapping("/demise/{demiseid}")

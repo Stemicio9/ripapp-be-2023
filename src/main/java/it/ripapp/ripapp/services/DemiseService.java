@@ -55,6 +55,10 @@ public class DemiseService extends AbstractService{
         return getAgencyDemises(accountID, 0);
     }
 
+    /*public void deleteDemiseByID(Long demiseID){
+        demiseEntityRepository.deleteById(demiseID);
+    }*/
+
     public List<DemiseEntity> updateDemise(Long accountID, Long demiseID, DemiseEntity demise){
         Optional<DemiseEntity> demiseEntity = demiseEntityRepository.findById(demiseID);
         if(!demiseEntity.isPresent()){

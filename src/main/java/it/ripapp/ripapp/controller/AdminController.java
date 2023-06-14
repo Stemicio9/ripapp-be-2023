@@ -46,6 +46,10 @@ public class AdminController extends AbstractController {
         return GetResponse(adminService.saveProductEntity(productEntity), HttpStatus.OK);
     }
 
+
+    @DeleteMapping("/delete/{productId}")
+    public void deleteProduct(@PathVariable Long productId){adminService.deleteProduct(productId);}
+
     @GetMapping("/agencies")
     @ResponseBody
     public ResponseEntity findAllAgencies(){
@@ -58,4 +62,6 @@ public class AdminController extends AbstractController {
         System.out.println(offset);
         return GetResponse(accountService.findAllAccounts(accountSearch), HttpStatus.OK);
     }
+
+
 }
