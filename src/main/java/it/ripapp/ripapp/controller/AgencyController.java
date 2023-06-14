@@ -62,17 +62,10 @@ public class AgencyController extends AbstractController {
     @DeleteMapping("/demise/{demiseid}")
     @ResponseBody
     public ResponseEntity deleteDemise(
-            @PathVariable Long demiseid) throws ResponseException {
-        demiseService.deleteDemiseByID(demiseid);
-        return GetResponse(Boolean.TRUE, HttpStatus.OK);
-    }
+            @PathVariable Long demiseid,
+            @RequestParam Long userid) throws ResponseException {
 
-
-    @DeleteMapping("/agency/{idAgency}")
-    @ResponseBody
-    public ResponseEntity deleteAgency(
-            @PathVariable Long idAgency) throws FirebaseAuthException {
-        return GetResponse(agencyService.deleteAgency(idAgency), HttpStatus.OK);
+        return GetResponse(demiseService.deleteDemiseByID(userid, demiseid), HttpStatus.OK);
     }
 
     @PutMapping("/demise/{demiseid}")
@@ -168,10 +161,6 @@ public class AgencyController extends AbstractController {
         return GetResponse(demiseService.insertDemiseForTesting(demiseEntity), HttpStatus.CREATED);
     }
 
-    @GetMapping("/kinships")
-    public ResponseEntity getKinships(){
-        return GetResponse(Kinship.values(), HttpStatus.OK);
-        //todo fetch from db actually
-    }
+
 
 }
