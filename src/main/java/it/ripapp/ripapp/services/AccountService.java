@@ -116,12 +116,18 @@ public class AccountService extends AbstractService{
         accountRepository.deleteById(userId);
         return account.get();
     }
-    public AccountEntity deleteUser(Long idUser){
+    public AccountEntity deleteUser(Long idUser) throws FirebaseAuthException {
         Optional<AccountEntity> account = accountRepository.findById(idUser);
         if(account.isEmpty()){
             throw new RuntimeException("User not found");
         }
+        FirebaseAuth fa = FirebaseAuth.getInstance();
+        String idToken = account.get().getIdtoken();
+        fa.deleteUser(idToken);
         accountRepository.deleteById(idUser);
+        //delete accounts from firebase
+
+
         return account.get();
     }
 

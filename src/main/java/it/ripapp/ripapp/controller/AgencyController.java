@@ -44,7 +44,6 @@ public class AgencyController extends AbstractController {
 
     @GetMapping("/demisesIgnorante")
     public ResponseEntity getAgencyDemisesForTesting(){
-        System.out.println("ci passo!");
         return GetResponse(demiseService.getAgencyDemisesIgnorante(), HttpStatus.OK);
     }
 
@@ -60,11 +59,12 @@ public class AgencyController extends AbstractController {
     @DeleteMapping("/demise/{demiseid}")
     @ResponseBody
     public ResponseEntity deleteDemise(
-            @PathVariable Long demiseid,
-            @CookieValue Long userid) throws ResponseException {
-
-        return GetResponse(demiseService.deleteDemiseByID(userid, demiseid), HttpStatus.OK);
+            @PathVariable Long demiseid) throws ResponseException {
+        demiseService.deleteDemiseByID(demiseid);
+        return GetResponse(Boolean.TRUE, HttpStatus.OK);
     }
+
+
     @DeleteMapping("/agency/{idAgency}")
     @ResponseBody
     public ResponseEntity deleteAgency(

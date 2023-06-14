@@ -1,6 +1,7 @@
 package it.ripapp.ripapp.controller;
 
 
+import com.google.firebase.auth.FirebaseAuthException;
 import it.ripapp.ripapp.authentication.model.LoginRequest;
 import it.ripapp.ripapp.entityUpdate.AccountEntity;
 import it.ripapp.ripapp.entityUpdate.PhoneBookSyncEntity;
@@ -43,6 +44,8 @@ public class UserController extends AbstractController {
             @CookieValue Long userid) throws ResponseException {
         return GetResponse(demiseService.userDemisesAutocomplete(userid, query), HttpStatus.OK);
     }
+
+
 
     @PutMapping("/account")
     @ResponseBody
@@ -93,10 +96,11 @@ public class UserController extends AbstractController {
             @CookieValue Long userid) throws ResponseException {
         return GetResponse(accountService.deleteAccount(userid), HttpStatus.OK);
     }
+
     @DeleteMapping("/account/{idUser}")
     @ResponseBody
     public ResponseEntity deleteUser(
-            @PathVariable Long idUser){
+            @PathVariable Long idUser) throws FirebaseAuthException {
         return GetResponse(accountService.deleteUser(idUser), HttpStatus.OK);
     }
 

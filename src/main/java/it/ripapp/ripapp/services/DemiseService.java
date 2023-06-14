@@ -27,8 +27,7 @@ public class DemiseService extends AbstractService{
     }
 
     public List<DemiseEntity> getAgencyDemises(Long accountID, Integer offset){
-        // TODO
-        // Here understand how to get the agency's demises as above
+        // TODO Here understand how to get the agency's demises as above
         return new LinkedList<DemiseEntity>();
     }
 
@@ -48,6 +47,10 @@ public class DemiseService extends AbstractService{
         return getAgencyDemises(accountID, 0);
     }
 
+    public void deleteDemiseByID(Long demiseID){
+        demiseEntityRepository.deleteById(demiseID);
+    }
+
     public List<DemiseEntity> updateDemise(Long accountID, Long demiseID, DemiseEntity demise){
         Optional<DemiseEntity> demiseEntity = demiseEntityRepository.findById(demiseID);
         if(!demiseEntity.isPresent()){
@@ -60,7 +63,6 @@ public class DemiseService extends AbstractService{
 
 
     public List<DemiseEntity> getAgencyDemisesIgnorante() {
-        System.out.println("ci passo?");
         return demiseEntityRepository.findAll();
     }
 }
