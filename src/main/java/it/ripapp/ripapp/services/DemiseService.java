@@ -1,21 +1,23 @@
 package it.ripapp.ripapp.services;
 
 
+import it.ripapp.ripapp.entityUpdate.AccountEntity;
+import it.ripapp.ripapp.entityUpdate.AgencyEntity;
 import it.ripapp.ripapp.entityUpdate.DemiseEntity;
+import it.ripapp.ripapp.repository.AccountRepository;
 import it.ripapp.ripapp.repository.DemiseEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class DemiseService extends AbstractService{
 
     @Autowired
     private DemiseEntityRepository demiseEntityRepository;
+    @Autowired
+    private AccountRepository accountRepository;
 
 
     public List<DemiseEntity> userDemisesAutocomplete(Long accountID, String query){
@@ -29,7 +31,12 @@ public class DemiseService extends AbstractService{
     public List<DemiseEntity> getAgencyDemises(Long accountID, Integer offset){
         // TODO
         // Here understand how to get the agency's demises as above
-        return new LinkedList<DemiseEntity>();
+
+        AccountEntity agencyOperator = accountRepository.findById(accountID).get();
+        List<DemiseEntity> agencyDemises = new ArrayList<>();
+        if (agencyOperator != null)
+            agencyDemises = agencyOperator.getAgency().getDemises();
+        return agencyDemises;
     }
 
     public List<DemiseEntity> insertDemise(Long accountID, DemiseEntity demise){
@@ -47,6 +54,10 @@ public class DemiseService extends AbstractService{
         demiseEntityRepository.deleteById(demiseID);
         return getAgencyDemises(accountID, 0);
     }
+
+    /*public void deleteDemiseByID(Long demiseID){
+        demiseEntityRepository.deleteById(demiseID);
+    }*/
 
     public List<DemiseEntity> updateDemise(Long accountID, Long demiseID, DemiseEntity demise){
         Optional<DemiseEntity> demiseEntity = demiseEntityRepository.findById(demiseID);

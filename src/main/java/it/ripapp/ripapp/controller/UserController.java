@@ -1,7 +1,10 @@
 package it.ripapp.ripapp.controller;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import it.ripapp.ripapp.authentication.model.LoginRequest;
+import it.ripapp.ripapp.dto.AccountSearchEntity;
 import it.ripapp.ripapp.entityUpdate.AccountEntity;
 import it.ripapp.ripapp.entityUpdate.PhoneBookSyncEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
@@ -11,6 +14,7 @@ import it.ripapp.ripapp.services.AgencyService;
 import it.ripapp.ripapp.services.DemiseService;
 import it.ripapp.ripapp.utilities.FirebaseAuthCookieData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +47,8 @@ public class UserController extends AbstractController {
             @CookieValue Long userid) throws ResponseException {
         return GetResponse(demiseService.userDemisesAutocomplete(userid, query), HttpStatus.OK);
     }
+
+
 
     @PutMapping("/account")
     @ResponseBody
@@ -83,8 +89,9 @@ public class UserController extends AbstractController {
         return GetResponse(accountService.syncPhoneBook(userid, phoneBookSyncEntity), HttpStatus.OK);
     }
     @GetMapping("/account/list")
-    public List<AccountEntity> getAllUser(){
-        return accountService.getAllUser();
+    public Page<AccountEntity> getAllUser(@RequestParam Integer pageNumber, @RequestParam Integer pageElements){
+        AccountSearchEntity accountSearch = new AccountSearchEntity(pageNumber, pageElements);
+        return accountService.findAllAccounts(accountSearch);
     }
 
     @DeleteMapping("/account")
@@ -93,10 +100,12 @@ public class UserController extends AbstractController {
             @CookieValue Long userid) throws ResponseException {
         return GetResponse(accountService.deleteAccount(userid), HttpStatus.OK);
     }
+
     @DeleteMapping("/account/{idUser}")
     @ResponseBody
     public ResponseEntity deleteUser(
-            @PathVariable Long idUser){
+            @PathVariable Long idUser) throws FirebaseAuthException {
+        AccountEntity toDelete = accountService.getAccountByID(idUser);
         return GetResponse(accountService.deleteUser(idUser), HttpStatus.OK);
     }
 

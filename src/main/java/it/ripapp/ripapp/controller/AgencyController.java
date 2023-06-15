@@ -1,6 +1,7 @@
 package it.ripapp.ripapp.controller;
 
 
+import it.ripapp.ripapp.bll.Kinship;
 import com.google.firebase.auth.FirebaseAuthException;
 import it.ripapp.ripapp.dto.ProductOffered;
 import it.ripapp.ripapp.entityUpdate.DemiseEntity;
@@ -43,9 +44,10 @@ public class AgencyController extends AbstractController {
 
 
     @GetMapping("/demisesIgnorante")
-    public ResponseEntity getAgencyDemisesForTesting(){
+    public ResponseEntity getAgencyDemisesForTesting(@RequestParam Long accountId){
         System.out.println("ci passo!");
-        return GetResponse(demiseService.getAgencyDemisesIgnorante(), HttpStatus.OK);
+        //return GetResponse(demiseService.getAgencyDemisesIgnorante(), HttpStatus.OK);
+        return GetResponse(demiseService.getAgencyDemises(accountId, 0), HttpStatus.OK);
     }
 
     @PostMapping("/demise")
@@ -61,7 +63,7 @@ public class AgencyController extends AbstractController {
     @ResponseBody
     public ResponseEntity deleteDemise(
             @PathVariable Long demiseid,
-            @CookieValue Long userid) throws ResponseException {
+            @RequestParam Long userid) throws ResponseException {
 
         return GetResponse(demiseService.deleteDemiseByID(userid, demiseid), HttpStatus.OK);
     }
@@ -163,6 +165,12 @@ public class AgencyController extends AbstractController {
     @ResponseBody
     public ResponseEntity insertDemiseNew(@RequestBody DemiseEntity demiseEntity) throws ResponseException {
         return GetResponse(demiseService.insertDemiseForTesting(demiseEntity), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/kinships")
+    public ResponseEntity getKinships(){
+        return GetResponse(Kinship.values(), HttpStatus.OK);
+        //todo fetch from db actually
     }
 
 

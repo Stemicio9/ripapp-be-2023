@@ -1,6 +1,8 @@
 package it.ripapp.ripapp.controller;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.ripapp.ripapp.authentication.model.LoginRequest;
+import it.ripapp.ripapp.dto.AccountSearchEntity;
 import it.ripapp.ripapp.entityUpdate.AgencyEntity;
 import it.ripapp.ripapp.entityUpdate.ProductEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
@@ -8,6 +10,7 @@ import it.ripapp.ripapp.services.AccountService;
 import it.ripapp.ripapp.services.AdminService;
 import it.ripapp.ripapp.services.AgencyService;
 import it.ripapp.ripapp.utilities.FirebaseAuthCookieData;
+import it.ripapp.ripapp.utilities.SearchSorting;
 import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,6 +46,10 @@ public class AdminController extends AbstractController {
         return GetResponse(adminService.saveProductEntity(productEntity), HttpStatus.OK);
     }
 
+
+    @DeleteMapping("/delete/{productId}")
+    public void deleteProduct(@PathVariable Long productId){adminService.deleteProduct(productId);}
+
     @GetMapping("/agencies")
     @ResponseBody
     public ResponseEntity findAllAgencies(){
@@ -50,8 +57,11 @@ public class AdminController extends AbstractController {
     }
 
     @GetMapping("/accounts")
-    public ResponseEntity findAllAccounts(@RequestParam Integer offset, @RequestParam Long userid){
+    public ResponseEntity findAllAccounts(@RequestParam Integer offset, @RequestParam Long userid, @RequestBody AccountSearchEntity accountSearch){
         System.out.println("ci arrivo qui si??");
-        return GetResponse(accountService.findAllAccounts(), HttpStatus.OK);
+        System.out.println(offset);
+        return GetResponse(accountService.findAllAccounts(accountSearch), HttpStatus.OK);
     }
+
+
 }

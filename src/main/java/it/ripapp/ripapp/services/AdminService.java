@@ -28,4 +28,7 @@ public class AdminService extends AbstractService{
     public List<ProductEntity> findAllProducts(){
         return productEntityRepository.findAll();
     }
+
+
+    public void deleteProduct(Long productId) {productEntityRepository.deleteById(productId);}
 }

@@ -12,11 +12,10 @@ import it.ripapp.ripapp.repository.AgencyRepository;
 import it.ripapp.ripapp.repository.ProductEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.method.HandlerTypePredicate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class AgencyService extends AbstractService {
@@ -42,7 +41,10 @@ public class AgencyService extends AbstractService {
 
     public List<ProductEntity> getAgencyProducts(Long userId, int offset) {
         AccountEntity entity = accountRepository.getById(userId);
+        System.out.println("entita: " + entity);
         AgencyEntity agency = entity.getAgency();
+        System.out.println("agenzia: " + agency);
+
         if (agency == null) {
             throw new RuntimeException("User is not an agency operator");
         }
@@ -72,7 +74,7 @@ public class AgencyService extends AbstractService {
 
         //delete agency from sql db
         agencyRepository.deleteById(idAgency);
-
+        usersToBeDeleted = usersToBeDeleted.stream().filter(Objects::nonNull).collect(Collectors.toList());
         FirebaseAuth fa = FirebaseAuth.getInstance();
         //delete accounts from firebase
         for (String s : usersToBeDeleted) {

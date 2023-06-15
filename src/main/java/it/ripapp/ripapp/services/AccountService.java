@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.SessionCookieOptions;
+import it.ripapp.ripapp.dto.AccountSearchEntity;
 import it.ripapp.ripapp.entityUpdate.AccountEntity;
 import it.ripapp.ripapp.entityUpdate.AgencyEntity;
 import it.ripapp.ripapp.entityUpdate.PhoneBookSyncEntity;
@@ -16,6 +17,10 @@ import it.ripapp.ripapp.repository.AgencyRepository;
 import it.ripapp.ripapp.utilities.FirebaseAuthCookieData;
 import it.ripapp.ripapp.utilities.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -116,12 +121,19 @@ public class AccountService extends AbstractService{
         accountRepository.deleteById(userId);
         return account.get();
     }
-    public AccountEntity deleteUser(Long idUser){
+    public AccountEntity deleteUser(Long idUser) throws FirebaseAuthException {
         Optional<AccountEntity> account = accountRepository.findById(idUser);
         if(account.isEmpty()){
             throw new RuntimeException("User not found");
         }
+        FirebaseAuth fa = FirebaseAuth.getInstance();
+        String idToken = account.get().getIdtoken();
+        System.out.println("token = " + idToken);
+        fa.deleteUser(idToken);
         accountRepository.deleteById(idUser);
+        //delete accounts from firebase
+
+
         return account.get();
     }
 
@@ -177,7 +189,9 @@ public class AccountService extends AbstractService{
 
     }
 
-    public List<AccountEntity> findAllAccounts() {
-        return accountRepository.findAll();
+    public Page<AccountEntity> findAllAccounts(AccountSearchEntity accountSearchEntity) {
+        System.out.println(accountSearchEntity);
+        Pageable page = PageRequest.of(accountSearchEntity.getPageNumber(), accountSearchEntity.getPageElements(), Sort.by("accountid"));
+        return accountRepository.findAll(page);
     }
 }
