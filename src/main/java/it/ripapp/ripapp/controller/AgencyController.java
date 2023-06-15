@@ -161,6 +161,12 @@ public class AgencyController extends AbstractController {
         return GetResponse(demiseService.insertDemiseForTesting(demiseEntity), HttpStatus.CREATED);
     }
 
+    @GetMapping("/kinships")
+    public ResponseEntity getKinships(){
+        return GetResponse(Kinship.values(), HttpStatus.OK);
+        //todo fetch from db actually
+    }
+
 
 
 }
