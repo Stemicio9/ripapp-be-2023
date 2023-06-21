@@ -3,14 +3,15 @@ package it.ripapp.ripapp.services;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import it.ripapp.ripapp.dto.AccountSearchEntity;
 import it.ripapp.ripapp.dto.ProductOffered;
-import it.ripapp.ripapp.entityUpdate.AccountEntity;
-import it.ripapp.ripapp.entityUpdate.AgencyEntity;
-import it.ripapp.ripapp.entityUpdate.ProductEntity;
-import it.ripapp.ripapp.repository.AccountRepository;
-import it.ripapp.ripapp.repository.AgencyRepository;
-import it.ripapp.ripapp.repository.ProductEntityRepository;
+import it.ripapp.ripapp.entityUpdate.*;
+import it.ripapp.ripapp.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.method.HandlerTypePredicate;
 
@@ -28,6 +29,9 @@ public class AgencyService extends AbstractService {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private CityEntityRepository cityEntityepository;
 
     public List<AgencyEntity> searchAgency(Long userId, String query) {
         // TODO here understand if is needed userId or not, I think it should remain as it is
@@ -163,5 +167,15 @@ public class AgencyService extends AbstractService {
             throw new RuntimeException("User is not an agency operator");
         }
         return productRepository.findAll();
+    }
+
+    public List<CityEntity> getCitiesStartingWith(String startsWith){
+        return cityEntityepository.findByNameStartsWith(startsWith);
+    }
+
+
+    public Page<AgencyEntity> findAllAgenciesPaged(AccountSearchEntity agencySearch) {
+        Pageable page = PageRequest.of(agencySearch.getPageNumber(), agencySearch.getPageElements(), Sort.by("agencyid"));
+        return agencyRepository.findAll(page);
     }
 }

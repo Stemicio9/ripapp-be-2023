@@ -4,6 +4,7 @@ package it.ripapp.ripapp.controller;
 import it.ripapp.ripapp.bll.Kinship;
 import com.google.firebase.auth.FirebaseAuthException;
 import it.ripapp.ripapp.dto.ProductOffered;
+import it.ripapp.ripapp.entityUpdate.City;
 import it.ripapp.ripapp.entityUpdate.DemiseEntity;
 import it.ripapp.ripapp.entityUpdate.ProductEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
@@ -167,6 +168,9 @@ public class AgencyController extends AbstractController {
         //todo fetch from db actually
     }
 
-
+    @GetMapping("/cities-autocomplete")
+    public ResponseEntity getCitiesAutocomplete(String startsWith){
+        return GetResponse(agencyService.getCitiesStartingWith(startsWith), HttpStatus.OK);
+    }
 
 }

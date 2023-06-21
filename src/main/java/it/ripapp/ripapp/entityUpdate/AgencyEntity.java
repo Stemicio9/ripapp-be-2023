@@ -35,7 +35,7 @@ public class AgencyEntity {
     @Cascade(CascadeType.ALL)
     private List<DemiseEntity> demises;
 
-    @OneToMany
+    @ManyToMany
     @Cascade(CascadeType.ALL)
     private List<ProductEntity> products;
 

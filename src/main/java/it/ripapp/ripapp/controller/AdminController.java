@@ -3,6 +3,7 @@ package it.ripapp.ripapp.controller;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.ripapp.ripapp.authentication.model.LoginRequest;
 import it.ripapp.ripapp.dto.AccountSearchEntity;
+import it.ripapp.ripapp.entityUpdate.AccountEntity;
 import it.ripapp.ripapp.entityUpdate.AgencyEntity;
 import it.ripapp.ripapp.entityUpdate.ProductEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
@@ -13,6 +14,7 @@ import it.ripapp.ripapp.utilities.FirebaseAuthCookieData;
 import it.ripapp.ripapp.utilities.SearchSorting;
 import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,6 +64,17 @@ public class AdminController extends AbstractController {
         System.out.println(offset);
         return GetResponse(accountService.findAllAccounts(accountSearch), HttpStatus.OK);
     }
+
+    @GetMapping("/agenciesWithIndex")
+    public Page<AgencyEntity> getAllAgencies(@RequestParam Integer pageNumber, @RequestParam Integer pageElements){
+        AccountSearchEntity agencySearch = new AccountSearchEntity(pageNumber, pageElements);
+        return agencyService.findAllAgenciesPaged(agencySearch);
+    }
+    @GetMapping("/productsWithIndex")
+        public Page<ProductEntity> getAllProducts(@RequestParam Integer pageNumber, @RequestParam Integer pageElements){
+            AccountSearchEntity agencySearch = new AccountSearchEntity(pageNumber, pageElements);
+            return adminService.findAllProcuctsPaged(agencySearch);
+        }
 
 
 }
