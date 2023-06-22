@@ -8,4 +8,7 @@ import java.io.Serializable;
 public class KinshipTextKey implements Serializable {
     private Kinship KINSHIP;
     private Lang LANG;
+
+    public KinshipTextKey() {
+    }
 }

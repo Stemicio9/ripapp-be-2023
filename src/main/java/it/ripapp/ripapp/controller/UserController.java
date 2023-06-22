@@ -3,6 +3,7 @@ package it.ripapp.ripapp.controller;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.gson.JsonObject;
 import it.ripapp.ripapp.authentication.model.LoginRequest;
 import it.ripapp.ripapp.dto.AccountSearchEntity;
 import it.ripapp.ripapp.entityUpdate.AccountEntity;
@@ -19,12 +20,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 @RestController
@@ -49,7 +49,6 @@ public class UserController extends AbstractController {
     }
 
 
-
     @PutMapping("/account")
     @ResponseBody
     public ResponseEntity updateAccount(
@@ -65,14 +64,12 @@ public class UserController extends AbstractController {
     }
 
 
-
-
     @PostMapping("/login")
     @ResponseBody
     public ResponseEntity login(@RequestBody LoginRequest loginRequest,
                                 HttpServletResponse response) throws ResponseException, Exception {
         //  return GetResponse(accountService.getAccountByID(userid), HttpStatus.OK);
-        FirebaseAuthCookieData firebaseAuthData =  accountService.getUserbaseUUIDByFirebaseToken(loginRequest.getIdtoken());
+        FirebaseAuthCookieData firebaseAuthData = accountService.getUserbaseUUIDByFirebaseToken(loginRequest.getIdtoken());
 
         Cookie cookie1 = new Cookie("firebasecookie", firebaseAuthData.getCookie());
         Cookie cookie2 = new Cookie("userid", firebaseAuthData.getAccountid());
@@ -88,8 +85,9 @@ public class UserController extends AbstractController {
             @RequestBody Collection<PhoneBookSyncEntity> phoneBookSyncEntity) throws ResponseException {
         return GetResponse(accountService.syncPhoneBook(userid, phoneBookSyncEntity), HttpStatus.OK);
     }
+
     @GetMapping("/account/list")
-    public Page<AccountEntity> getAllUser(@RequestParam Integer pageNumber, @RequestParam Integer pageElements){
+    public Page<AccountEntity> getAllUser(@RequestParam Integer pageNumber, @RequestParam Integer pageElements) {
         AccountSearchEntity accountSearch = new AccountSearchEntity(pageNumber, pageElements);
         return accountService.findAllAccounts(accountSearch);
     }
@@ -136,5 +134,26 @@ public class UserController extends AbstractController {
         return GetResponse(accountService.addPlayerID(userid, playerid), HttpStatus.CREATED);
     }
 
+    @GetMapping("/publicCityList")
+    public List<Object> cityList() {
+        RestTemplate restTemplate = new RestTemplate();
+        List<Object> result;
+        result = (List<Object>) restTemplate.getForObject("https://axqvoqvbfjpaamphztgd.functions.supabase.co/comuni", Object.class);
+        return result;
 
+       /* List<String> aryLst = new ArrayList<String>();
+        for (int i = 0; i < result.size(); i++) {
+            aryLst.add(result.get(i).toString());
+        }
+        System.out.println("FORSE FUNZIONA");
+        System.out.println(result);
+        return aryLst;*/
+    }
 }
+   /* List<Object> lst  =listOfTypeObject;
+    ArrayList<String> aryLst = new ArrayList<String>();
+    for (int i = 0; i < lst.size(); i++) {
+        aryLst.add(lst.get(i).toString());
+        }
+
+    */

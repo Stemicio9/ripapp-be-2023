@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
 
 @RestController
 @RequestMapping(value = "/api/auth")
@@ -70,11 +70,11 @@ public class AgencyController extends AbstractController {
     @DeleteMapping("/agency/{idAgency}")
     @ResponseBody
     public ResponseEntity deleteAgency(
-            @PathVariable Long idAgency){
+            @PathVariable Long idAgency) throws FirebaseAuthException {
         return GetResponse(agencyService.deleteAgency(idAgency), HttpStatus.OK);
     }
 
-    @PutMapping("/demise/{demiseid}")
+    @PutMapping("/agency/{demiseid}")
     @ResponseBody
     public ResponseEntity updateDemise(
             @PathVariable Long demiseid,
