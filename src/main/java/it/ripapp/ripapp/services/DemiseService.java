@@ -5,11 +5,13 @@ import it.ripapp.ripapp.entityUpdate.AccountEntity;
 import it.ripapp.ripapp.entityUpdate.AgencyEntity;
 import it.ripapp.ripapp.entityUpdate.DemiseEntity;
 import it.ripapp.ripapp.repository.AccountRepository;
+import it.ripapp.ripapp.repository.AgencyRepository;
 import it.ripapp.ripapp.repository.DemiseEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class DemiseService extends AbstractService{
@@ -18,6 +20,8 @@ public class DemiseService extends AbstractService{
     private DemiseEntityRepository demiseEntityRepository;
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private AgencyRepository agencyRepository;
 
 
     public List<DemiseEntity> userDemisesAutocomplete(Long accountID, String query){
@@ -39,8 +43,10 @@ public class DemiseService extends AbstractService{
         return agencyDemises;
     }
 
-    public List<DemiseEntity> insertDemise(Long accountID, DemiseEntity demise){
-       executeAction(() -> demiseEntityRepository.save(demise));
+    public List<DemiseEntity> insertDemise(Long accountID, DemiseEntity demise) throws Exception{
+       AgencyEntity agencyEntity = accountRepository.findById(accountID).get().getAgency();
+       agencyEntity.getDemises().add(demise);
+       executeAction(() -> agencyRepository.save(agencyEntity));
        return getAgencyDemises(accountID, 0);
     }
 
@@ -51,6 +57,11 @@ public class DemiseService extends AbstractService{
     }
 
     public List<DemiseEntity> deleteDemiseByID(Long accountID, Long demiseID){
+        AgencyEntity agencyEntity = accountRepository.findById(accountID).get().getAgency();
+        List<DemiseEntity> result = agencyEntity.getDemises().stream().filter(demise -> !demise.getDemiseid().equals(demiseID)).toList();
+        List<DemiseEntity> mutableList = new LinkedList<>(result);
+        agencyEntity.setDemises(mutableList);
+        agencyRepository.save(agencyEntity);
         demiseEntityRepository.deleteById(demiseID);
         return getAgencyDemises(accountID, 0);
     }

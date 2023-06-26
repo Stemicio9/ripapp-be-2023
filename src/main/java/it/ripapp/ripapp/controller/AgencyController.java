@@ -37,7 +37,7 @@ public class AgencyController extends AbstractController {
     @GetMapping("/demises")
     @ResponseBody
     public ResponseEntity getAgencyDemises(
-            @RequestParam Integer offset,
+            @RequestParam(defaultValue = "0") Integer offset,
             @CookieValue Long userid) throws ResponseException {
 
         return GetResponse(demiseService.getAgencyDemises(userid, offset), HttpStatus.OK);
@@ -55,7 +55,7 @@ public class AgencyController extends AbstractController {
     @ResponseBody
     public ResponseEntity insertDemise(
             @RequestBody DemiseEntity demise,
-            @CookieValue Long userid) throws ResponseException {
+            @CookieValue Long userid) throws Exception {
 
         return GetResponse(demiseService.insertDemise(userid, demise), HttpStatus.CREATED);
     }
@@ -64,7 +64,7 @@ public class AgencyController extends AbstractController {
     @ResponseBody
     public ResponseEntity deleteDemise(
             @PathVariable Long demiseid,
-            @RequestParam Long userid) throws ResponseException {
+            @CookieValue Long userid) throws ResponseException {
 
         return GetResponse(demiseService.deleteDemiseByID(userid, demiseid), HttpStatus.OK);
     }

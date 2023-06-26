@@ -74,11 +74,14 @@ public class UserController extends AbstractController {
                                 HttpServletResponse response) throws ResponseException, Exception {
         //  return GetResponse(accountService.getAccountByID(userid), HttpStatus.OK);
         FirebaseAuthCookieData firebaseAuthData =  accountService.getUserbaseUUIDByFirebaseToken(loginRequest.getIdtoken());
+        AccountEntity account = accountService.accountFromIdToken(firebaseAuthData.getAccountid());
 
         Cookie cookie1 = new Cookie("firebasecookie", firebaseAuthData.getCookie());
-        Cookie cookie2 = new Cookie("userid", firebaseAuthData.getAccountid());
+        Cookie cookie2 = new Cookie("firebaseuserid", firebaseAuthData.getAccountid());
+        Cookie cookie3 = new Cookie("userid", account.getAccountid().toString());
         response.addCookie(cookie2);
         response.addCookie(cookie1);
+        response.addCookie(cookie3);
         return GetResponse("CIAO", HttpStatus.OK);
     }
 
@@ -143,7 +146,6 @@ public class UserController extends AbstractController {
         List<Object> result;
         result = (List<Object>) restTemplate.getForObject("https://axqvoqvbfjpaamphztgd.functions.supabase.co/comuni", Object.class);
         return result;
-
     }
 
 }

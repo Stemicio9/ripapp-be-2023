@@ -41,6 +41,12 @@ public class AdminController extends AbstractController {
         return GetResponse(agencyService.saveAgencyEntity(agencyEntity), HttpStatus.OK);
     }
 
+    @DeleteMapping("/agency/{agencyId}")
+    @ResponseBody
+    public ResponseEntity deleteAgency(@PathVariable Long agencyId) throws Exception {
+        return GetResponse(agencyService.deleteAgency(agencyId), HttpStatus.OK);
+    }
+
     //@PostMapping("/product/fine")
     @PostMapping("/productFromAdmin")
     @ResponseBody

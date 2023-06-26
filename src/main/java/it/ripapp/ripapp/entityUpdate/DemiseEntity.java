@@ -74,6 +74,13 @@ public class DemiseEntity {
     private CityEntity city;
 
 
+    @Override
+    public boolean equals(Object o){
+        if(o == this) return true;
+        if(!(o instanceof DemiseEntity)) return false;
+        DemiseEntity d = (DemiseEntity) o;
+        return d.getDemiseid().equals(this.getDemiseid());
+    }
 }
 
 

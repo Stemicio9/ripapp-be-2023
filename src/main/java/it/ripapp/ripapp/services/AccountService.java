@@ -59,6 +59,12 @@ public class AccountService extends AbstractService{
         return new FirebaseAuthCookieData(account.getIdtoken(), cookie);
     }
 
+    public AccountEntity accountFromIdToken(String idtoken) throws Exception{
+        if (idtoken == null)
+            throw new BadRequestException("idtoken not provided");
+        return accountRepository.findByIdtoken(idtoken);
+    }
+
     public AccountEntity accountFromToken(String token) throws Exception{
         if (token == null)
             throw new BadRequestException("token not provided");
