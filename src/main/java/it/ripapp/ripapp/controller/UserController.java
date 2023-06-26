@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -136,5 +137,13 @@ public class UserController extends AbstractController {
         return GetResponse(accountService.addPlayerID(userid, playerid), HttpStatus.CREATED);
     }
 
+    @GetMapping("/publicCityList")
+    public List<Object> cityList() {
+        RestTemplate restTemplate = new RestTemplate();
+        List<Object> result;
+        result = (List<Object>) restTemplate.getForObject("https://axqvoqvbfjpaamphztgd.functions.supabase.co/comuni", Object.class);
+        return result;
+
+    }
 
 }
