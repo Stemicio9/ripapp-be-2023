@@ -13,6 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>ripapp</name>
     <description>RipApp backend</description>
+    <packaging>war</packaging>
 
     <properties>
         <java.version>16</java.version>
@@ -113,6 +114,7 @@
     </dependencies>
 
     <build>
+        <finalName>ripapp</finalName>
         <plugins>
 <!--            <plugin>-->
 <!--                <groupId>org.codehaus.mojo</groupId>-->
