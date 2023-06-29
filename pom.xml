@@ -114,7 +114,7 @@
     </dependencies>
 
     <build>
-        <finalName>ripapp</finalName>
+        <finalName>ROOT</finalName>
         <plugins>
 <!--            <plugin>-->
 <!--                <groupId>org.codehaus.mojo</groupId>-->

@@ -14,4 +14,5 @@ public interface AgencyRepository extends JpaRepository<AgencyEntity, Long> {
     AgencyEntity findAllByAgencyid(Long agencyid);
 
     List<AgencyEntity> findAllByNameContains(String query);
+
 }

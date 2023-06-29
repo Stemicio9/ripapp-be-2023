@@ -57,6 +57,7 @@ public class AgencyController extends AbstractController {
             @RequestBody DemiseEntity demise,
             @CookieValue Long userid) throws Exception {
 
+        System.out.println("ciao carissimo, " + demise.getFirebaseid());
         return GetResponse(demiseService.insertDemise(userid, demise), HttpStatus.CREATED);
     }
 

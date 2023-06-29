@@ -41,6 +41,7 @@ public class DemiseEntity {
     private String funeralnotes;
 
     private String kinshipdesc;
+    private String firebaseid;
 
     private Date ts;
 
