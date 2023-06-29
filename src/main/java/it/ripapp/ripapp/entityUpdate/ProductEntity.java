@@ -23,4 +23,6 @@ public class ProductEntity {
     private double price;
 
     private String urlImage;
+
+    private String firebaseId;
 }
