@@ -7,6 +7,7 @@ import it.ripapp.ripapp.entityUpdate.AccountEntity;
 import it.ripapp.ripapp.entityUpdate.AgencyEntity;
 import it.ripapp.ripapp.entityUpdate.ProductEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
+import it.ripapp.ripapp.message.DeleteProductMessage;
 import it.ripapp.ripapp.services.AccountService;
 import it.ripapp.ripapp.services.AdminService;
 import it.ripapp.ripapp.services.AgencyService;
@@ -47,16 +48,18 @@ public class AdminController extends AbstractController {
         return GetResponse(agencyService.deleteAgency(agencyId), HttpStatus.OK);
     }
 
-    //@PostMapping("/product/fine")
     @PostMapping("/productFromAdmin")
     @ResponseBody
-    public ResponseEntity saveProduct(@RequestBody ProductEntity productEntity) throws Exception {
+    public ResponseEntity saveProduct(@RequestBody ProductEntity productEntity) throws Exception{
         return GetResponse(adminService.saveProductEntity(productEntity), HttpStatus.OK);
     }
 
-
+    //@PostMapping("/product/fine")
     @DeleteMapping("/delete/{productId}")
-    public void deleteProduct(@PathVariable Long productId){adminService.deleteProduct(productId);}
+    public ResponseEntity deleteProduct(@PathVariable Long productId){
+        return GetResponse(adminService.deleteProduct(productId), HttpStatus.OK);}
+
+
 
     @GetMapping("/agencies")
     @ResponseBody
