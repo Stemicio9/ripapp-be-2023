@@ -165,12 +165,13 @@ public class AgencyService extends AbstractService {
         }
         catch (Exception e){
             System.out.println("classe causa " + e.getCause().getClass());
-            if (e.getCause() instanceof ConstraintViolationException){
-                Throwable exceptionThrown =  ExceptionUtils.getRootCause(e);
-                System.out.println("causa messaggio  = " +e.getCause().getCause().getMessage());
-                if (exceptionThrown.getMessage().contains("duplicate key value violates unique constraint"))
-                    throw new SQLIntegrityConstraintViolationException("indirizzo email già in uso");
-                else System.out.println("la eccezione non viene lanciata e ha messaggio " + exceptionThrown.getMessage());
+            Throwable exceptionThrown =  ExceptionUtils.getRootCause(e);
+            if (exceptionThrown.getMessage().contains("duplicate key value violates unique constraint") || exceptionThrown.getMessage().startsWith("Duplicate entry")) {
+                System.out.println("la eccezione viene lanciata e ha messaggio " + exceptionThrown.getMessage());
+                throw new SQLIntegrityConstraintViolationException("indirizzo email già in uso");
+            }
+            else {
+                System.out.println("la eccezione non viene lanciata e ha messaggio " + exceptionThrown.getMessage());
             }
         }
         return saved;
