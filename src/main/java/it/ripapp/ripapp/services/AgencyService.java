@@ -7,6 +7,7 @@ import it.ripapp.ripapp.dto.AccountSearchEntity;
 import it.ripapp.ripapp.dto.ProductOffered;
 import it.ripapp.ripapp.entityUpdate.*;
 import it.ripapp.ripapp.repository.*;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.method.HandlerTypePredicate;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -155,8 +157,20 @@ public class AgencyService extends AbstractService {
         return agencyEntity;
     }
 
-    public AgencyEntity saveAgencyEntity(AgencyEntity agency) {
-        return agencyRepository.save(agency);
+    public AgencyEntity saveAgencyEntity(AgencyEntity agency) throws SQLIntegrityConstraintViolationException {
+        AgencyEntity saved = null;
+        try{
+            saved = agencyRepository.save(agency);
+        }
+        catch (Exception e){
+            System.out.println("classe causa " + e.getCause().getClass());
+            if (e.getCause() instanceof ConstraintViolationException){
+                System.out.println("causa messaggio  = " +e.getCause().getCause().getMessage());
+                if (e.getCause().getCause().getMessage().startsWith("Duplicate entry"))
+                throw new SQLIntegrityConstraintViolationException("indirizzo email già in uso");
+            }
+        }
+        return saved;
     }
 
 

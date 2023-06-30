@@ -8,6 +8,7 @@ import it.ripapp.ripapp.entityUpdate.AgencyEntity;
 import it.ripapp.ripapp.entityUpdate.ProductEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
 import it.ripapp.ripapp.message.DeleteProductMessage;
+import it.ripapp.ripapp.message.SaveAgencyMessage;
 import it.ripapp.ripapp.services.AccountService;
 import it.ripapp.ripapp.services.AdminService;
 import it.ripapp.ripapp.services.AgencyService;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +41,18 @@ public class AdminController extends AbstractController {
     @PostMapping("/agency")
     @ResponseBody
     public ResponseEntity saveAgency(@RequestBody AgencyEntity agencyEntity) throws Exception {
-        return GetResponse(agencyService.saveAgencyEntity(agencyEntity), HttpStatus.OK);
+        SaveAgencyMessage message = new SaveAgencyMessage();
+        AgencyEntity saved = null;
+        try {
+            saved = agencyService.saveAgencyEntity(agencyEntity);
+            message.setAgencySaved(saved);
+            message.setMessage("Agency saved successfully!");
+        }
+        catch (SQLIntegrityConstraintViolationException e) {
+            message.setMessage(e.getMessage());
+            message.setMessage("Duplicate entry");
+        }
+        return GetResponse(message, HttpStatus.OK);
     }
 
     @DeleteMapping("/agency/{agencyId}")
