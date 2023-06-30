@@ -7,6 +7,7 @@ import it.ripapp.ripapp.dto.AccountSearchEntity;
 import it.ripapp.ripapp.dto.ProductOffered;
 import it.ripapp.ripapp.entityUpdate.*;
 import it.ripapp.ripapp.repository.*;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -165,9 +166,11 @@ public class AgencyService extends AbstractService {
         catch (Exception e){
             System.out.println("classe causa " + e.getCause().getClass());
             if (e.getCause() instanceof ConstraintViolationException){
+                Throwable exceptionThrown =  ExceptionUtils.getRootCause(e);
                 System.out.println("causa messaggio  = " +e.getCause().getCause().getMessage());
-                if (e.getCause().getCause().getMessage().startsWith("Duplicate entry"))
-                throw new SQLIntegrityConstraintViolationException("indirizzo email già in uso");
+                if (exceptionThrown.getMessage().contains("duplicate key value violates unique constraint"))
+                    throw new SQLIntegrityConstraintViolationException("indirizzo email già in uso");
+                else System.out.println("la eccezione non viene lanciata e ha messaggio " + exceptionThrown.getMessage());
             }
         }
         return saved;

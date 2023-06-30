@@ -49,7 +49,7 @@ public class AdminController extends AbstractController {
             message.setMessage("Agency saved successfully!");
         }
         catch (SQLIntegrityConstraintViolationException e) {
-            message.setMessage(e.getMessage());
+            System.out.println("email doppione");
             message.setMessage("Duplicate entry");
         }
         return GetResponse(message, HttpStatus.OK);
