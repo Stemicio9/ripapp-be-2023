@@ -3,6 +3,7 @@ package it.ripapp.ripapp.controller;
 
 import it.ripapp.ripapp.bll.Kinship;
 import com.google.firebase.auth.FirebaseAuthException;
+import it.ripapp.ripapp.dto.AccountSearchEntity;
 import it.ripapp.ripapp.dto.ProductOffered;
 import it.ripapp.ripapp.entityUpdate.City;
 import it.ripapp.ripapp.entityUpdate.DemiseEntity;
@@ -12,6 +13,8 @@ import it.ripapp.ripapp.services.AdminService;
 import it.ripapp.ripapp.services.AgencyService;
 import it.ripapp.ripapp.services.DemiseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -98,16 +101,45 @@ public class AgencyController extends AbstractController {
         return GetResponse(agencyService.getAgencyProducts(userid, offset), HttpStatus.OK);
     }
 
-    @GetMapping("/productsOffered")
-    public ResponseEntity getProductsOfferedByAgencyOnTotal(@RequestParam Long userid) throws ResponseException {
+    @GetMapping("/productsOfferedPaginated")
+    public ResponseEntity getProductsOfferedByAgencyOnTotal(@RequestParam Long userid,
+                                                            @RequestParam Integer pageNumber,
+                                                            @RequestParam Integer pageElements) throws ResponseException {
+        AccountSearchEntity agencySearch = new AccountSearchEntity(pageNumber, pageElements);
+
+        System.out.println("a zi vediamo mpo");
         List<ProductEntity> allProducts = agencyService.getAvailableProducts(userid);
         List<ProductEntity> productsOfferedByAgency = agencyService.getAgencyProducts(userid, 0);
+
         List<ProductOffered> productsOfferedOnTotal = new ArrayList<>();
-        for (ProductEntity product : allProducts)
+        for (ProductEntity product : allProducts) {
             if (productsOfferedByAgency.contains(product))
                 productsOfferedOnTotal.add(new ProductOffered(product, true));
             else
                 productsOfferedOnTotal.add(new ProductOffered(product, false));
+        }
+
+        int start = pageNumber*pageElements;
+        int end = (pageNumber*pageElements) + pageElements;
+        final Page<ProductOffered> page = new PageImpl<>(productsOfferedOnTotal.subList(start, end));
+        System.out.println("a zi vediamo mpo sta pagettina a zi " + page.toString());
+
+        return GetResponse(page, HttpStatus.OK);
+    }
+
+    @GetMapping("/productsOffered")
+    public ResponseEntity getProductsOfferedByAgencyOnTotal(@RequestParam Long userid) throws ResponseException {
+        List<ProductEntity> allProducts = agencyService.getAvailableProducts(userid);
+        List<ProductEntity> productsOfferedByAgency = agencyService.getAgencyProducts(userid, 0);
+
+        List<ProductOffered> productsOfferedOnTotal = new ArrayList<>();
+        for (ProductEntity product : allProducts) {
+            if (productsOfferedByAgency.contains(product))
+                productsOfferedOnTotal.add(new ProductOffered(product, true));
+            else
+                productsOfferedOnTotal.add(new ProductOffered(product, false));
+        }
+
         return GetResponse(productsOfferedOnTotal, HttpStatus.OK);
     }
 

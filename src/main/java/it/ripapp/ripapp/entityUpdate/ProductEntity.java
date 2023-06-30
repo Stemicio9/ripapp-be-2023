@@ -1,4 +1,5 @@
 package it.ripapp.ripapp.entityUpdate;
+import it.ripapp.ripapp.dto.ProductOffered;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -25,4 +26,12 @@ public class ProductEntity {
     private String urlImage;
 
     private String firebaseId;
+
+    @Override
+    public boolean equals(Object other){
+        if(other == this) return true;
+        if(!(other instanceof ProductOffered)) return false;
+        ProductEntity o = (ProductEntity) other;
+        return this.productId.equals(o.getProductId());
+    }
 }

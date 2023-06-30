@@ -92,9 +92,12 @@ public class AgencyService extends AbstractService {
     }
 
     public void setAgencyProducts(Long userId, List<ProductOffered> productsOffered) {
+        List<ProductEntity> definitiveProducts = productsOffered.stream().filter(productOffered -> productOffered.getOffered()).map(ProductOffered::getProduct).toList();
+        List<ProductEntity> mutable = new LinkedList<>(definitiveProducts);
         AccountEntity entity = accountRepository.getById(userId);
         AgencyEntity agency = entity.getAgency();
-        List<ProductEntity> agencyProducts = agency.getProducts();
+        agency.setProducts(mutable);
+        /*List<ProductEntity> agencyProducts = agency.getProducts();
         List<ProductEntity> toRemove = new ArrayList<>();
         for (ProductOffered productOffered : productsOffered) {
             System.out.println("prodotto offerto:" + productOffered);
@@ -116,9 +119,9 @@ public class AgencyService extends AbstractService {
         }
         for (ProductEntity product : toRemove) agencyProducts.remove(product);
         agency.setProducts(agencyProducts);
-        System.out.println("agenzia che sto salvando" + agency);
+        System.out.println("agenzia che sto salvando" + agency); */
         agencyRepository.save(agency);
-        System.out.println("prodotti aggiornati: " + agencyProducts);
+        //System.out.println("prodotti aggiornati: " + agencyProducts);
     }
 
     public AgencyEntity insertProduct(Long userId, ProductEntity productEntity) {
