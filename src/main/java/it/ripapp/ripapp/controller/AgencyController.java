@@ -41,9 +41,18 @@ public class AgencyController extends AbstractController {
     @ResponseBody
     public ResponseEntity getAgencyDemises(
             @RequestParam(defaultValue = "0") Integer offset,
-            @CookieValue Long userid) throws ResponseException {
-
-        return GetResponse(demiseService.getAgencyDemises(userid, offset), HttpStatus.OK);
+            @CookieValue Long userid,
+            @RequestParam Integer pageNumber,
+            @RequestParam Integer pageElements) throws ResponseException {
+        List<DemiseEntity> demiseEntities =demiseService.getAgencyDemises(userid, offset);
+        int start = pageNumber*pageElements;
+        int end = start + Integer.min(pageElements, (demiseEntities.size()-start));
+        Page<DemiseEntity> page;
+        if (end > start)
+            page = new PageImpl<>(demiseEntities.subList(start, end));
+        else
+            page = Page.empty();
+        return GetResponse(page, HttpStatus.OK);
     }
 
 
@@ -107,7 +116,6 @@ public class AgencyController extends AbstractController {
                                                             @RequestParam Integer pageElements) throws ResponseException {
         AccountSearchEntity agencySearch = new AccountSearchEntity(pageNumber, pageElements);
 
-        System.out.println("a zi vediamo mpo");
         List<ProductEntity> allProducts = agencyService.getAvailableProducts(userid);
         List<ProductEntity> productsOfferedByAgency = agencyService.getAgencyProducts(userid, 0);
 
@@ -122,7 +130,6 @@ public class AgencyController extends AbstractController {
         int start = pageNumber*pageElements;
         int end = (pageNumber*pageElements) + pageElements;
         final Page<ProductOffered> page = new PageImpl<>(productsOfferedOnTotal.subList(start, end));
-        System.out.println("a zi vediamo mpo sta pagettina a zi " + page.toString());
 
         return GetResponse(page, HttpStatus.OK);
     }
