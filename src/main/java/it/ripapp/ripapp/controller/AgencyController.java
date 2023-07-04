@@ -115,7 +115,7 @@ public class AgencyController extends AbstractController {
                                                             @RequestParam Integer pageNumber,
                                                             @RequestParam Integer pageElements) throws ResponseException {
         AccountSearchEntity agencySearch = new AccountSearchEntity(pageNumber, pageElements);
-
+/*
         List<ProductEntity> allProducts = agencyService.getAvailableProducts(userid);
         List<ProductEntity> productsOfferedByAgency = agencyService.getAgencyProducts(userid, 0);
 
@@ -128,8 +128,24 @@ public class AgencyController extends AbstractController {
         }
 
         int start = pageNumber*pageElements;
-        int end = (pageNumber*pageElements) + pageElements;
-        final Page<ProductOffered> page = new PageImpl<>(productsOfferedOnTotal.subList(start, end));
+        int end = start + Integer.min(pageElements, (productsOfferedOnTotal.size()-start));
+        Page<ProductOffered> page;
+        if (end > start)
+            page = new PageImpl<>(productsOfferedOnTotal.subList(start, end));
+        else
+            page = Page.empty();
+
+        return GetResponse(page, HttpStatus.OK);
+
+ */
+        List<ProductEntity> productsOfferedByAgency = agencyService.getAgencyProducts(userid, 0);
+        int start = pageNumber*pageElements;
+        int end = start + Integer.min(pageElements, (productsOfferedByAgency.size()-start));
+        Page<ProductEntity> page;
+        if (end > start)
+            page = new PageImpl<>(productsOfferedByAgency.subList(start, end));
+        else
+            page = Page.empty();
 
         return GetResponse(page, HttpStatus.OK);
     }
