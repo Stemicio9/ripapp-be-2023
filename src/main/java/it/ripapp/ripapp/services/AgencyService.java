@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import it.ripapp.ripapp.dto.AccountSearchEntity;
 import it.ripapp.ripapp.dto.ProductOffered;
 import it.ripapp.ripapp.entityUpdate.*;
+import it.ripapp.ripapp.exceptions.BadRequestException;
 import it.ripapp.ripapp.repository.*;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.hibernate.exception.ConstraintViolationException;
@@ -163,21 +164,32 @@ public class AgencyService extends AbstractService {
 
     public AgencyEntity saveAgencyEntity(AgencyEntity agency) throws SQLIntegrityConstraintViolationException {
         AgencyEntity saved = null;
-        try{
+        try {
             saved = agencyRepository.save(agency);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println("classe causa " + e.getCause().getClass());
-            Throwable exceptionThrown =  ExceptionUtils.getRootCause(e);
+            Throwable exceptionThrown = ExceptionUtils.getRootCause(e);
             if (exceptionThrown.getMessage().contains("duplicate key value violates unique constraint") || exceptionThrown.getMessage().startsWith("Duplicate entry")) {
                 System.out.println("la eccezione viene lanciata e ha messaggio " + exceptionThrown.getMessage());
                 throw new SQLIntegrityConstraintViolationException("indirizzo email già in uso");
-            }
-            else {
+            } else {
                 System.out.println("la eccezione non viene lanciata e ha messaggio " + exceptionThrown.getMessage());
             }
         }
         return saved;
+    }
+
+    public AgencyEntity updateAgencyEntity(AgencyEntity agencyEntity) throws BadRequestException {
+        Optional<AgencyEntity> opt = agencyRepository.findById(agencyEntity.getAgencyid());
+        if (opt.isEmpty()) {
+            throw new BadRequestException("Agenzia non presente a db, impossibile aggiornare");
+        } else {
+            AgencyEntity agencyFromDb = opt.get();
+            agencyFromDb.setName(agencyEntity.getName());
+            agencyFromDb.setTelephoneNumber(agencyEntity.getTelephoneNumber());
+            agencyFromDb.setAddress(agencyEntity.getAddress());
+            return agencyRepository.save(agencyFromDb);
+        }
     }
 
 
@@ -190,7 +202,7 @@ public class AgencyService extends AbstractService {
         return productRepository.findAll();
     }
 
-    public List<CityEntity> getCitiesStartingWith(String startsWith){
+    public List<CityEntity> getCitiesStartingWith(String startsWith) {
         return cityEntityepository.findByNameStartsWith(startsWith);
     }
 
@@ -199,4 +211,6 @@ public class AgencyService extends AbstractService {
         Pageable page = PageRequest.of(agencySearch.getPageNumber(), agencySearch.getPageElements(), Sort.by("agencyid"));
         return agencyRepository.findAll(page);
     }
+
+
 }

@@ -51,12 +51,11 @@ public class UserController extends AbstractController {
 
 
 
-    @PutMapping("/account")
+    @PostMapping("/account/update")
     @ResponseBody
     public ResponseEntity updateAccount(
-            @RequestBody AccountEntity accountEntity,
-            @CookieValue Long userid) throws ResponseException {
-        return GetResponse(accountService.updateUserByID(userid, accountEntity), HttpStatus.OK);
+            @RequestBody AccountEntity accountEntity) throws ResponseException {
+        return GetResponse(accountService.updateUser(accountEntity), HttpStatus.OK);
     }
 
     @GetMapping("/account")

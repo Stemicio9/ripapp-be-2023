@@ -20,6 +20,8 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Long> {
 
     AccountEntity findByIdtoken(String idtoken);
 
+    boolean existsAccountEntityByEmail(String email);
+
 
     List<AccountEntity> findAllByAgency_NameContainsOrAgency_EmailContains(String query, String query2);
 

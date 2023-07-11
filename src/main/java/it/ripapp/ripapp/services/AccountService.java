@@ -16,6 +16,7 @@ import it.ripapp.ripapp.repository.AccountRepository;
 import it.ripapp.ripapp.repository.AgencyRepository;
 import it.ripapp.ripapp.utilities.FirebaseAuthCookieData;
 import it.ripapp.ripapp.utilities.UserStatus;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,7 +30,7 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class AccountService extends AbstractService{
+public class AccountService extends AbstractService {
 
     @Autowired
     private AccountRepository accountRepository;
@@ -52,66 +53,80 @@ public class AccountService extends AbstractService{
         try {
             if (!account.getEnabled())
                 throw new ForbiddenException("Account disabled");
-        }catch(Exception e){
+        } catch (Exception e) {
             // IF this exception is thrown, it means that the account is enabled (by default enabled is null, that means enabled)
         }
 
         return new FirebaseAuthCookieData(account.getIdtoken(), cookie);
     }
 
-    public AccountEntity accountFromIdToken(String idtoken) throws Exception{
+    public AccountEntity accountFromIdToken(String idtoken) throws Exception {
         if (idtoken == null)
             throw new BadRequestException("idtoken not provided");
         return accountRepository.findByIdtoken(idtoken);
     }
 
-    public AccountEntity accountFromToken(String token) throws Exception{
+    public AccountEntity accountFromToken(String token) throws Exception {
         if (token == null)
             throw new BadRequestException("token not provided");
 
-       // FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
+        // FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
         FirebaseToken decodedToken = FirebaseAuth.getInstance().verifySessionCookie(token);
         AccountEntity account = accountRepository.findByEmail(decodedToken.getEmail());
         return account;
     }
-    public List<AccountEntity> getAllUser(){
+
+    public List<AccountEntity> getAllUser() {
         return accountRepository.findAll();
     }
 
 
-
-    public AccountEntity saveUser(AccountEntity user){
+    public AccountEntity saveUser(AccountEntity user) {
         user.setAccountid(null);
         // TODO here we need to check if UUID should be generated here or in the database to avoid duplicates
         System.out.println(user);
         return executeAction(() -> saveUserFlow(user));
     }
 
-    public UserStatus getUserStatusByEmail(String email){
+    public AccountEntity updateUser(AccountEntity accountEntity) throws BadRequestException {
+        Optional<AccountEntity> opt = accountRepository.findById(accountEntity.getAccountid());
+        if (opt.isEmpty()) {
+            throw new BadRequestException("Utente non trovato, impossibile procedere con la modifica");
+        } else {
+            AccountEntity accountFromDb = opt.get();
+            accountFromDb.setName(accountEntity.getName());
+            accountFromDb.setSurname(accountEntity.getSurname());
+            if (mailAlreadyPresentCondition(accountFromDb, accountEntity)) {
+                throw new BadRequestException("Impossibile procedere con la modifica, email già esistente.");
+            }
+            accountFromDb.setEmail(accountEntity.getEmail());
+            accountFromDb.setPhone(accountEntity.getPhone());
+            return accountRepository.save(accountFromDb);
+        }
+    }
+
+    private boolean mailAlreadyPresentCondition(AccountEntity accountFromDb, AccountEntity accountEntity){
+        return StringUtils.isNotBlank(accountFromDb.getEmail()) &&
+                StringUtils.isNotBlank(accountEntity.getEmail()) &&
+                !accountFromDb.getEmail().equals(accountEntity.getEmail()) &&
+                accountRepository.existsAccountEntityByEmail(accountEntity.getEmail());
+    }
+
+    public UserStatus getUserStatusByEmail(String email) {
         return executeAction(() -> accountRepository.findByEmail(email).getStatus());
     }
 
-    public AccountEntity updateUserByID(Long userId, AccountEntity accountEntity){
-        // here is a draft of how to update AccountEntity
-        Optional<AccountEntity> account = accountRepository.findById(userId);
-        if(account.isEmpty()){
-            throw new RuntimeException("User not found");
-        }
-        accountEntity.setAccountid(userId);
-        return executeAction(() -> accountRepository.save(accountEntity));
-    }
-
-    public AccountEntity getAccountByID(Long userId){
+    public AccountEntity getAccountByID(Long userId) {
         return executeAction(() -> accountRepository.findById(userId).orElseThrow());
     }
 
-    public AccountEntity getAccountByFirebaseID(String firebaseId){
+    public AccountEntity getAccountByFirebaseID(String firebaseId) {
         return executeAction(() -> accountRepository.findByIdtoken(firebaseId));
     }
 
-    public AccountEntity syncPhoneBook(Long userId, Collection<PhoneBookSyncEntity> phoneBookSyncEntity){
+    public AccountEntity syncPhoneBook(Long userId, Collection<PhoneBookSyncEntity> phoneBookSyncEntity) {
         Optional<AccountEntity> account = accountRepository.findById(userId);
-        if(account.isEmpty()){
+        if (account.isEmpty()) {
             throw new RuntimeException("User not found");
         }
         // TODO here understand phonebook logic and implement it
@@ -119,17 +134,18 @@ public class AccountService extends AbstractService{
         return account.get();
     }
 
-    public AccountEntity deleteAccount(Long userId){
+    public AccountEntity deleteAccount(Long userId) {
         Optional<AccountEntity> account = accountRepository.findById(userId);
-        if(account.isEmpty()){
+        if (account.isEmpty()) {
             throw new RuntimeException("User not found");
         }
         accountRepository.deleteById(userId);
         return account.get();
     }
+
     public AccountEntity deleteUser(Long idUser) throws FirebaseAuthException {
         Optional<AccountEntity> account = accountRepository.findById(idUser);
-        if(account.isEmpty()){
+        if (account.isEmpty()) {
             throw new RuntimeException("User not found");
         }
         FirebaseAuth fa = FirebaseAuth.getInstance();
@@ -143,10 +159,10 @@ public class AccountService extends AbstractService{
         return account.get();
     }
 
-    public AccountEntity sendPhoneBook(Long userId, Long agencyId, String file){
+    public AccountEntity sendPhoneBook(Long userId, Long agencyId, String file) {
         Optional<AccountEntity> account = accountRepository.findById(userId);
         Optional<AgencyEntity> agency = agencyRepository.findById(agencyId);
-        if(account.isEmpty() || agency.isEmpty()){
+        if (account.isEmpty() || agency.isEmpty()) {
             throw new RuntimeException("User not found");
         }
         // TODO here understand phonebook logic and implement it
@@ -154,30 +170,30 @@ public class AccountService extends AbstractService{
         return account.get();
     }
 
-    public AccountEntity addPlayerID(Long userId, String playerID){
+    public AccountEntity addPlayerID(Long userId, String playerID) {
         Optional<AccountEntity> account = accountRepository.findById(userId);
-        if(account.isEmpty()){
+        if (account.isEmpty()) {
             throw new RuntimeException("User not found");
         }
         // TODO what the hell is this playerID ???
-      //  account.get().setPlayerid(playerID);
+        //  account.get().setPlayerid(playerID);
         return executeAction(() -> accountRepository.save(account.get()));
     }
 
-    private AccountEntity saveUserFlow(AccountEntity accountEntity ){
+    private AccountEntity saveUserFlow(AccountEntity accountEntity) {
         // If the user is a customer or an admin, we save it as a normal user
-        if(accountEntity.getStatus().equals(UserStatus.active)
+        if (accountEntity.getStatus().equals(UserStatus.active)
                 || accountEntity.getStatus().equals(UserStatus.disabled)
-                || accountEntity.getStatus().equals(UserStatus.admin)){
+                || accountEntity.getStatus().equals(UserStatus.admin)) {
             return accountRepository.save(accountEntity);
         }
         // If the user is an agency, we save the agency before
-        else if(accountEntity.getStatus().equals(UserStatus.agency)){
+        else if (accountEntity.getStatus().equals(UserStatus.agency)) {
             String agencyEmail = accountEntity.getAgency().getEmail();
             Optional<AgencyEntity> agency = agencyRepository.findByEmail(agencyEmail);
             AgencyEntity agencyEntity = null;
             // We can write this section in 1 row, but for readability we split it !!! Do not follow Intellij hint
-            if(agency.isEmpty()){
+            if (agency.isEmpty()) {
                 // here we need to save agency object
                 agencyEntity = agencyRepository.save(accountEntity.getAgency());
             } else {
@@ -186,9 +202,7 @@ public class AccountService extends AbstractService{
             }
             accountEntity.setAgency(agencyEntity);
             return accountRepository.save(accountEntity);
-        }
-
-        else {
+        } else {
             // we should not be here in no case
             throw new RuntimeException("User status not valid");
         }
@@ -200,4 +214,6 @@ public class AccountService extends AbstractService{
         Pageable page = PageRequest.of(accountSearchEntity.getPageNumber(), accountSearchEntity.getPageElements(), Sort.by("accountid"));
         return accountRepository.findAll(page);
     }
+
+
 }
