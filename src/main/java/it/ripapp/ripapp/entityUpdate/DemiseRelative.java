@@ -29,16 +29,25 @@ public class DemiseRelative {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long RELATIVEID;
+    private Long relativeid;
 
-    @OneToMany
+    /*@ManyToOne(ma)
     @Cascade(CascadeType.ALL)
-    private List<DemiseEntity> demises;
+    private DemiseEntity demise;*/
 
-    private UUID DEMISEID;
-    private UUID ACCOUNTID;
-    private Kinship KINSHIP;
-    private String PHONE; //? verificare utilizzo di demiserelative.phone in altre classi
-    private String PHONEHASH;
-    private String PREFIX;
+    @OneToOne
+    private AccountEntity account;
+
+    private UUID demiseid;
+    //private UUID accountid;
+    private Kinship kinship;
+
+    private String name;
+    private String surname;
+    private String email;
+    private String phone; //? verificare utilizzo di demiserelative.phone in altre classi
+    private String phonehash;
+    private String prefix;
+
+
 }

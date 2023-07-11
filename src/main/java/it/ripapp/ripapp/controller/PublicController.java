@@ -54,7 +54,7 @@ public class PublicController extends AbstractController {
         list2.add(demiseEntity);
         agency.setDemises(list2);
         DemiseRelative demiseRelative = new DemiseRelative();
-        demiseRelative.setPHONE("331");
+        demiseRelative.setPhone("331");
 
         ArrayList<DemiseRelative> list3= new ArrayList<>();
         list3.add(demiseRelative);
