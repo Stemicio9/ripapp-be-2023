@@ -16,53 +16,30 @@ import org.jooq.Schema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public enum Kinship implements EnumType {
 
-    son("son"),
-
-    daughter("daughter"),
-
-    nephew("nephew"),
-
-    uncle("uncle"),
-
-    aunt("aunt"),
-
-    father("father"),
-
-    mother("mother"),
-
-    wife("wife"),
-
-    brother("brother"),
-
-    sister("sister"),
-
-    grandmother("grandmother"),
-
-    grandfather("grandfather"),
-
-    husband("husband"),
-
-    mother_in_law("mother_in_law"),
-
-    father_in_law("father_in_law"),
-
-    son_in_law("son_in_law"),
-
-    daughter_in_law("daughter_in_law"),
-
-    brother_in_law("brother_in_law"),
-
-    sister_in_law("sister_in_law"),
-
-    cousin_m("cousin_m"),
-
-    cousin_f("cousin_f"),
-
-    grandniece_m("grandniece_m"),
-
-    grandniece_f("grandniece_f"),
-
-    nephew_f("nephew_f");
+    figlio("figlio"),
+    figlia("figlia"),
+    nipote_m("nipote_m"),
+    zio("zio"),
+    zia("zia"),
+    padre("padre"),
+    madre("madre"),
+    moglie("moglie"),
+    fratello("fratello"),
+    sorella("sorella"),
+    nonna("nonna"),
+    nonno("nonno"),
+    marito("marito"),
+    matrigna("matrigna"),
+    patrigno("patrigno"),
+    figliastro("figliastro"),
+    figliastra("figliastra"),
+    fratellastro("fratellastro"),
+    sorellastra("sorellastra"),
+    cugino("cugino"),
+    cugina("cugina"),
+    pronipote_m("pronipote"),
+    pronipote_f("pronipote_f"),
+    nipote_f("nipote_f");
 
     private final String literal;
 
