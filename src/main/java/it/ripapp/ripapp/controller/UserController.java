@@ -146,6 +146,7 @@ public class UserController extends AbstractController {
         List<Object> result;
         result = (List<Object>) restTemplate.getForObject("https://axqvoqvbfjpaamphztgd.functions.supabase.co/comuni", Object.class);
         return result;
+
     }
 
 }

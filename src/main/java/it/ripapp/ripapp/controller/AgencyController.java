@@ -2,9 +2,7 @@ package it.ripapp.ripapp.controller;
 
 
 import it.ripapp.ripapp.bll.Kinship;
-import com.google.firebase.auth.FirebaseAuthException;
 import it.ripapp.ripapp.dto.ProductOffered;
-import it.ripapp.ripapp.entityUpdate.City;
 import it.ripapp.ripapp.entityUpdate.DemiseEntity;
 import it.ripapp.ripapp.entityUpdate.ProductEntity;
 import it.ripapp.ripapp.exceptions.ResponseException;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api/auth")

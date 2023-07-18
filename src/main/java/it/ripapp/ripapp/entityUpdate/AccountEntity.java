@@ -42,6 +42,7 @@ public class AccountEntity implements Serializable {
     private List<CityEntity> city;
     private Boolean enabled;
     private String photourl;
+
     private Lang lang;
     private String idtoken; //uid di firebase
     private Kinship kinship;

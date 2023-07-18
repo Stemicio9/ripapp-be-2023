@@ -37,6 +37,8 @@ public class DemiseEntity {
     private String agencylogo;
     private String title;
     private String phonehash;
+    private String citiesofinterest; //aggiunto comune di intresse
+
     private String wakenotes;
     private String funeralnotes;
 
