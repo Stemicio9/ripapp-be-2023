@@ -70,14 +70,14 @@ public class DemiseService extends AbstractService{
         demiseEntityRepository.deleteById(demiseID);
     }*/
 
-    public List<DemiseEntity> updateDemise(Long accountID, Long demiseID, DemiseEntity demise){
+    public DemiseEntity updateDemise(Long accountID, Long demiseID, DemiseEntity demise){
         Optional<DemiseEntity> demiseEntity = demiseEntityRepository.findById(demiseID);
         if(!demiseEntity.isPresent()){
             throw new RuntimeException("Demise not found");
         }
         demise.setDemiseid(demiseID);
-        executeAction(() -> demiseEntityRepository.save(demise));
-        return getAgencyDemises(accountID, 0);
+        DemiseEntity updated = demiseEntityRepository.save(demise);
+        return updated;
     }
 
 
