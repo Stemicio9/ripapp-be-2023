@@ -94,7 +94,8 @@ public class UserController extends AbstractController {
     @GetMapping("/account/list")
     public Page<AccountEntity> getAllUser(@RequestParam Integer pageNumber, @RequestParam Integer pageElements){
         AccountSearchEntity accountSearch = new AccountSearchEntity(pageNumber, pageElements);
-        return accountService.findAllAccounts(accountSearch);
+        Page<AccountEntity> result = accountService.findAllAccounts(accountSearch);
+        return result;
     }
 
     @DeleteMapping("/account")

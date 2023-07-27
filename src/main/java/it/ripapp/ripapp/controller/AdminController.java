@@ -57,17 +57,18 @@ public class AdminController extends AbstractController {
 
     @PostMapping("/agency/update")
     @ResponseBody
-    public ResponseEntity updateAgency(@RequestBody AgencyEntity agencyEntity) {
+    public ResponseEntity updateAgency(@RequestBody AgencyEntity agencyEntity) throws Exception{
         UpdateAgencyMessage message = new UpdateAgencyMessage();
         AgencyEntity agencyUpdated;
         try {
             agencyUpdated = agencyService.updateAgencyEntity(agencyEntity);
             message.setAgencyUpdated(agencyUpdated);
             message.setMessage("Agency updated successfully!");
+            return GetResponse(message, HttpStatus.OK);
         } catch (Exception e) {
-            message.setMessage(e.getMessage());
+           throw e;
         }
-        return GetResponse(message, HttpStatus.OK);
+
     }
 
     @DeleteMapping("/agency/{agencyId}")

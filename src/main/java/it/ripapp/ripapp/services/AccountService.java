@@ -101,6 +101,12 @@ public class AccountService extends AbstractService {
             }
             accountFromDb.setEmail(accountEntity.getEmail());
             accountFromDb.setPhone(accountEntity.getPhone());
+            accountFromDb.setCity(accountEntity.getCity());
+            accountFromDb.setStatus(accountEntity.getStatus());
+            if(accountEntity.getStatus().equals(UserStatus.agency)) {
+                AgencyEntity agencyEntity = agencyRepository.findById(accountEntity.getAgency().getAgencyid()).orElseThrow();
+                accountFromDb.setAgency(agencyEntity);
+            }
             return accountRepository.save(accountFromDb);
         }
     }
